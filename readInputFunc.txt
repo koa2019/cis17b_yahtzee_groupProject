@@ -1,0 +1,42 @@
+
+getline(cin,n);
+        
+        // Set flag. Confirm name is at least 2 characters long
+        isLeng = isMinSize(n,MIN);
+
+if(isLeng){
+        // Reset class member variables
+        name = toLowerCase(n); // changes to lowercase & set variable in class    
+        namSiz = name.size(); 
+        return true;
+    }    
+
+unsigned short MINSIZE = 9;
+    string em = "";
+cin>>em;
+        
+        // Set flags. Confirm emails length and that it contains '@' and '.'
+        isEmail = confrmEmail(em);
+        isLeng = isMinSize(em, MINSIZE);
+
+if(isEmail && isLeng){        
+        // Reset class member variables
+        email = toLowerCase(em);  
+        emaiSiz = email.size(); 
+        return true;
+    }  
+
+ string pwd = "";
+
+// Set flag. Confirm string length is a minimum length
+            isPwd = isMinSize(pwd,MINSIZE);            
+           
+            // Confirm string has digit, uppercase and $,!, or # in it
+            hasSpCh = hasSpecialChars(pwd);  
+
+//  Confirm password is the exactly the same as temp password 
+      if(isPwd){
+        password = pwd; // set variable in class   
+        pwrdSiz = password.size();  // set this string's length in the class
+         isPwd = isStrEqual(pwd,tempPwd);
+} 
