@@ -114,6 +114,9 @@ void Player::setGuess(int guesIndx){
 void Player::printGBoard()const {
     gboard.printBoard();
 }
+void Player::printTotals()const {
+    gboard.printSums();
+}
 
 
 

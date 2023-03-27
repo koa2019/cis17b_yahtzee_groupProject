@@ -21,7 +21,7 @@ Choices::Choices() {
     //Initialize both arrays 
     for(int shuffle=0;shuffle<2;shuffle++){ //randomized values 2 times
         for (int i = 0; i < size; i++) {            
-            board[i] = rand()%26+65; // rand() uppercase letters from alphabet            
+            board[i] = '0'; // rand()%(26+65) uppercase letters from alphabet            
             indx[i] = i;
         }
     }
@@ -40,7 +40,7 @@ Choices::Choices(int s) {
 
     //Initialize both arrays 
     for (int i=0; i<size; i++) {        
-        board[i]=rand()%26+96; // rand() lowercase letters from alphabet            
+        board[i] = '0'; // rand() lowercase letters from alphabet            
         indx[i] = i;
     }
     //sets board with ships or blanks
@@ -90,16 +90,23 @@ void Choices::setBoard(){
 // Prints game board
 //**************************************************************
 void Choices::printBoard() const {
-
+    
+    
     //cout<<"\n\t"<<name<<"'s Game Board\n";
-    cout<<"'s Game Board.  S==Ship.\n";
+    cout<<"'s Scorecard\n";
     for (int i = 0; i<getBrdSize(); i++) {
-        cout<<setw(3)<<indx[i];
+        cout<<setw(13)<<indx[i]+1<<setw(3)<<board[i]<<endl;
     }
-    cout << endl;
-    for (int i=0; i<getBrdSize(); i++) {
-        cout<<setw(3)<<board[i];
-        //if(i%10==(10-1)) cout<<endl;
-    }
-    cout << endl << endl;
+ 
+    cout<<endl;
+}
+
+//**************************************************************
+//              Prints upper and lower section scores
+//**************************************************************
+void Choices::printSums() const{
+    int upperSum=0, lowerSum=0;
+    cout<<"Upper section: "<< upperSum <<endl;
+    cout<<"Lower section: "<< lowerSum <<endl;
+    cout<<"Grand Total:   "<< (upperSum+lowerSum)<<endl<<endl;
 }
