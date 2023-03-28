@@ -93,7 +93,7 @@ void Score::hitMiss(int &pGuess, char &i, bool isHit) {
     if (isHit) {
         cout << setw(12) << pGuess << " == " << i << endl;
         //cout << setw(12) << pGuess << " == " << score->player[b].shipLoc << endl;
-        cout << setw(22) << "It\'s a HIT!\n\n" << endl;
+        //cout << setw(22) << "It\'s a HIT!\n\n" << endl;
         
     } else {
         cout << setw(15) << pGuess << endl << setw(22) << "It\'s a MISS!\n\n";

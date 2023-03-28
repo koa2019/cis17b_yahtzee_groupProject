@@ -1,270 +1,30 @@
 Record 0
-ID:      1440
+ID:      100
 namSiz:  11
 name:    mother zero
 emaiSiz: 13
 email:   mother@aa.com
 pwrdSiz: 8
-pwrd:    mm!1abcd
+pwrd:    Mm!1abcd
 hiScore: 0
 
 Record 1
-ID:      300
+ID:      90
 namSiz:  10
 name:    father one
 emaiSiz: 16
 email:   father@email.com
 pwrdSiz: 8
-pwrd:    ff$0abcd
+pwrd:    Ff$0abcd
 hiScore: 0
 
-Record 2
-ID:      210
-namSiz:  10
-name:    sister two
-emaiSiz: 14
-email:   sister@sis.com
-pwrdSiz: 9
-pwrd:    ss#9ttttt
-hiScore: 0
-
-Record 3
-ID:      1260
-namSiz:  13
-name:    brother three
-emaiSiz: 17
-email:   brotehr@three.com
-pwrdSiz: 9
-pwrd:    bb3!yyyyy
-hiScore: 0
-
-Record 4
-ID:      770
-namSiz:  9
-name:    dog gdadg
-emaiSiz: 10
-email:   dog@aa.com
-pwrdSiz: 8
-pwrd:    dd!2hhhh
-hiScore: 0
-
-Record 5
-ID:      1120
-namSiz:  12
-name:    harry potter
-emaiSiz: 16
-email:   harryp@email.com
-pwrdSiz: 8
-pwrd:    hp!12345
-hiScore: 0
-
-Record 6
-ID:      130
-namSiz:  7
-name:    rhianna
-emaiSiz: 15
-email:   first@email.com
-pwrdSiz: 8
-pwrd:    pp#34567
-hiScore: 0
-
-Record 7
+Record 1
 ID:      90
-namSiz:  7
-name:    ten ten
-emaiSiz: 13
-email:   ten@email.com
-pwrdSiz: 9
-pwrd:    ten!12345
-hiScore: 0
-
-Record 8
-ID:      160
 namSiz:  10
-name:    eleven ten
-emaiSiz: 15
-email:   email@email.com
-pwrdSiz: 8
-pwrd:    ee#3abcd
-hiScore: 0
-
-Record 9
-ID:      240
-namSiz:  10
-name:    teddy bear
-emaiSiz: 13
-email:   name@aa.comff
-pwrdSiz: 9
-pwrd:    ff!2hhhhg
-hiScore: 0
-
-Record 10
-ID:      1120
-namSiz:  12
-name:    jillian lash
-emaiSiz: 13
-email:   jill@lash.com
-pwrdSiz: 8
-pwrd:    jill2!gg
-hiScore: 0
-
-Record 11
-ID:      40
-namSiz:  11
-name:    nicole lash
-emaiSiz: 14
-email:   nicole@aol.com
-pwrdSiz: 8
-pwrd:    nic!2345
-hiScore: 0
-
-Record 12
-ID:      540
-namSiz:  12
-name:    minnie mouse
-emaiSiz: 17
-email:   minnie@disney.com
-pwrdSiz: 8
-pwrd:    mm!12345
-hiScore: 0
-
-Record 13
-ID:      810
-namSiz:  13
-name:    homer simpson
-emaiSiz: 14
-email:   homer@simp.com
-pwrdSiz: 9
-pwrd:    hh!234567
-hiScore: 0
-
-Record 14
-ID:      240
-namSiz:  16
-name:    hamburger helper
-emaiSiz: 19
-email:   hamburger@email.com
-pwrdSiz: 7
-pwrd:    hh!2345
-hiScore: 0
-
-Record 15
-ID:      480
-namSiz:  12
-name:    mary poppins
-emaiSiz: 14
-email:   mary@gmail.com
-pwrdSiz: 10
-pwrd:    mary!23oiu
-hiScore: 0
-
-Record 16
-ID:      130
-namSiz:  11
-name:    day tripper
-emaiSiz: 12
-email:   dayt@aaa.com
-pwrdSiz: 8
-pwrd:    aa!1567s
-hiScore: 0
-
-Record 17
-ID:      660
-namSiz:  12
-name:    taylor swift
-emaiSiz: 13
-email:   taylor@ta.com
-pwrdSiz: 7
-pwrd:    bb$3567
-hiScore: 0
-
-Record 18
-ID:      600
-namSiz:  15
-name:    california love
-emaiSiz: 13
-email:   cali@cali.com
-pwrdSiz: 8
-pwrd:    ff#9abcs
-hiScore: 0
-
-Record 19
-ID:      1280
-namSiz:  12
-name:    adam sandler
+name:    father one
 emaiSiz: 16
-email:   adam@sandler.com
+email:   father@email.com
 pwrdSiz: 8
-pwrd:    gd!5dfcs
-hiScore: 0
-
-Record 20
-ID:      1120
-namSiz:  10
-name:    jane smith
-emaiSiz: 13
-email:   jane@fdaf.com
-pwrdSiz: 8
-pwrd:    gg$4dfca
-hiScore: 0
-
-Record 21
-ID:      70
-namSiz:  18
-name:    willow smallsville
-emaiSiz: 13
-email:   will@name.com
-pwrdSiz: 8
-pwrd:    wi#13567
-hiScore: 0
-
-Record 22
-ID:      90
-namSiz:  15
-name:    wednesday adams
-emaiSiz: 12
-email:   fafd@fda.com
-pwrdSiz: 8
-pwrd:    hh1!dfcc
-hiScore: 0
-
-Record 23
-ID:      360
-namSiz:  9
-name:    good will
-emaiSiz: 12
-email:   good@her.com
-pwrdSiz: 8
-pwrd:    jj$4dfcg
-hiScore: 0
-
-Record 24
-ID:      800
-namSiz:  7
-name:    dad one
-emaiSiz: 13
-email:   dad@gmail.com
-pwrdSiz: 9
-pwrd:    dd#135673
-hiScore: 0
-
-Record 25
-ID:      360
-namSiz:  10
-name:    mother two
-emaiSiz: 13
-email:   mom@gmail.com
-pwrdSiz: 10
-pwrd:    mm!2dfc961
-hiScore: 0
-
-Record 26
-ID:      300
-namSiz:  13
-name:    brother three
-emaiSiz: 17
-email:   brother@yahoo.com
-pwrdSiz: 10
-pwrd:    bb3$dfcyt2
-hiScore: 0
+pwrd:    Ff$0abcd
+hiScore: 38
 

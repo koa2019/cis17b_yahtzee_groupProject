@@ -11,35 +11,42 @@ using namespace std;  //STD Name-space where Library is compiled
 
 class User : public Admin {
     
-    private:
-    int numWins;
+private:
+    int nRolls;
     
-    public:
+public:
     
-        // Default constructor
-        User(){
-            readInputFile();
-            numWins=0;
-            cout<<"\nHit User constructor.\n";
-        } 
-//    User(string n, string e, string p){
-//        setName(n);
-//        setNamSiz(n.size());
-//        setEmail(e);
-//        setEmaiSiz(e.size());
-//        setPwrd(p);
-//        setPwrdSiz(p.size());
-//    }
+    // Default constructor
+    User(){
+        nRolls = 3;
+        cout<<"\nHit User constructor.\n";
+    }
+
+    // Constructor #2
+    User(int rec, int i, string n, string e, string p){
+        setTtlRec(rec);
+        setID(i);
+        setName(n);
+        setNamSiz(n.size());
+        setEmail(e);
+        setEmaiSiz(e.size());
+        setPwrd(p);
+        setPwrdSiz(p.size());
+        nRolls = 3;
+    }
         
-        // Destructor
-        ~User(); 
-        
-        // Mutators
-        void setNumWins(int n){numWins=n;}
-        
-        // Accessors
-        int getNumWins() const {return numWins;}
-        void print1User() const;
+    // Destructor
+    ~User(); 
+
+    // Mutators
+    void setNRolls(int n){nRolls = n;}
+    void signUp();  // Calls functions to create 1 or more profiles
+    void readInputFile();  // Reads 27 records from a file
+    void play();
+    
+    // Accessors
+    int getNRolls() const {return nRolls;}
+    void print1User() const;  // prints User obj and nRolls
 };
 #endif /* USER_H */
 

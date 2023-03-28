@@ -32,7 +32,6 @@
     <itemPath>admin.dat</itemPath>
     <itemPath>admin.txt</itemPath>
     <itemPath>input.txt</itemPath>
-    <itemPath>numRecrds.txt</itemPath>
     <itemPath>usrData.dat</itemPath>
     <itemPath>usrData.txt</itemPath>
   </logicalFolder>
@@ -61,8 +60,6 @@
       <item path="input.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="numRecrds.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="usrData.dat" ex="false" tool="3" flavor2="0">
       </item>
@@ -104,8 +101,6 @@
       <item path="input.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="numRecrds.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="usrData.dat" ex="false" tool="3" flavor2="0">
       </item>
