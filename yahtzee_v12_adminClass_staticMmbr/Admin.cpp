@@ -169,20 +169,18 @@ void Admin::adminPortal(){
                 updateAdmin();        
                 break;
             } 
-            case 2:{               
-                //findByIndx();
+            case 2:{ // find index in binary file  
                 int oneRec = (rand()%(getTtlRec()));
                 readBin('u', oneRec);    
                 print1Record(); 
                 break;
             } 
-            case 3:{
-                //findEmail();
-                string em = "dog@aa.com"; //father@email.com
-                cout<<"\n\nEnter email ";
-                //cin>>em;
-                readBin('u',em); // Record 1
-                print1Record();
+            case 3:{ // find email in binary file
+                string em = "brother@yahoo.com"; //father@email.com
+                //cout<<"\n\nEnter email ";
+                //cin>>em;                
+                if(!(findEmail('u',em) == -99)){ print1Record(); }
+                else{ cout<<"Unable to locate that email.\n";}
                 break;
             }            
             default: {
@@ -190,7 +188,7 @@ void Admin::adminPortal(){
                 return;
             }
         }
-    } while(!(choice==9));
+    } while(choice==1 || choice==2 || choice==3);
 }
 
 
@@ -262,7 +260,7 @@ void Admin::wrtAdminBin(){
 //                  & return 1 record  
 /*****************************************************************/
 
-void Admin::readBin(const char ch, string emai){ 
+long Admin::findEmail(const char ch, string emai){ 
     
     cout<<endl<<endl<<"Looking for "<<emai<<" in binary file.\n\n";   
     
@@ -271,16 +269,19 @@ void Admin::readBin(const char ch, string emai){
     file = (ch == 'a') ? "admin.dat" : "usrData.dat";        
     
     inBin.open(file.c_str(), ios::in | ios::binary); 
-    if(!inBin.is_open()){ cout<<"\nError opening "<<file<<endl; return;} 
+    if(!inBin.is_open()){ cout<<"\nError opening "<<file<<endl; exit(0);} 
     
-    bool foundEm = false;
+    bool foundEm;
     long cursor = 0L, thisSum=0L;
     int count = 0,   // start at 1, so it stops before the record I'm looking for     
         recIndx=0;
-     
+    
+    int nRec=getTtlRec();
+    //cout<<"ttlRec= "<<nRec<<endl;
+    
     // Accumulate all the bits between the beginning of file up the record I'm looking for.
-    while(!inBin.eof() && count<=recIndx){ 
-                    
+    for(int i=0;i<nRec;i++){ 
+    //while( (count <= getTtlRec()) || (!inBin.eof())   ){                 
         inBin.seekg(cursor,ios::beg);  // set is set to the beginning of the cursor's value  
         
         // Read in sizeof id and add to cursor
@@ -348,9 +349,10 @@ void Admin::readBin(const char ch, string emai){
         thisSum += sizeof(int);
         cursor += sizeof(int);
         //cout<<sizeof(hScore)<<endl;
-        //cout<<"\t   cursor = "<<cursor<<endl;
+        
         
         foundEm = isStrEqual(emai,binEmail);
+        //cout<<"\nFound = "<<foundEm<<endl;
         if(foundEm){
             recIndx=ttlRec; 
             cursor -= thisSum;
@@ -358,21 +360,28 @@ void Admin::readBin(const char ch, string emai){
             //cout<<"ttlREc= "<<ttlRec<<" recIndx= "<<recIndx<<"  count= "<<count<<endl;
             break;
         }
-        else {
+        else{
+            foundEm = false;
             count++;
             recIndx=count;
-            thisSum = 0L;
-            //cout<<"Not email "<<foundEm<<endl;
-            //cout<<"ttlREc= "<<ttlRec<<" recIndx= "<<recIndx<<"  count= "<<count<<endl;
+            thisSum = 0L;    
         }
+        //cout<<count<<"=count \t   cursor = "<<cursor<<endl;   
     }
+    //cout<<"Out loop foundEm= "<<foundEm<<endl;
     //cout<<"\n\tcursor = "<<cursor<<"  count= "<<count<<"  recIndx= "<<recIndx<<endl;
-    cursor = (count==0) ? 0 : cursor;
-    
-    //***********    SAVE LOCATED RECORD   ************************//            
-    wrt1Record(ch, cursor);
     
     inBin.close();
+    
+    if(foundEm){        
+        cursor = (count==0) ? 0 : cursor;               
+        wrt1Record(ch, cursor); //SAVE LOCATED RECORD  
+        return cursor;        
+    }     
+    cursor = -99;
+    return cursor;
+   
+    
 }
     
   
@@ -525,21 +534,11 @@ bool Admin::isUsrLogin(){
     cout<<"\n\tUser Login\n";
       
     const char ch = 'u';
-    int oneRec = (rand()%(getTtlRec()));
-    readBin(ch, oneRec);
-    Admin usrRec;
-    //usrRec.readBin(ch,"mother@aa.com");     // Record 0
-    //usrRec.readBin(ch,"father@email.com"); // Record 1
-    //usrRec.readBin(ch,"sister@sis.com"); // Record 2
-    //usrRec.readBin(ch,"brother@yahoo.com"); // Record 26    
-    cout<<"\n*****Erase after testing*****\nRandom record "<<getTtlRec()<<"\nemail: "<<getEmail()<<"\npassword: "<<getPwrd()<<endl;
-    
+    cout<<"\n\n*****Erase after testing*****\nsister@sis.com\nSs!2345\n";
     string tempE="",
            tempPw="";
-    bool isLeng,
-         isEmail,
-         isName,
-         isPwrd;
+    bool isName = false ,
+         isPwrd = false;
     
     do {
         cout<<"\nEnter email:    ";
@@ -551,15 +550,23 @@ bool Admin::isUsrLogin(){
         cin>>tempPw;       
     } while(!(isMinSize(tempPw,7)));
     
-    usrRec.readBin(ch,tempE); // look for this email in usrBin.dat
-    //cout<<"\nFound record "<<usrRec.getTtlRec()<<"\nemail: "<<usrRec.getEmail()<<"\npassword: "<<usrRec.getPwrd()<<endl;
+    long cursr = findEmail(ch,tempE);
+    //cout<<"cursr= " <<cursr<<endl;
     
+    if( !(cursr == -99)){// look for this email in usrBin.dat
     
-    isName = isStrEqual(getEmail(),tempE);
-    isPwrd = isStrEqual(getPwrd(),tempPw);
+        isName = isStrEqual(getEmail(),tempE);
+        isPwrd = isStrEqual(getPwrd(),tempPw);
+        
+    } else { return false; }
     
-    if(!isName || !isPwrd){ return false; }//refresh page with javascript        
-    else {return true;}
+    if(!isName || !isPwrd){ 
+        cout<<"Username and/or password does not match.\n";
+        return false; }        
+    else {
+        cout<<"\n\nUser login was successful."; 
+        return true;
+    }
 }
     
 

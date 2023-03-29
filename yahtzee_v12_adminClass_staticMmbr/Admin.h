@@ -19,7 +19,7 @@ private: // ONLY Admin has access to these member functions
     bool isUsrLogin(); // Calls functions to verify login credentials
     void updateAdmin();
     void readBin(const char, int); // ReadS binary file & locate file by index
-    void readBin(const char, string="-99"); // ReadS binary file & locate file by email
+    long findEmail(const char, string="-99"); // ReadS binary file & locate file by email
     void wrt1Record(const char, long cursor=0L);
     void wrtAdminTxt();
     void wrtAdminBin();
@@ -83,11 +83,15 @@ public:
     void print1Record() const;
     
     // Calls private member functions
-    void getUsrLogin(){
+    bool getUsrLogin(){
         
-        bool is = isUsrLogin();
-        if(!is){cout<<"Username and/or password does not match.\n";} 
-        else { cout<<"\n\nUser login was successful."; }        
+        if(! isUsrLogin() ){
+            
+            return false;} 
+        else { 
+           
+            return true;
+        }        
     }
     void getAdLogin() { adminLogin(); }
     void adminPortal();

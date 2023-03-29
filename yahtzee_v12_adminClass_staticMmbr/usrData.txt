@@ -1,5 +1,5 @@
 Record 0
-ID:      100
+ID:      160
 namSiz:  11
 name:    mother zero
 emaiSiz: 13
@@ -9,7 +9,7 @@ pwrd:    Mm!1abcd
 hiScore: 0
 
 Record 1
-ID:      90
+ID:      100
 namSiz:  10
 name:    father one
 emaiSiz: 16
@@ -18,13 +18,273 @@ pwrdSiz: 8
 pwrd:    Ff$0abcd
 hiScore: 0
 
-Record 1
-ID:      90
+Record 2
+ID:      130
 namSiz:  10
-name:    father one
+name:    sister two
+emaiSiz: 14
+email:   sister@sis.com
+pwrdSiz: 7
+pwrd:    Ss!2345
+hiScore: 0
+
+Record 3
+ID:      200
+namSiz:  13
+name:    brother three
 emaiSiz: 16
-email:   father@email.com
+email:   brothr@three.com
+pwrdSiz: 9
+pwrd:    Ff3!12345
+hiScore: 0
+
+Record 4
+ID:      80
+namSiz:  9
+name:    dog daddy
+emaiSiz: 10
+email:   dog@aa.com
 pwrdSiz: 8
-pwrd:    Ff$0abcd
-hiScore: 38
+pwrd:    Dd!12345
+hiScore: 0
+
+Record 5
+ID:      490
+namSiz:  12
+name:    harry potter
+emaiSiz: 16
+email:   harryp@email.com
+pwrdSiz: 8
+pwrd:    Hp!12345
+hiScore: 0
+
+Record 6
+ID:      320
+namSiz:  7
+name:    rhianna
+emaiSiz: 15
+email:   first@email.com
+pwrdSiz: 8
+pwrd:    Pp#34567
+hiScore: 0
+
+Record 7
+ID:      120
+namSiz:  7
+name:    ten ten
+emaiSiz: 13
+email:   ten@email.com
+pwrdSiz: 9
+pwrd:    Ten!12345
+hiScore: 0
+
+Record 8
+ID:      720
+namSiz:  10
+name:    eleven ten
+emaiSiz: 15
+email:   email@email.com
+pwrdSiz: 8
+pwrd:    Ee#3abcd
+hiScore: 0
+
+Record 9
+ID:      640
+namSiz:  10
+name:    teddy bear
+emaiSiz: 13
+email:   name@aa.comff
+pwrdSiz: 9
+pwrd:    Ff!2hhhhg
+hiScore: 0
+
+Record 10
+ID:      700
+namSiz:  12
+name:    jillian lash
+emaiSiz: 13
+email:   jill@lash.com
+pwrdSiz: 8
+pwrd:    JILL2!GG
+hiScore: 0
+
+Record 11
+ID:      400
+namSiz:  11
+name:    nicole lash
+emaiSiz: 14
+email:   nicole@aol.com
+pwrdSiz: 8
+pwrd:    NIC!2345
+hiScore: 0
+
+Record 12
+ID:      210
+namSiz:  12
+name:    minnie mouse
+emaiSiz: 17
+email:   minnie@disney.com
+pwrdSiz: 8
+pwrd:    MM!12345
+hiScore: 0
+
+Record 13
+ID:      320
+namSiz:  13
+name:    homer simpson
+emaiSiz: 14
+email:   homer@simp.com
+pwrdSiz: 9
+pwrd:    Hh!234567
+hiScore: 0
+
+Record 14
+ID:      140
+namSiz:  16
+name:    hamburger helper
+emaiSiz: 19
+email:   hamburger@email.com
+pwrdSiz: 7
+pwrd:    Hh!2345
+hiScore: 0
+
+Record 15
+ID:      360
+namSiz:  12
+name:    mary poppins
+emaiSiz: 14
+email:   mary@gmail.com
+pwrdSiz: 10
+pwrd:    Mary!23oiu
+hiScore: 0
+
+Record 16
+ID:      640
+namSiz:  11
+name:    day tripper
+emaiSiz: 12
+email:   dayt@aaa.com
+pwrdSiz: 8
+pwrd:    Aa!1567s
+hiScore: 0
+
+Record 17
+ID:      170
+namSiz:  12
+name:    taylor swift
+emaiSiz: 13
+email:   taylor@ta.com
+pwrdSiz: 7
+pwrd:    Bb$3567
+hiScore: 0
+
+Record 18
+ID:      630
+namSiz:  15
+name:    california love
+emaiSiz: 13
+email:   cali@cali.com
+pwrdSiz: 8
+pwrd:    fF#9abcs
+hiScore: 0
+
+Record 19
+ID:      360
+namSiz:  12
+name:    adam sandler
+emaiSiz: 16
+email:   adam@sandler.com
+pwrdSiz: 8
+pwrd:    Gd!5dfcs
+hiScore: 0
+
+Record 20
+ID:      440
+namSiz:  10
+name:    jane smith
+emaiSiz: 13
+email:   jane@fdaf.com
+pwrdSiz: 8
+pwrd:    Gg$4dfca
+hiScore: 0
+
+Record 21
+ID:      200
+namSiz:  18
+name:    willow smallsville
+emaiSiz: 13
+email:   will@name.com
+pwrdSiz: 8
+pwrd:    Wi#13567
+hiScore: 0
+
+Record 22
+ID:      540
+namSiz:  15
+name:    wednesday adams
+emaiSiz: 10
+email:   wed@aa.com
+pwrdSiz: 8
+pwrd:    hH1!dfcc
+hiScore: 0
+
+Record 23
+ID:      240
+namSiz:  9
+name:    good will
+emaiSiz: 12
+email:   good@her.com
+pwrdSiz: 8
+pwrd:    Jj$4dfcg
+hiScore: 0
+
+Record 24
+ID:      300
+namSiz:  7
+name:    dad one
+emaiSiz: 15
+email:   daddo@gmail.com
+pwrdSiz: 9
+pwrd:    Dd#135673
+hiScore: 0
+
+Record 25
+ID:      360
+namSiz:  10
+name:    mother two
+emaiSiz: 15
+email:   mommy@gmail.com
+pwrdSiz: 10
+pwrd:    Mm!2dfc961
+hiScore: 0
+
+Record 26
+ID:      110
+namSiz:  11
+name:    brother bro
+emaiSiz: 17
+email:   brother@yahoo.com
+pwrdSiz: 10
+pwrd:    Bb3$dfcyt2
+hiScore: 0
+
+Record 2
+ID:      130
+namSiz:  10
+name:    sister two
+emaiSiz: 14
+email:   sister@sis.com
+pwrdSiz: 7
+pwrd:    Ss!2345
+hiScore: 44
+
+Record 2
+ID:      130
+namSiz:  10
+name:    sister two
+emaiSiz: 14
+email:   sister@sis.com
+pwrdSiz: 7
+pwrd:    Ss!2345
+hiScore: 23
 

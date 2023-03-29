@@ -6,7 +6,7 @@ using namespace std;  //STD Name-space where Library is compiled
 
 //   Destructor
 User::~User(){
-    cout<<"\nHit User Destructor(). Static class, so nothing to destroy.";
+    cout<<"\nHit User Destructor().";
 }
 
 
@@ -73,9 +73,9 @@ void User::readInputFile(){
     int count=0, num=0;
     string n="", em="", pwd="";
     bool isNameGood,isEmailGood,isPwrdGood,isLeng,isEmail,isPwd,hasSpCh;
+    int max = 28; // 27 files 
     
-    
-    while(!in.eof() && count<2){ // 27 files        
+    while(!in.eof() && count<max){        
         
         // Read name  from file & validate
         getline(in,n);

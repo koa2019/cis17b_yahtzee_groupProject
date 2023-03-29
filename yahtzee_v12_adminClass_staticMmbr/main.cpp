@@ -90,20 +90,18 @@
  * Added char arguments to wrtTxt()
  * Added a switch menu in main() with options to sign up, user login, admin login
  * Added number of rolls to User class
- * BUG! User is writing the current number of records instead of
-        this record number. AND its rewriting the id.
-   Solution: Passed ttlRec & ID when I created new User in the main()
+ * Fixed User overwriting ttlRec & ID by passing the values from Admin to
+   User in  main().
+ * Changed bool readBin() to long findEmail(), so I can pass the cursor
+   when i need to rewrite a file in binary. If email is not found in
+   binary, then it sets cursor to -99.
  
+ * To do:
  * BUG! User is appending the new hiScore record to file instead 
         of inserting @its original spot. 
    Solution? --> figure out cursor size of this record or readBin then rewrite?
- 
- * To do:
- * Add conditional in case readBin(email) if it doesn't find email
  * Why aren't my class variables green after moving them to 
    their own cpp file? 
- * Test setHiScore(). It'll have to rewrite the binary file 
-   @specific location. 
  * Admin needs to delete record from binary --> pass cursor size?
  * Admin needs to edit member variable in binary          
  
@@ -138,10 +136,7 @@ int main(int argc, char** argv) {
     // Variables    
     int choice = 0;
     
-    
-    
-    User user;    // Create one instance of User class
-    
+    //do {
     cout<<"\n\nMenu\n"
         <<"Press 1: Sign Up\n"
         <<"Press 2: User Login\n"
@@ -153,19 +148,20 @@ int main(int argc, char** argv) {
         cin.ignore();
         
         switch(choice){
-            case 1:{        
-                cout<<"\nIn main()\n";
+            case 1:{ 
+                User user;    // Create one instance of User class
                 user.readInputFile();
                 //user.signUp();                 
                 break;
             }
             case 2:{ // I WANT TO SAVE THIS ADMIN TO A USER so i can play()
-                cout<<"\nIn main()\n";
+             
                 Admin admin;  // Create one instance of Admin class
-                admin.getUsrLogin();
-                admin.print1Record();
-                User user2(admin.getTtlRec(), admin.getID(),admin.getName(),admin.getEmail(),admin.getPwrd());
-                user2.play();
+                if(admin.getUsrLogin()){
+                    //admin.print1Record();
+                    User user2(admin.getTtlRec(), admin.getID(),admin.getName(),admin.getEmail(),admin.getPwrd());
+                    user2.play();
+                } else {cout<<"\nUnable to locate your email.\n";}
                 break;
             } 
             case 3:{
@@ -173,7 +169,8 @@ int main(int argc, char** argv) {
                 admin2.getAdLogin();
                 break;
             } 
-            case 4:{                
+            case 4:{  
+                //User user3;    // Create one instance of User class
                 //user3.play();
                 break;
             }
@@ -182,6 +179,7 @@ int main(int argc, char** argv) {
                 exit(0);
             }
         }
+    //} while(choice==1 || choice==2 || choice==3 || choice==4);
     return 0;
 }
 
