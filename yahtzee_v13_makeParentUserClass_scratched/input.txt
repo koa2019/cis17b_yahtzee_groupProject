@@ -6,13 +6,13 @@ father@email.com
 Ff$0abcd
 sister two
 sister@sis.com
-Ss!2345
+Ss#9ttttt
 brother three
-brothr@three.com
-Ff3!12345
-dog daddy
+brotehr@three.com
+Bb3!yyyyy
+dog gdadg
 dog@aa.com
-Dd!12345
+Dd!2hhhh
 harry potter
 harryP@email.com
 Hp!12345
@@ -65,17 +65,17 @@ willow smallsville
 will@name.com
 Wi#13567
 wednesday adams
-wed@aa.com
+fafd@fda.com
 hH1!dfcc
 good will
 good@her.com
 Jj$4dfcg
 dad one
-daddo@gmail.com
+dad@gmail.com
 Dd#135673
 mother two
-mommy@gmail.com
+mom@gmail.com
 Mm!2dfc961
-brother bro
+brother three
 brother@yahoo.com
 Bb3$dfcyt2

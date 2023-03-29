@@ -67,6 +67,7 @@ public:
     //calls Choices Accessor function
     const char get1gBrdElmnt(int i)const {return gboard.get1BrdElmnt(i);}
     void printGBoard()const; 
+    void printTotals() const; // calls printSums()
     //returns reference to *board
     const char *getGBoard() const {return gboard.getBoard();}
     

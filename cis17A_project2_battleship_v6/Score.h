@@ -9,34 +9,36 @@
 using namespace std;
 #include "Player.h" 
 
-// Score is derived from Player class
+// Score inherits Player class
 class Score : public Player {
+
+//private:
 protected:
-    int maxGmes;
-    int ttlGmes;
+    int maxRolls;
+    int ttlRolls;
     int ttlRnds;
 
 public:
-    
-    //Exception class. Empty class declaration 
-    class NegativeGames {};     
+         
+    class NegativeGames {}; //Exception class. Empty class declaration
     const int SIZE17 = 17; //size of choices array 
-    Score();//Default constructor 
-    Score(string);//constructor #2
-    Score(int);   //constructor #3 for passes maxGmes    
+    Score();         //Default constructor 
+    Score(string);  //constructor #2
+    Score(int);    //constructor #3 for passes maxRolls    
     Score(const Score &); // Copy constructor
 
     //Mutators    
-    void setMaxGmes(int num) {maxGmes = num;}
-    void setTtlGmes(int);
-    void setScore(int nPly, int gmes, int tGmes, int tRnds) {
-        setMaxGmes(gmes);
-        setTtlGmes(tGmes);
+    void setMaxRoll(int num) {maxRolls = num;}
+    void setTtlRolls(int);
+    void decreRolls(){ ttlRolls--; }
+    void setScore(int nPly, int rolls, int tRolls, int tRnds) {
+        setMaxRoll(rolls);
+        setTtlRolls(tRolls);
     }
 
     //Accessors   
-    int getMaxGmes()const {return maxGmes; }
-    int getTtlGmes()const {return ttlGmes;} 
+    int getMaxRoll()const {return maxRolls; }
+    int getTtlRolls()const {return ttlRolls;} 
     void getBanner(string); // print banner & prints Score structure 
     void hitMiss(int &guess, char &i, bool isHit); // print message after each player guesses
     //Score *fillScore(string [],char **);    // fill Score structure by playing game  

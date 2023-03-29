@@ -1,10 +1,10 @@
-Record 0
+Record 27
 ID:      2
 namSiz:  5
 name:    admin
-emaiSiz: 14
-email:   admin@info.com
-pwrdSiz: 7
-pwrd:    pass!23
+emaiSiz: 15
+email:   admin@admin.com
+pwrdSiz: 8
+pwrd:    pass!234
 hiScore: 0
 

@@ -12,10 +12,16 @@
 	Added overloaded operator++ and operator—to HighScore 
 	Made a base class call a derived class. Score calls a function of Player
 
+ * v: converted my battleship_v6 to Yahtzee. 
+ *    Changed the gameBoard's print out. Initialized gameBoard to zero.
+ *    Printed out 5 random dice and the new gameBoard in the play().
+ *    Added printSums() to Choices and a printTotals in Player. 
+ *    Called printTotals() in the main when a winner is correct.
+ *    Set numRolls in Score class. * 
+ *    While loop isn't stopping at round 13;
 * To do:
- *fix ChoicesTemplate
+
  * fix bug in Score.h Protected & public keywords aren't diff color
- * add 3 ships to each player's profile
  * inherit a HighScore instance
 */
 
@@ -54,11 +60,11 @@ int main(int argc, char** argv) {
     bool    p1_crrt,     // player 1 correct
             p2_crrt;    // player 2 correct 
     
-    int     MAX=13, // maximum number for rand()       
+    int     MAX=6,    // maximum number for rand()       
             indx1,       // index for player 1's name
             indx2,       // index for player 2's name
-            maxGmes=3, // number of games
-            nGmsLft,      // number of games left       
+            maxRoll=3, // number of rolls
+            numRolls = maxRoll,      // number of games left       
             round=0, // round
             maxRnd=13,
             numPlyr = 2;  
@@ -70,6 +76,8 @@ int main(int argc, char** argv) {
     
     // create new instances of Score class 
     Score score;  // Replaced Score *score = new Score;
+    score.setTtlRolls(maxRoll);
+    cout<<"Num rolls left: "<<score.getTtlRolls()<<endl;
     
     // create a pointer to Player's structure and create array size of 2
     //score->player = new Player[score->nPlayrs]; 
@@ -90,10 +98,8 @@ int main(int argc, char** argv) {
     // pointer for rounds
     int *rndPtr = nullptr;
 
-    // read in maximum number of games that can be played from file
-    nGmsLft = score.getMaxGmes(); // set numberOfGamesLeft to equal maxGames
     
-    while (nGmsLft>0) {
+    while (round < maxRnd || score.getTtlRolls() > 0 ) {
        
         // sets variables to default starting values
         p1_crrt = p2_crrt = false;
@@ -108,50 +114,45 @@ int main(int argc, char** argv) {
             // display round number banner
             rndPtr = rBanner(round);
 
+            pause();
+            
             // Player 1's Guess                       
             p1_crrt = play(&score,player,indx[0],indx[1],round);
             
-            // If player1 is false, then it's player2 turn
-            if(!p1_crrt){ 
-                // Player 2's Guess  
+            // If player1 is false, then it's player2 turn to guess
+            if(!p1_crrt){                
                 p2_crrt = play(&score,player,indx[1],indx[0],round);                            
-            }
-
-            // if both players guess wrong, then display message 
-            if ((!p1_crrt) && (!p2_crrt)) {
-                cout << endl << "  You Both Missed. Try Again...\n\n";
-            }
+            }           
             
         } // ends while((!p1_crrt) && (!p2_crrt))
         
-        // Decrease # games left 
-        nGmsLft--;
         
-        try {           
-            score.setTtlGmes(nGmsLft);
-            
-        } catch(Score::NegativeGames){ 
-            cout<<"Error. Negative games.\n";
-        }
+        numRolls--; // Decrease # rolls left 
         
-        score.getBanner("SCORE CARD");//score.prntScore();
+        try {score.setTtlRolls(numRolls);}           
+        catch(Score::NegativeGames){ cout<<"Error. Negative rolls.\n"; }
+        
+        
+        score.getBanner("SCORE CARD");
+        //score.prntScore();
          
-        // checks maximum number of games has NOT been played
-        if(nGmsLft>0) { pause(); }          
+        // checks maximum number of rolls has NOT been played
+        if(numRolls>0) { pause(); }          
            
         // reset variables for next game
-        *rndPtr=0;          
+        //*rndPtr=0;          
         p1_crrt = p2_crrt = false; 
         
-    } // ends the while(nGmsLft> ZERO)
+    } // ends the while(numRolls> ZERO)
     
     // Game ends & Prints each player's game board
-    cout<<"\n\n\t"<<player[indx[0]]->getName();
+    cout<<endl<<endl<<setw(15)<<player[indx[0]]->getName();
     player[indx[0]]->printGBoard(); 
-    
+    player[indx[0]]->printTotals();
    
-    cout<<"\t"<<player[indx[1]]->getName();
-    player[indx[1]]->printGBoard();   
+    cout<<setw(15)<<player[indx[1]]->getName();
+    player[indx[1]]->printGBoard();  
+    player[indx[1]]->printTotals();
     
     // de-allocate dynamic memory
     for (int p=0; p<numPlyr; p++) {       
@@ -169,19 +170,68 @@ int main(int argc, char** argv) {
 
 
 //****************************************************************
-// BUG! supposed to be in Player.h
+//  BUG! supposed to be in Player.h
+//
 //     Returns if player's guess is correct or not     
 //****************************************************************
 
 bool play(Score *score, Player **player, int a, int b, int &round){
    
-    cout<<endl<<setw(1)<<" "<<player[a]->getName()
-        <<" Guess a number between 0-13\n\n";
-           
-    int num = rand()%13;
+    unsigned short ans;
+    int dice1, dice2, dice3, dice4, dice5, dice6;
+    dice1 = (1+rand()%6); // returns number 1-6
+    dice2 = (1+rand()%6); // returns number 1-6
+    dice3 = (1+rand()%6); // returns number 1-6
+    dice4 = (1+rand()%6); // returns number 1-6
+    dice5 = (1+rand()%6); // returns number 1-6
+    dice6 = (1+rand()%6); // returns number 1-6
     
+    cout<<setw(15)<<' '<<"You Rolled: "<<endl;
+    cout<<setw(5)<<dice1<<setw(7)<<dice2<<setw(7)<<dice3
+        <<setw(7)<<dice4<<setw(7)<<dice5<<setw(7)<<dice6<<endl;
+    cout<<setw(2)<<' '<<"dice1  dice2  dice3  dice4  dice5  dice6\n";
+            
+    // Prints this player's score board
+    cout<<endl<<endl<<"\t"<<player[a]->getName();
+    player[a]->printGBoard(); 
+    
+    
+    cout<<endl<<setw(13)<<" "<<player[a]->getName()<<endl
+        <<" Press 1: to keep any of these dice:\n"
+//        <<setw(10)<<dice1<<' '<<dice2<<' '<<dice3<<' '
+//                  <<dice4<<' '<<dice5<<' '<<dice6<<endl
+        <<" Press 2: to keep one of these scores\n"
+        <<" Press 3: to roll again\n\n";
+    cin>>ans;
+    
+    
+    switch(ans){
+        case 1: {
+            // Add dice to an array or vector
+            cout<<"\n Which of these dice do you want to keep?\n\n";
+            cout<<setw(5)<<dice1<<setw(7)<<dice2<<setw(7)<<dice3
+                <<setw(7)<<dice4<<setw(7)<<dice5<<setw(7)<<dice6<<endl;
+            cout<<setw(2)<<' '<<"dice1  dice2  dice3  dice4  dice5  dice6\n";
+            break;
+        }
+        case 2: {
+            // Save score to score card
+            cout<<"Saving points to score card\n";
+            cout<<"Now it's "<<player[b]->getName()<<"'s turn.\n";
+            //player[a]->setIsRight(true);            
+            break;
+        }
+        default:
+            // roll x number of dice
+            cout<<"Roll 1 to 5 dice\n"; 
+            cout<<"Decrement numRolls\n";
+            score->decreRolls();
+            cout<<"Num rolls left: "<<score->getTtlRolls()<<endl;
+    }
+           
+        
     // set this player's guess
-    player[a]->setGuess(num);
+    player[a]->setGuess(dice1);
     
     // get this player's guess
     int guessIndx = player[a]->getGuess(); 
@@ -225,6 +275,6 @@ int *rBanner(int &round) {
 // pause screen before game starts
 //******************************************
 void pause() {
-    cout << "\nPress enter to continue. \n\n";   
+    cout<<endl<<setw(7)<<' '<<"Press enter to roll. \n\n";   
     cin.get();
 }

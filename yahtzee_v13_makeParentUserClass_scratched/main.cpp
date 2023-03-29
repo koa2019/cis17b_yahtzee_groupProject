@@ -72,39 +72,34 @@
  * v11:   Added Admin class & moved all of User class to it, so Admin is parent
  *        class. User class will inherit Admin and add hiScore to its class.
  
- v12:   
- * Adding a static member and static member() to fix 
-   number of records counter. Added static void addTtlRec() to increment.
- * Fixed ttlRecs to hold in between runs by adding a text file that reads 
-   total # records in & initiates it every time ADMIN constructor runs.
- * Added ttlRec to wrtTxt(),wrtBin(), readBin().
- * Added readInputFile() cause I was tired of doing it manually.
- * Moved signUp() & readInputFile() to User class.
- * Created adminPortal with a Admin Menu inside of the admin.cpp 
-   so it could call private functions. You can only access this menu
-   if you sign in correctly.
- * Add max retries in user validation functions
- * Added overloaded readBin() that accepts an email.
- * Added wrt1Record() and called it in both readBin()
- * Added wrtAdminTxt() & wrtAdminBin() as private Admin members
- * Added char arguments to wrtTxt()
- * Added a switch menu in main() with options to sign up, user login, admin login
- * Added number of rolls to User class
- * Fixed User overwriting ttlRec & ID by passing the values from Admin to
-   User in  main().
- * Changed bool readBin() to long findEmail(), so I can pass the cursor
-   when i need to rewrite a file in binary. If email is not found in
-   binary, then it sets cursor to -99.
- 
+ * v12:   Adding a static member and static member() to fix 
+ *        number of records counter. Added static void addTtlRec() to increment.
+ *      * Added it to wrtTxt(),wrtBin(),find1Record().
+ *      * PROBLEM: Static variable doesn't hold in between runs. 
+ *                 Maybe need to write it a file and read it each time?
+ *      * Added readInputFile() cause I was tired of doing it manually.
+ *      * Added findByIndx(), so I could move find1Record() to private in Admin
+ *        I think that blocks any other classes from reading binary file.
+ *      * 
+ * 
+ * 
  * To do:
- * BUG! User is appending the new hiScore record to file instead 
-        of inserting @its original spot. 
-   Solution? --> figure out cursor size of this record or readBin then rewrite?
- * Why aren't my class variables green after moving them to 
-   their own cpp file? 
- * Admin needs to delete record from binary --> pass cursor size?
- * Admin needs to edit member variable in binary          
- 
+ *      * PROBLEM: Static variable doesn't hold in between runs. 
+                  Maybe need to write it a file and read it each time?
+        * Why aren't my class variables green after moving them to 
+ *        their own cpp file? 
+        * May need to Ask how many players are going to play and create an array of users. 
+        * Need to add a variable that keeps it count of how many records 
+          are written every time the program runs. We are appending the files every time the 
+          program runs. Static variable doesn't work in main() or in User class.
+        * Test setHiScore(). It'll have to rewrite the binary file 
+          @specific location.         
+        * Once User profile is complete, create Admin class 
+          and either copy User class or inherit User class.
+          Then cut the code that reads binary from the User class 
+          and only allow Admin class to read the binary file.       
+        * Create a input file to read in dummy info.
+ *      * Add max retries in user validation functions
  */
 
 //System Libraries
@@ -118,60 +113,59 @@
 using namespace std;  //STD Name-space where Library is compiled
 
 //User Libraries
-#include "Admin.h"
-#include "User.h"  // User class inherits Admin class
+#include "User.h"   // Base class
+#include "Admin.h"  // Admin class inherits User class
 
 //Global Constants not Variables
 //Math/Physics/Science/Conversions/Dimensions
 
 // Function Prototypes
-//void getUsrLogin(Admin);
+
 
 /*****  Code Begins Execution Here with function main  ****/
 int main(int argc, char** argv) {
     
-    // Set random number seed once here
+    //Set random number seed once here
     srand(static_cast<unsigned int>(time(0)));
     
     // Variables    
     int choice = 0;
     
-    //do {
+    Admin admin;  // Create one instance of Admin class
+    
+    //User user;    // Create one instance of User class
+    
     cout<<"\n\nMenu\n"
         <<"Press 1: Sign Up\n"
         <<"Press 2: User Login\n"
         <<"Press 3: Admin Login\n"
-        <<"Press 4: Play Yahtzee\n"
-        //<<"Press 5: \n"
+        //<<"Press 4: Find one index\n"
+        //<<"Press 5: Update Admin\n"
         <<"Press 9: Logout\n";
         cin>>choice;
         cin.ignore();
         
         switch(choice){
-            case 1:{ 
-                User user;    // Create one instance of User class
-                user.readInputFile();
-                //user.signUp();                 
+            case 1:{                
+                //User user;    // Create one instance of User class
+                //user.signUp();                
                 break;
             }
-            case 2:{ // I WANT TO SAVE THIS ADMIN TO A USER so i can play()
-             
-                Admin admin;  // Create one instance of Admin class
-                if(admin.getUsrLogin()){
-                    //admin.print1Record();
-                    User user2(admin.getTtlRec(), admin.getID(),admin.getName(),admin.getEmail(),admin.getPwrd());
-                    user2.play();
-                } else {cout<<"\nUnable to locate your email.\n";}
+            case 2:{
+                admin.usrLogin();
                 break;
             } 
             case 3:{
-                Admin admin2;  // Create one instance of Admin class
-                admin2.getAdLogin();
+                //admin.getAdLogin();
+                admin.adminLogin();
                 break;
             } 
-            case 4:{  
-                //User user3;    // Create one instance of User class
-                //user3.play();
+            case 4:{                
+                //admin.findByIndx();
+                break;
+            }
+            case 5:{
+                //admin.updateAdmin();
                 break;
             }
             default: {
@@ -179,17 +173,12 @@ int main(int argc, char** argv) {
                 exit(0);
             }
         }
-    //} while(choice==1 || choice==2 || choice==3 || choice==4);
+    
+    
+    
+    
+    
     return 0;
 }
 
 /**********  Function Definitions  **************/
-//void getUsrLogin(Admin ad){
-//       
-//    if( ad.isUsrLogin() ) {
-//        
-//        // copy this admin record to a User
-//        //u.play(); 
-//    }
-//    return;
-//}
