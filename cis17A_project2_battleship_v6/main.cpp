@@ -1,7 +1,7 @@
 /* File:    main.cpp
  * Author:  Danielle F
  * Created: 12-16-2022 @ 10:13 PM
- * Purpose:  cis17A_project2_battleship_v5
+ * Purpose:  cis17A_project2_battleship_v6
  * 
  * v5: 
 	Created 3 new classes: HighScores, PlayScore and ChoicesTemplate.
@@ -12,7 +12,7 @@
 	Added overloaded operator++ and operator—to HighScore 
 	Made a base class call a derived class. Score calls a function of Player
 
- * v: converted my battleship_v6 to Yahtzee. 
+ * v6: converted my battleship_v6 to Yahtzee. 
  *    Changed the gameBoard's print out. Initialized gameBoard to zero.
  *    Printed out 5 random dice and the new gameBoard in the play().
  *    Added printSums() to Choices and a printTotals in Player. 
