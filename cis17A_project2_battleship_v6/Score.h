@@ -7,6 +7,7 @@
 #ifndef SCORE_H
 #define SCORE_H
 using namespace std;
+#include <iostream>
 #include "Player.h" 
 
 // Score inherits Player class
@@ -26,7 +27,10 @@ public:
     Score(string);  //constructor #2
     Score(int);    //constructor #3 for passes maxRolls    
     Score(const Score &); // Copy constructor
-
+    
+    //  I THINK IM MISSING A DESTRUCTOR!
+    ~Score(){cout<<"\nHit Score Destructor.";}
+    
     //Mutators    
     void setMaxRoll(int num) {maxRolls = num;}
     void setTtlRolls(int);
