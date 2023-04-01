@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=yahtzee_v15_UserBaseAdminDerived
+PROJECTNAME=survey_v1
 
 # Active Configuration
 DEFAULTCONF=Debug
