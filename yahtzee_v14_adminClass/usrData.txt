@@ -298,3 +298,23 @@ pwrdSiz: 7
 pwrd:    Ss!2345
 hiScore: 27
 
+Record 2
+ID:      90
+namSiz:  10
+name:    sister two
+emaiSiz: 14
+email:   sister@sis.com
+pwrdSiz: 7
+pwrd:    Ss!2345
+hiScore: 35
+
+Record 2
+ID:      90
+namSiz:  10
+name:    sister two
+emaiSiz: 14
+email:   sister@sis.com
+pwrdSiz: 7
+pwrd:    Ss!2345
+hiScore: 31
+

@@ -113,7 +113,7 @@ void Admin::adminLogin(){
     const char ch = 'a';   
     const int index = 0;
  
-    readBin(ch,index);       
+    findByIndx(ch,index);       
     cout<<getName()<<endl<<getPwrd()<<endl;
     
     string tempNam = "",
@@ -174,13 +174,13 @@ void Admin::adminPortal(){
             } 
             case 2:{ // find index in binary file  
                 int oneRec = (rand()%(getTtlRec()));
-                readBin('u', 2);    
+                findByIndx('u', 2);    
                 print1Record(); 
                 break;
             } 
             case 3:{ // find email in binary file
                 string em = "sister@sis.com"; //father@email.com
-                //cout<<"\n\nEnter email ";
+                cout<<"\n\nEnter email ";
                 //cin>>em;     
                 int recSize=0;
                 long cursor = findEmail('u',em,recSize);
@@ -196,7 +196,7 @@ void Admin::adminPortal(){
                     reWrtBin(recSize, cursor);
                     //Admin ad;
                     //cout<<"\nLooking for rewritten record...\n";
-                    //ad.readBin('u',2);
+                    //ad.findByIndx('u',2);
                 }
                 else{ cout<<"Unable to locate that email.\n";}
                 break;
@@ -376,7 +376,7 @@ long Admin::findEmail(const char ch, string emai, int &recSize){
             recSize = thisSum;
             cursor -= thisSum;
             //cout<<"found email "<<foundEm<<endl;
-            //cout<<"ttlREc= "<<ttlRec<<" recIndx= "<<recIndx<<"  count= "<<count<<endl;
+            //cout<<"ttlRec= "<<ttlRec<<" recIndx= "<<recIndx<<"  count= "<<count<<endl;
             break;
         }
         else{
@@ -411,13 +411,13 @@ void Admin::reWrtBin(int recSize, long cursor){
     cout<<"\nHit reWrtBin()  recSize= "<<recSize<<"  cursor= "<<cursor<<endl;
     
     fstream outBin; 
-    outBin.open("usrData.dat",ios::out | ios::app | ios::binary); // appends content to the current content of the file.
+    outBin.open("usrData.dat",ios::out | ios::app |ios::ate | ios::binary); // appends content to the current content of the file.
     if(!outBin.is_open()){ cout<<"\nError opening usrData.dat\n";}
     
     cursor -=4; // hiScore is a int which is 4 bits
     cout<<"cursor= "<<cursor<<endl;
     
-    outBin.seekg(cursor,ios::beg);  // Sets the position of the get pointer
+    outBin.seekp(cursor,ios::beg);  // Sets the position of the get pointer
         
 //    // Write total records to binary file
 //    outBin.write(reinterpret_cast<char *>(&ttlRec) , sizeof(int)); 
@@ -458,11 +458,12 @@ void Admin::reWrtBin(int recSize, long cursor){
 //                     & return 1 record  
 /*****************************************************************/
 
-void Admin::readBin(const char ch, int recIndx){ 
-    
-    //cout<<endl<<endl<<"Looking for record "<<recIndx<<" in binary file.\n\n";  
+void Admin::findByIndx(const char ch, int recIndx){ 
     
     recIndx = recIndx < 0 ? 0 : recIndx;    
+    
+    cout<<endl<<endl<<"Looking for record "<<recIndx<<" in binary file.\n\n";  
+    
     
     ifstream inBin;
     string file = "";

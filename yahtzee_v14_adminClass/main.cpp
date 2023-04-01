@@ -305,7 +305,7 @@ bool play(Player **player, int a, int &round){
         dSize = 5,          // number of dice
         rollCnt = 1,        // counts number of rolls
         nDiceRllng = dSize; // number of dice rolling at this moment
-    int *dice = nullptr;     // array holds the number of dice we're rolling during each roll    
+    int dice []={0,0,0,0,0};     // array holds the number of dice we're rolling during each roll    
     int keep[]={0,0,0,0,0}; // Needs to accept MORE than 1 dice at a time 
     
     
@@ -315,22 +315,22 @@ bool play(Player **player, int a, int &round){
         cout << setw(22) << "Roll " << rollCnt++ << endl;
         cout << setw(26) <<"***************************************\n";
     
-        dice = new int[nDiceRllng]; // allocate dynamic array for dice
+        //dice = new int[nDiceRllng]; // allocate dynamic array for dice
         
-        for(int d=1;d<=nDiceRllng;d++){
-            dice[d] = (1+rand()%6); // returns number 1-6
+        for(int d=0; d<nDiceRllng;d++){
+            dice[d] = (1+(rand()%6)); // returns number 1-6
         }
 
         --nRolls; // decrease # of rolls
                 
         // Print dice     
         cout<<setw(10)<<' '<<player[a]->getName()<<" Rolled: "<<endl;
-        for(int d=1; d <= nDiceRllng; d++){
+        for(int d=0; d<nDiceRllng;d++){
             cout<<setw(5)<<dice[d]<<setw(3)<<' ';      
         } 
         cout<<endl;
-        for(int d=1; d <= nDiceRllng; d++){
-            cout<<setw(7)<<"dice"<<d;      
+        for(int d=0; d<nDiceRllng;d++){
+            cout<<setw(7)<<"dice"<<d+1;      
         } 
         
 
@@ -374,8 +374,8 @@ bool play(Player **player, int a, int &round){
 
                         if(choice != 9) {
                             
-                            keep[cnt] = dice[choice]; // BUG! It does NOT hold values 
-                            dice[choice] = 0;         // in between rolls
+                            keep[cnt] = dice[choice-1]; // BUG! It does NOT hold values 
+                            dice[choice-1] = 0;         // in between rolls
                             cnt++;  // increase # of dice they are keeping                       
                             stop--; // used as a bounds check for nDiceRllng
                             //cout<<"\ncnt= "<<cnt<<" stop= "<<stop<<endl;
@@ -384,11 +384,11 @@ bool play(Player **player, int a, int &round){
                             if(cnt != nDiceRllng){cout<<"\n\n    Choose a dice or 9 to stop.\n"; }
                             
                             // prints remaining dice they can choose
-                            for(int d=1; d <= nDiceRllng; d++){
+                            for(int d=0; d<nDiceRllng;d++){                                
                                 cout<<setw(5)<<dice[d]<<setw(3)<<' ';      
                             } 
                             cout<<endl;
-                            for(int d=1; d <= nDiceRllng; d++){
+                           for(int d=0; d<nDiceRllng;d++){
                                 cout<<setw(7)<<"dice"<<d;      
                             } 
                             cout<<endl;                            
