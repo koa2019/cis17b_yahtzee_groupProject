@@ -15,23 +15,23 @@ bool Admin::isUsrLogin(){
     
     cout<<"\n\tUser Login\n";
       
-    const char ch = 'u';
-    cout<<"\n\n*****Erase after testing*****\nsister@sis.com\nSs!2345\n";
-    string tempE="",
-           tempPw="";
+    //cout<<"\n\n*****Erase after testing*****\nsister@sis.com\nSs!2345\n";
+    string tempE= "sister@sis.com",
+           tempPw="Ss!2345";
     bool isName = false ,
          isPwrd = false;
     
-    do {
+//    do {
         cout<<"\nEnter email:    ";
-        cin>>tempE;
-    } while(!(isMinSize(tempE,8)) || !(confrmEmail(tempE)));
-     
-    do{
+//        cin>>tempE;
+//    } while(!(isMinSize(tempE,8)) || !(confrmEmail(tempE)));
+       cout<<tempE<<endl;
+                
+//    do{
         cout<<"Enter password: ";
-        cin>>tempPw;       
-    } while(!(isMinSize(tempPw,7)));
-    
+//        cin>>tempPw;       
+//    } while(!(isMinSize(tempPw,7)));
+    cout<<tempPw;
    
     findByEmail(tempE); // returns -66 if email is NOT found in binary
     
@@ -39,17 +39,16 @@ bool Admin::isUsrLogin(){
     if( !(begnFile == -66)){// look for this email in usrBin.dat
     
         isName = isStrEqual(getEmail(),tempE);
-        isPwrd = isStrEqual(getPwrd(),tempPw);
-        
+        isPwrd = isStrEqual(getPwrd(),tempPw);        
+    
     } else { return false; }
     
     if(!isName || !isPwrd){ 
+        
         cout<<"Username and/or password does not match.\n";
-        return false; }        
-    else {
-        cout<<"\n\nUser login was successful."; 
-        return true;
-    }
+        return false;  
+        
+    } else { return true;}
 }
 
 
@@ -82,12 +81,12 @@ void Admin::adminLogin(){
     //************************************
     
 //    do{        
-        cout<<"\nEnter username: ";
+        cout<<"\nEnter username: \n";
 //        cin>>tempNam;
 //        isName = isMinSize(tempNam,2);
 //    } while(!isName);
 //    
-    cout<<"Enter password: ";
+    cout<<"Enter password: \n";
 //    cin>>tempPwrd;   
     
     isName = isStrEqual(getName(),tempNam);
@@ -108,76 +107,145 @@ void Admin::adminLogin(){
 
 void Admin::adminPortal(){
     
-    cout<<"\nAdmin login successful.\n";
+    cout<<"\n\nAdmin login was successful.\n";
     char ans='n';
     int choice;
-     
-    
+   
     
     do {
-        cout<<"\n\nMenu\n"
-            <<"Press 1: Update Admin\n"
-            <<"Press 2: Find one index\n"
-            <<"Press 3: Find by email\n"
-            <<"Press 4: Edit binary\n"
-            //<<"Press 5: \n"
-            <<"Press 9: Logout\nEnter a number: ";
+        cout<<"\n\n\tMenu\n"
+            <<"1: Show all users\n"
+            <<"2: Find one index\n"
+            <<"3: Find by email\n"
+            <<"4: Edit binary\n"
+            <<"5: Delete a user\n"
+            <<"6: Update Admin\n"
+            <<"9: Logout\n"
+            <<"Enter a number: ";
         cin>>choice;
         //cin.ignore();
 
         switch(choice){
             case 1:{                
-                updateAdmin();        
+                 //Admin usr1;        
                 break;
             } 
             case 2:{ // find index in binary file  
-                //cout<<"\nttlRec in user = "<<getTtlRec()<<endl;
-                int num = ( rand()%(getTtlRec()) );   
-                Admin usr1;
-                //usr1.printUser(); 
+                 Admin usr2;
+                int num;                
+                //usr2.printAdUsr(); 
                 cout<<"\nWhich index do you want to look for? ";
                 cin>>num;
-                usr1.findByUsrIndx(num); 
-                usr1.printUser(); 
+                usr2.findByIndx(num);
+                
+                if(!(usr2.getBegnFile() == -66)){ 
+                    usr2.printAdUsr(); 
+                }
+                
                 break;
             } 
             case 3:{ // find email in binary file
                 Admin usr3;
-                usr3.printUser();
-                string str = "father@email.com";//mother@aa.com
-                //string str = "sister@sis.com";//mother@aa.com
+                usr3.printAdUsr();
+                cout<<"\nEnter the email you want to find: ";
+                //string str = "mother@aa.com";
+                string str = "father@email.com";
+                //string str = "sister@sis.com";
                 usr3.findByEmail(str);
-                usr3.printUser();
+                
+                if(!(usr3.getBegnFile() == -66)){
+                    cout<<"Here is "<<str<<"'s profile";
+                    usr3.printAdUsr(); 
+                }
+                
                 break;
             }      
             case 4: {
-                Admin usr2;
-                //int indx=1;
-                //usr2.findByUsrIndx(indx);
-                string temp = "mother@aa.com";
-                //string temp = "father@email.com";//
+                Admin usr4;
+                //string temp = "mother@aa.com";
+                string temp = "father@email.com";//
                 //string temp = "sister@sis.com";
-                usr2.findByEmail(temp);
-                cout<<"Found "<<temp<<endl;
-                usr2.printUser(); 
-                usr2.setHiScore(45);
-                //usr2.setName("mommy zero");
-                cout<<"\nNew High Score! Updated class obj:";
-                usr2.printUser();
-                cout<<"\nUpdating binary....";
-                usr2.reWrtBin(); // rewrites this record in binary & text files                           
-                usr2.findByEmail(temp);
-                //usr2.findByUsrIndx(indx); 
-                usr2.printUser(); 
+                usr4.findByEmail(temp);
+                
+                if(!(usr4.getBegnFile() == -66)) {
+              
+                    cout<<"Found "<<temp<<endl;
+                    //usr4.printAdUsr(); 
+                    usr4.setHiScore(9);
+                    //usr4.setName("mommy zero");
+                    cout<<"\nNew High Score of "<<usr4.getHiScore()<<"! Updated class obj:";
+                    //usr4.printAdUsr();
+                    cout<<"\nUpdating binary....";
+                    usr4.reWrtBin(); // rewrites this record in binary & text files                           
+                    usr4.findByEmail(temp);
+                    usr4.printAdUsr(); 
+                }
+                
                 break;
             }
+            case 5:{   
+                Admin usr5;
+                int num;                
+                usr5.findByIndx(num); 
+                usr5.deleteUsr();
+                break;
+            } 
+            case 6:{                
+                updateAdmin();        
+                break;
+            } 
             default: {
                 cout<<"\nLogged Out.\n";                
                 return;
             }
         }
-    } while(choice==1 || choice==2 || choice==3 || choice==4);
+    } while(choice>=1 && choice<=6);
 }
+
+
+/******************************************************************/ 
+//                      Delete 1 record
+/******************************************************************/ 
+
+void Admin::deleteUsr(){
+    Admin delUsr;
+    
+    int num;                
+    //delUsr.printAdUsr(); 
+    cout<<"\nWhich index do you want to delete? ";
+    cin>>num;
+    delUsr.findByIndx(num);
+    delUsr.printAdUsr();     
+                
+    // add copy constructor then delete it? or set some sort of flag that its deleted
+    //setTtlRec(9); 
+    int i;
+    string temp="";
+    for(i=0; i< delUsr.getNamSiz();i++){
+        temp += "x";
+    }
+    delUsr.setName(temp);
+    
+    temp="";
+    for(i=0; i< delUsr.getEmaiSiz();i++){
+        temp += "#";
+    }
+    delUsr.setEmail(temp);
+    
+    temp="";
+    for(i=0; i< delUsr.getPwrdSiz();i++){
+        temp += "#";
+    }
+    delUsr.setPwrd(temp);    
+    delUsr.setHiScore(0);
+    delUsr.setBegnFile(-66);
+    //delUsr.printAdUsr();
+    delUsr.reWrtBin(); // rewrites this record in binary & text files  
+    cout<<"\nRecord deleted in binary.";
+    //delUsr.printAdUsr();
+    
+}
+
 
 /******************************************************************/              
 //                  REWRITE 1 RECORD TO Text FILE    
@@ -193,20 +261,20 @@ void Admin::reWrtTxt(){
     outTxt.open("usrData.txt", ios::ate | ios::in | ios::out ); // appends content to the current content of the file.
     if(!outTxt.is_open()){ cout<<"\nError opening usrData.txt\n";}
     
-    cout<<"\nttlRec = "<<ttlRec<<endl;
+    //cout<<"\ngetTtlRec() = "<<getTtlRec()<<endl;
     
-    int endlCount = (ttlRec==0) ? 0 : ((85)*ttlRec);
-    cout<<"\nendlCount = "<<endlCount<<endl;
-    long cursor = (begnFile <= 0) ? 0 : (begnFile+endlCount); // hiScore is a int which is 4 bits
+    int charCount = (getTtlRec()==0) ? 0 : ((86)*getTtlRec());
+    //cout<<"\ncharCount = "<< charCount <<endl;
+    long cursor = (begnFile <= 0) ? 0 : (begnFile+charCount); // hiScore is a int which is 4 bits
     
-    cout<<"begnFile = "<< cursor <<endl;
+    //cout<<"begnFile = "<< cursor <<endl;
     
     outTxt.seekp(cursor,ios::beg);  // Sets the position of the get pointer
        
     outTxt<<endl;
-    outTxt<<"Record   "<<ttlRec<<endl;
+    outTxt<<"Record   "<<getTtlRec()<<endl;
     outTxt<<"ID:      "<<id<<endl;      // write id to text file
-    outTxt<<"namSiz:  "<<namSiz<<endl; // write the size of this string to text file
+    outTxt<<"namSiz:  "<<getNamSiz()<<endl; // write the size of this string to text file
     outTxt<<"name:    "<<name<<endl;   // write this string to text file
     outTxt<<"emaiSiz: "<<emaiSiz<<endl;// write the size of this string to text file
     outTxt<<"email:   "<<email<<endl;  // write this string to text file
@@ -231,7 +299,7 @@ void Admin::reWrtBin(){
     
     long cursor = (begnFile <= 0) ? 0 : begnFile; // hiScore is a int which is 4 bits
     
-    cout<<"begnFile = "<< cursor <<endl;
+    //cout<<"begnFile = "<< cursor <<endl;
     
     outBin.seekp(cursor,ios::beg);  // Sets the position of the get pointer
         
@@ -262,13 +330,12 @@ void Admin::reWrtBin(){
    
     
     // Rewrite hiScore in binary file
-    cout<<"\nHiScore= "<< hiScore<<endl;
-    
+    //cout<<"\nHiScore= "<< hiScore<<endl;    
     outBin.write(reinterpret_cast<char *>(&hiScore) , sizeof(int)); 
       
     outBin.close(); // close file  
     
-    usr2.reWrtTxt();  // rewrite this record in usrData text file
+    reWrtTxt();  // rewrite this record in usrData text file
 }
 
 
@@ -277,11 +344,17 @@ void Admin::reWrtBin(){
 //                Assumes the records are in ascending order
 /*****************************************************************/
 
-void Admin::findByUsrIndx(int recIndx){
+void Admin::findByIndx(int recIndx){
     
-    recIndx = recIndx < 0 ? 0 : recIndx;
+    cout<<" getTtlRec() = "<<getTtlRec()<<endl;
     
-    cout<<endl<<"Looking for record "<<recIndx<<" in binary file.\n\n";  
+    if(getBegnFile()== -66 || !(recIndx>=0 && recIndx <= getTtlRec())) {         
+        setBegnFile(-66);
+        cout<<"\nInvalid record index\n";
+        return;
+    }
+    
+    cout<<endl<<"Looking for record "<<recIndx<<" in binary file.\n";  
     
     ifstream inBin;
     string file = "usrData.dat";        
@@ -345,10 +418,10 @@ void Admin::findByUsrIndx(int recIndx){
         count++;        
     }
        
-    cursor = (count==0)? 0 : cursor;
+    cursor = (count==0)? 0 : cursor-rSize;
     setRecSiz(rSize);
-    setCursLoc(cursor);
-    //cout<<"\nrSize = "<<rSize<<"\ncursor = "<<cursor<<endl;   
+    setBegnFile(cursor);
+    //cout<<"\nrecSiz = "<<recSiz<<"  begnFile = "<<begnFile<<endl;   
     
     //***********    SAVE LOCATED RECORD   ************************//            
     read1Bin(); //read binary & save record
@@ -363,8 +436,8 @@ void Admin::findByUsrIndx(int recIndx){
 
 void Admin::read1Bin(){
     
-    cout<<"Hit read1Bin()\n";
-    cout<<"recSiz = "<<recSiz<<"  cursor = "<<begnFile<<endl;
+    //cout<<"Hit read1Bin()\n";
+    //cout<<"recSiz = "<<recSiz<<"  cursor = "<<begnFile<<endl;
     
     ifstream inBin;
     string file = "usrData.dat";        
@@ -484,7 +557,7 @@ void Admin::wrtAdTxt(){
     outTxt.open("admin.txt",ios::out); // DOES NOT appends content to the current content of the file.
     if(!outTxt.is_open()){ cout<<"\nError opening admin.txt\n"; exit(0);}
     
-    outTxt<<"namSiz:  "<<namSiz<<endl; // write the size of this string to text file
+    outTxt<<"namSiz:  "<<getNamSiz()<<endl; // write the size of this string to text file
     outTxt<<"name:    "<<name<<endl;   // write this string to text file
     outTxt<<"emaiSiz: "<<emaiSiz<<endl;// write the size of this string to text file
     outTxt<<"email:   "<<email<<endl;  // write this string to text file
@@ -546,7 +619,7 @@ void Admin::updateAdmin(){
 
 void Admin::findByEmail(string emai){
     
-    cout<<endl<<endl<<"Looking for "<<emai<<" in binary file.\n\n";   
+    cout<<endl<<endl<<"Looking for "<<emai<<"...\n";   
     
     ifstream inBin;
     string file = "usrData.dat";        
@@ -633,11 +706,14 @@ void Admin::findByEmail(string emai){
     if(foundEm){        
         setRecSiz(rSize);
         cursor = (count==0) ? 0 : (cursor-rSize); 
-        setCursLoc(cursor); 
+        setBegnFile(cursor); 
         //cout<<"\n\trecSiz ="<<recSiz<<"  cursLoc="<<cursLoc<<"  count="<<count<<endl<<endl;
         read1Bin(); // read this file binary & save         
         
-    } else { setCursLoc(-66); }
+    } else { 
+        setBegnFile(-66); 
+        cout<<"\nUnable to locate "<<emai<<endl;
+    }
    
     inBin.close();
 }
@@ -649,7 +725,7 @@ void Admin::findByEmail(string emai){
 
 void Admin::print1Admin()const{  
     cout<<endl<<endl
-        <<"NamSiz:    "<< namSiz <<endl
+        <<"NamSiz:    "<< getNamSiz() <<endl
         <<"Name:      "<< name    <<endl
         <<"EmaiSiz:   "<< emaiSiz <<endl
         <<"Email:     "<< email   <<endl
@@ -661,7 +737,7 @@ void Admin::print1Admin()const{
 //                     PRINT 1 record  
 /*****************************************************************/
 
-void Admin::printUser() const{ 
+void Admin::printAdUsr() const{ 
     print1URec();
     cout<<"Record Size    "<<recSiz<<endl
         <<"Start of file: "<<begnFile<<endl;

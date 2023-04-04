@@ -1,0 +1,54 @@
+Record 0
+namSiz:  11
+name:  mother zero
+emaiSiz: 16
+email: mother@email.com
+pwrdSiz: 4
+pwrd:  Mm!1
+hiScore: 0
+
+Record 0
+namSiz:  10
+name:  father one
+emaiSiz: 13
+email: father@aa.com
+pwrdSiz: 4
+pwrd:  Ff$1
+hiScore: 0
+
+Record 0
+namSiz:  10
+name:  sister two
+emaiSiz: 13
+email: sister@aa.com
+pwrdSiz: 4
+pwrd:  Ss#2
+hiScore: 0
+
+Record 0
+namSiz:  7
+name:  test er
+emaiSiz: 11
+email: test@aa.com
+pwrdSiz: 4
+pwrd:  tT1!
+hiScore: 0
+
+Record 0
+namSiz:  9
+name:  user 1234
+emaiSiz: 14
+email: user@email.com
+pwrdSiz: 7
+pwrd:  Us!1234
+hiScore: 0
+
+Record 0
+namSiz:  6
+name:  fdsfda
+emaiSiz: 14
+email: dfad@email.com
+pwrdSiz: 4
+pwrd:  dF!1
+hiScore: 0
+
