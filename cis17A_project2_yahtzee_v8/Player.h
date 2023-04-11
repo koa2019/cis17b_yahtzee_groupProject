@@ -7,12 +7,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "Choices.h"  //Player aggregates 
-//#include "Score.h"
 #include <string>   //string, .c_str()
 #include <cstring>  //char [] library
 using namespace std;
 
-//class Player : public Score {     // structure represents a single player
 class Player {
 
 protected:

@@ -1,0 +1,7 @@
+Record 0
+namSiz:  5
+name:    admin
+emaiSiz: 15
+email:   admin@admin.edu
+pwrdSiz: 8
+pwrd:    password

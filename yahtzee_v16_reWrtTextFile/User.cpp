@@ -74,7 +74,7 @@ User::User(){
 /*****************************************************************/
 
 User::User(string n, string e, string p){
-    cout<<"\nHit User constructor #2\n";
+    //cout<<"\nHit User constructor #2\n";
         readTtlRec(); 
         id = 10*(rand()%(0+16)+1) * (rand()%(17+29)+1);
         setName(n);
@@ -84,6 +84,9 @@ User::User(string n, string e, string p){
         setPwrd(p);
         setPwrdSiz(p.size());
         hiScore=0;
+        wrtTxt();
+        wrtBin();
+        User::addTtlRec(); // increment total # of profiles created       
 }
 
 
@@ -92,7 +95,7 @@ User::User(string n, string e, string p){
 /*****************************************************************/
 
 User::User(int i, string n, string e, string p){
-    cout<<"\nHit User constructor #3\n";
+    //cout<<"\nHit User constructor #3\n";
         setTtlRec(i);
         id = 10*(rand()%(0+16)+1) * (rand()%(17+29)+1);
         setName(n);
@@ -110,7 +113,7 @@ User::User(int i, string n, string e, string p){
 /*****************************************************************/
 
 User::User(int rec, int i, string n, string e, string p){
-    cout<<"\nHit User constructor #4\n";
+    //cout<<"\nHit User constructor #4\n";
         setTtlRec(rec);
         setID(i);
         setName(n);
@@ -153,7 +156,7 @@ void User::wrtTxt(){
     outTxt<<"pwrdSiz: "<<pwrdSiz<<endl; // write the size of this string to text file
     outTxt<<"pwrd:    "<<password<<endl;// write this string to text file 
     outTxt<<"hiScore: "; 
-    outTxt<< (hiScore/100) << (hiScore/10%10) << (hiScore%10) <<endl<<endl; 
+    outTxt<< (hiScore/100) << (hiScore/10%10) << (hiScore%10) <<endl; 
     outTxt.close(); // close file
 }
 
@@ -480,12 +483,14 @@ void User::signUp(){
 
     // If user's input was valid, then write it files
     if(isName() && isEmail() && isPwrd()){       
-
+        
         wrtTxt();  // Write to text file
         wrtBin(); // Write to binary file 
 
-        cout<<"\nProfile successfully created.\n";
+        cout<<"\nProfile successfully created.";
         print1User();     // Print 1 profile
+        cout<<"ttlRec "<< ttlRec<<endl;
+        setTtlRec(ttlRec);
         User::addTtlRec(); // increment total # of profiles created         
 
     } else { cout<<"\nOops! Profile not created.\n"; }
@@ -501,6 +506,7 @@ void User::readInputFile(){
     
     // clear usrData text & binary files. Used for testing 
     setTtlRec(0);
+    wrtTtlRec();
     ifstream out, oB;    
     out.open("usrData.txt", ios::out | ios::trunc); // read in inputs from a file    
     if(!out.is_open()){ 
@@ -515,73 +521,8 @@ void User::readInputFile(){
     out.close();
     oB.close();
     
-    
-    // Start reading inputs from file
-    ifstream in;    
-    in.open("input.txt",ios::in); // read in inputs from a file    
-    if(!in.is_open()){ 
-        cout<<"\nError opening inTxt.txt\n";
-        return;
-    } 
-    
-   
-    
-    int count=0, num=0;
-    string n="", em="", pwd="";
-    bool isNameGood,isEmailGood,isPwrdGood,isLeng,isEmail,isPwd,hasSpCh;
-    
-    int max = 5; // 27 files 
-    
-    while(!in.eof() && count<max){        
-        
-        // Read name  from file & validate
-        getline(in,n);
-        
-        isLeng = isMinSize(n,2);
-        if(isLeng){               
-                setName(toLowerCase(n));
-                setNamSiz(n.size());
-                isNameGood = true;
-        } else { isNameGood = false;}
-
-        // Read email  from file & validate
-        in>>em;
-        
-        isEmail = confrmEmail(em); // Set flags. Confirm emails length and that it contains '@' and '.'
-        isLeng = isMinSize(em, 8);
-        if(isEmail && isLeng){ 
-            setEmail(toLowerCase(em));
-            setEmaiSiz(email.size());                 
-            isEmailGood = true;
-        } else { isEmailGood = false;}        
-        
-        // Read password from file
-        in>>pwd;
-        in.ignore();
-        
-        isPwd = isMinSize(pwd,7); 
-        hasSpCh = hasSpecialChars(pwd);  
-        if(isPwd){
-            setPwrd(pwd);
-            setPwrdSiz(password.size());              
-            isPwrdGood = true;
-        } else { isPwrdGood = false;}
-        
-        
-        // SAVE TO TEXT FILE & BINARY FILE
-        count++;
-        num = 10*(rand()%(0+16)+3) * (rand()%(0+9)+1);
-        setID(num);
-        
-        if(isNameGood && isEmailGood && isPwrdGood){       
-            wrtTxt();  // Write to text file
-            wrtBin();  // Write to binary file 
-            
-            //cout<<"\nProfile successfully created.\n";
-            //print1User();     // Print 1 profile
-            User::addTtlRec(); // increment total # of profiles created
-
-        } else { cout<<"\nOops! Profile not created.\n"; }      
-    }  
-    in.close();
+   User user21("mother zero","mother@aa.com","Mm!1abcd");
+   User user22("father one","father@email.com","Ff$0abcd");
+   User user23("sister two","sister@sis.com","Ss!2345"); 
+   User user24("guest","guest@em.com","Gue!2345");   
 }

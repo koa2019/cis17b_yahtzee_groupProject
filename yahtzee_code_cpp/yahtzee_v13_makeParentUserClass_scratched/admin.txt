@@ -1,0 +1,10 @@
+Record 0
+ID:      2
+namSiz:  5
+name:    admin
+emaiSiz: 14
+email:   admin@info.com
+pwrdSiz: 7
+pwrd:    pass!23
+hiScore: 0
+
