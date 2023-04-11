@@ -1,6 +1,6 @@
 
 Record   0
-ID:      910
+ID:      1320
 namSiz:  11
 name:    mother zero
 emaiSiz: 13
@@ -10,7 +10,7 @@ pwrd:    Mm!1abcd
 hiScore: 000
 
 Record   1
-ID:      600
+ID:      2960
 namSiz:  10
 name:    father one
 emaiSiz: 16
@@ -20,7 +20,7 @@ pwrd:    Ff$0abcd
 hiScore: 000
 
 Record   2
-ID:      1680
+ID:      370
 namSiz:  10
 name:    sister two
 emaiSiz: 14
@@ -30,11 +30,11 @@ pwrd:    Ss!2345
 hiScore: 000
 
 Record   3
-ID:      600
-namSiz:  5
-name:    guest
-emaiSiz: 12
-email:   guest@em.com
-pwrdSiz: 8
-pwrd:    Gue!2345
+ID:      1650
+namSiz:  12
+name:    brothr three
+emaiSiz: 16
+email:   brothr@three.com
+pwrdSiz: 9
+pwrd:    Ff3!12345
 hiScore: 000

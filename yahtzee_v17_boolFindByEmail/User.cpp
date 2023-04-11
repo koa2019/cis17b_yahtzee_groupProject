@@ -126,6 +126,25 @@ User::User(int rec, int i, string n, string e, string p){
 }
 
 
+/*****************************************************************/
+//                  Constructor #5
+//                  Admin calls it in getAllUsr()
+/*****************************************************************/
+
+User::User(int rec){
+    //cout<<"\nHit User constructor #5\n";
+    ttlRec = rec;
+    id = 10*(rand()%(0+16)+1) * (rand()%(17+29)+1);
+    namSiz=0;
+    name="";
+    emaiSiz=0;
+    email="";
+    pwrdSiz=0;
+    password="";  
+    hiScore=0;
+}
+
+
 /******************************************************************/              
 //                  WRITE 1 RECORD TO TEXT FILE     
 /*****************************************************************/
@@ -524,5 +543,5 @@ void User::readInputFile(){
    User user21("mother zero","mother@aa.com","Mm!1abcd");
    User user22("father one","father@email.com","Ff$0abcd");
    User user23("sister two","sister@sis.com","Ss!2345"); 
-   User user24("guest","guest@em.com","Gue!2345");   
+   User user24("brothr three","brothr@three.com","Ff3!12345");   
 }
