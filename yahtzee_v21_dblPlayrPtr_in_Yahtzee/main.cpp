@@ -159,44 +159,27 @@ int main(int argc, char** argv) {
                     cout<<"\nWelcome "<<user2.getName();
                     user2.print1User();                    
                     Yahtzee game1;
-                    //game1.play();                    
-                    int score = 4;                     
-                    if(user2.isHiScore(score)) {
-                        
-                        //admin.setUsrHiScore(score); 
-                        user2.setHiScore(score);
-                        cout<<"\nNew High Score of "<<user2.getHiScore()<<"!\n";
-                        //cout<<"Updating binary....";
-                        user2.reWrtBin(admin.getBegnFile()); // rewrites this record in binary & text files    
-                        admin.findByIndx(user2.getTtlRec());
-                        cout<<"Updated profile: ";
-                        user2.print1User();   
-                    }                                   
-                    else { cout<<"\n\nGood Game!\n"; }
                     
-//                    int nPlayer = 2;
-//                
-//                    // create a pointer to Player's structure and create array size of 2   
-//                    User **player;
-//
-//                    // creating an array of Player pointers
-//                    player = new User*[nPlayer];
-//
-//                    //array of index to keep track of each player
-//                    int *indx = new int[nPlayer];
-//
-//                    // creating each individual player by calling Player constructor
-//                    for (int i=0; i < nPlayer; i++) {         
-//                        indx[i]=i;
-//                    }
-//
-//                    player[indx[0]] = new User("Guest","guest@email.com","G!23456");
-//                    player[indx[1]] = new User("Computer","computer@email.com","C!23456");
-//
-//                    bool p1Winner = game1.play(player,indx,nPlayer);
-//
-//                    string msg = p1Winner ? "P1 wins!\n" : "P2 wins!";
-//                    cout<<msg<<endl;
+                    bool p1Winner = game1.play();
+
+                    string msg = p1Winner ? "P1 wins!\n" : "P2 wins!";
+                    cout<<msg<<endl;
+                    
+                    
+//                    int score = 4;                     
+//                    if(user2.isHiScore(score)) {
+//                        
+//                        //admin.setUsrHiScore(score); 
+//                        user2.setHiScore(score);
+//                        cout<<"\nNew High Score of "<<user2.getHiScore()<<"!\n";
+//                        //cout<<"Updating binary....";
+//                        user2.reWrtBin(admin.getBegnFile()); // rewrites this record in binary & text files    
+//                        admin.findByIndx(user2.getTtlRec());
+//                        cout<<"Updated profile: ";
+//                        user2.print1User();   
+//                    }                                   
+//                    else { cout<<"\n\nGood Game!\n"; }
+
                 }
                 break;
             } 
@@ -224,10 +207,10 @@ int main(int argc, char** argv) {
     
                 Yahtzee game2;
                                                   
-                bool p1Winner = game2.play(player,indx,nPlayer);
-               
-                string msg2 = p1Winner ? "P1 wins!\n" : "P2 wins!";
-                cout << msg2 << endl;
+//                bool p1Winner = game2.play(player,indx,nPlayer);
+//               
+//                string msg2 = p1Winner ? "P1 wins!\n" : "P2 wins!";
+//                cout << msg2 << endl;
                 
                 break;
             }
