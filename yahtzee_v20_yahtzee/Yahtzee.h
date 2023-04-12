@@ -14,6 +14,7 @@
 #ifndef YAHTZEE_H
 #define YAHTZEE_H
 #include "Dice.h"
+#include "User.h"
 
 class Yahtzee {
 private:
@@ -26,7 +27,8 @@ private:
     
 public:
     Yahtzee();
-    void play();
+    bool play(User**,int *,int);
+    //void play();
 };
 
 

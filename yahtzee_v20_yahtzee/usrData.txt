@@ -38,3 +38,43 @@ email:   brothr@three.com
 pwrdSiz: 9
 pwrd:    Ff3!12345
 hiScore: 000
+
+Record   4
+ID:      360
+namSiz:  5
+name:    Guest
+emaiSiz: 15
+email:   guest@email.com
+pwrdSiz: 7
+pwrd:    G!23456
+hiScore: 000
+
+Record   5
+ID:      4420
+namSiz:  8
+name:    Computer
+emaiSiz: 18
+email:   computer@email.com
+pwrdSiz: 7
+pwrd:    C!23456
+hiScore: 000
+
+Record   6
+ID:      880
+namSiz:  5
+name:    Guest
+emaiSiz: 15
+email:   guest@email.com
+pwrdSiz: 7
+pwrd:    G!23456
+hiScore: 000
+
+Record   7
+ID:      200
+namSiz:  8
+name:    Computer
+emaiSiz: 18
+email:   computer@email.com
+pwrdSiz: 7
+pwrd:    C!23456
+hiScore: 000
