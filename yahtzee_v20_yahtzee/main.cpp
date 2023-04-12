@@ -57,6 +57,12 @@
  * then don't allow them to edit hiScore.
  * 
  * 
+ * Created an array of Users, so the game can run with 2 players. 
+ 
+ * Altered play() in Yahtzee, so it accepts a double pointer, pointer and number of players.
+   Play() also returns if player 1 is the winner or not.
+   
+   
  To Do: 
  * Figure out double pointers for 2 players.
   
@@ -148,8 +154,32 @@ int main(int argc, char** argv) {
             } 
             case 4: // Play Yahtzee as a guest
             {      
+                int nPlayer = 2;
+                
+                // create a pointer to Player's structure and create array size of 2   
+                User **player;
+                
+                // creating an array of Player pointers
+                player = new User*[nPlayer];
+                
+                //array of index to keep track of each player
+                int *indx = new int[nPlayer];
+
+                // creating each individual player by calling Player constructor
+                for (int i=0; i < nPlayer; i++) {         
+                    indx[i]=i;
+                }
+    
+                player[indx[0]] = new User("Guest","guest@email.com","G!23456");
+                player[indx[1]] = new User("Computer","computer@email.com","C!23456");
+    
                 Yahtzee game2;
-                game2.play();                
+                                                  
+                bool p1Winner = game2.play(player,indx,nPlayer);
+               
+                string msg = p1Winner ? "P1 wins!\n" : "P2 wins!";
+                cout<<msg<<endl;
+                
                 break;
             }
             case 5: // Read inputs to fill User binary with records

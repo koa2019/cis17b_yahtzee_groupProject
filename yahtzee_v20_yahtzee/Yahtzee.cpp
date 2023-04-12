@@ -12,6 +12,7 @@
 #include "Yahtzee.h"
 #include "Dice.h"
 #include "Score_Card.h"
+#include "User.h"
 
 using namespace std;
 
@@ -20,7 +21,13 @@ Yahtzee::Yahtzee() {
 }
 
 
-void Yahtzee::play() {
+//void Yahtzee::play() {
+bool Yahtzee::play(User **player,int *indx, int nPlayer){   
+    
+    cout << "\n" << player[indx[0]]->getName() 
+         << " vs " 
+         << player[indx[1]]->getName() << endl;
+    
     ScoreCard scorecard;
     Dice dice[NUM_DICE];
     int numRolls = 3;
@@ -120,6 +127,8 @@ void Yahtzee::play() {
             cout << "Do you want to play again? (Y/N) ";
             cin >> resp1;
         } while (resp1 == 'y' || resp1 == 'Y');
+        
+        return true;
 }
 
 
