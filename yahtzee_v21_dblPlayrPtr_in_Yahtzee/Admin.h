@@ -21,7 +21,7 @@ public:
     Admin();
     Admin(string, string, string );    
     Admin(int);
-    //~Admin(){ cout<<"\nHit Admin Destructor()."; }
+    ~Admin(){ cout<<"\nHit Admin Destructor()."; }
     void copy2Usr(User &);  // copy Admin variables to intance of User
     
     
@@ -41,7 +41,6 @@ public:
     
     
     // Reads User binary & text files
-    bool isUsrLogin(User &);
     bool isUsrLogin();        // Calls functions to verify login credentials
     void findByIndx(int);     // Reads binary file to search for an index
     bool findByEmail(string); // Reads binary file to search for an email
@@ -58,11 +57,8 @@ public:
     Admin **getAllUsrs();
     
     
-    // Accesses aggregated members from User class
-    void setUsrHiScore(int); // Reset hiScore in User and rewrite in binary & text files
-    int  getUsrHiScore(){ return user.getHiScore(); }
-    int  getUsrRec(){ return user.getTtlRec(); }
-    bool getIsHiScore(int s){ return user.isHiScore(s); }
+    // Calls aggregated member functions from User class
+    void setUsrHiScore(); // Reassign hiScore in User and rewrite in binary & text files
     
 };
 #endif /* ADMIN_H */

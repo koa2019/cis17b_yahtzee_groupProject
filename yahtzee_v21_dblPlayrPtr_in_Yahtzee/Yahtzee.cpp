@@ -10,9 +10,9 @@
 #include <bits/stdc++.h>
 
 #include "Yahtzee.h"
-#include "Dice.h"
+#include "Dice.h"       // aggregates instance of Dice class
 #include "Score_Card.h"
-#include "User.h"
+#include "User.h"       // aggregates instance of User class
 
 using namespace std;
 
@@ -21,135 +21,172 @@ Yahtzee::Yahtzee() {
 }
 
 
-//void Yahtzee::play() {
-//bool Yahtzee::play(User **player,int *indx, int nPlayer){   
-bool Yahtzee::play() { 
+bool Yahtzee::play(User &user){
     
-    int nPlayer = 2;
-                
-    // create a pointer to Player's structure and create array size of 2   
+    int nPlayer = 1;
+    
+    do {
+        cout<<"\n\nHow many players?\nEnter number between 1 and 2:  ";
+        cin >> nPlayer;
+    } while(!(nPlayer >= 1 && nPlayer <= 2));
+    
+    // creating double pointer to User's class and create array size of 2   
     User **player;
 
     // creating an array of Player pointers
     player = new User*[nPlayer];
 
-    //array of index to keep track of each player
+    // Create array of index to keep track of each player
     int *indx = new int[nPlayer];
 
-    // creating each individual player by calling Player constructor
-    for (int i=0; i < nPlayer; i++) {         
-        indx[i]=i;
+    // Initialize array
+    for (int i=1; i <= nPlayer; i++) {         
+        indx[i] = i;
     }
-
-    player[indx[0]] = new User("Guest","guest@email.com","G!23456");
-    player[indx[1]] = new User("Computer","computer@email.com","C!23456");
-                
-                
-    cout << "\n" << player[indx[0]]->getName() 
-         << " vs " 
-         << player[indx[1]]->getName() << endl;
+  
+    // Creating each individual player by calling User constructor 
+    for (int i=1; i <= nPlayer; i++) {
+        
+        if(i > 1) { player[indx[i]] = new User("Computer"); }
+        else      { player[indx[i]] = new User(user.getName()); }
+    }
     
-    ScoreCard scorecard;
-    Dice dice[NUM_DICE];
-    int numRolls = 3;
-    int diceArr[NUM_DICE];
-    int resp;
-    char resp1;
+    if(nPlayer>1){
+        cout << "\n" << player[indx[1]]->getName() << " vs "
+             << player[indx[2]]->getName() << endl;
+    }
+    
+    cout << "\n" << player[indx[1]]->getName() << "'s turn.\n";
+    
+    bool p1Winner = false;
 
     
-    do {
+//    ScoreCard scorecard;
+//    Dice dice[NUM_DICE];
+//    int numRolls = 3;
+//    int diceArr[NUM_DICE];
+//    int resp;
+//    char resp1;
+//
+//    
+//    do {
+//        
+//        
+//            vector<int> selected;
+//
+//            for (int currRoll = 0; currRoll < numRolls; currRoll++) {
+//                // Roll the dice
+//                for (int j = 0; j < NUM_DICE; j++) {
+//                    if (find( selected.begin(), selected.end(), j) == selected.end()) {
+//                        dice[j].roll();
+//                    }
+//                }
+//
+//                // Display the dice values
+//                cout << endl;
+//                cout << "Dice values:" << endl;
+//
+//                for (int j = 0; j < NUM_DICE; j++) {
+//                    cout << setw(4) << dice[j].getValue() << "  ";
+//                }
+//
+//                cout << endl;
+//                for (int j = 0; j < NUM_DICE; j++) {
+//                    cout << "Dice" << j + 1 << " ";
+//                }
+//                cout << endl << endl;
+//
+//                // Store the dice values in an array
+//                for (int i = 0; i < NUM_DICE; i++) {
+//                    diceArr[i] = dice[i].getValue();
+//                }
+//
+//                if (currRoll < numRolls - 1) {
+//                    cout << "Enter the dice numbers (1-5) to keep, separated by spaces, or -1 to stop: ";
+//                    int choice;
+//                    cin >> choice;
+//
+//                    while (choice != -1) {
+//                        if (choice < 1 || choice > NUM_DICE) {
+//                            cout << "Invalid choice. Please enter a number between 1 and " << NUM_DICE << ", or -1 to stop: ";
+//                        } else {
+//                            selected.push_back(choice - 1);
+//                            cout << "Keeping Dice" << choice << ": " << dice[choice - 1].getValue() << endl;
+//                        }
+//                        cin >> choice;
+//                    }
+//                }
+//            }
+//
+//            // Print selected dice
+//            cout << endl;
+//            cout << "Selected dice: " << endl;
+//
+//
+//            for (int idx : selected) {
+//                cout << setw(4) << dice[idx].getValue() << "  ";
+//            }
+//
+//            cout << endl;
+//            for (int idx : selected) {
+//                cout << "Dice" << idx + 1 << " ";
+//            }
+//            cout << endl << endl;
+//
+//
+//            displayOptions();
+//            cin >> resp;
+//
+//            while (resp < 1 || resp > 2) {
+//                cout << "Incorrect Response: Try Again" << endl;
+//                cin >> resp;
+//            }
+//
+//
+//            switch(resp) {
+//                case 1:
+//                    scorecard.fillScoreCard(diceArr);
+//                    scorecard.printScoreCard();
+//                    break;
+//
+//                case 2:
+//                    cout << endl << endl;
+//                    cout << "Pick a Category 1-13, you can't pick a Category twice" << endl;
+//                    selectCategory();
+//                    break;
+//            }
+//
+//            cout << endl << endl;
+//            cout << "Do you want to play again? (Y/N) ";
+//            cin >> resp1;
+//        } while (resp1 == 'y' || resp1 == 'Y');
+    
+    
+    // if player 1 is the winner, then set their hiScore and change flag
+    player[indx[1]]->setHiScore(9);
+    p1Winner = true;
+    
+    
+    if(p1Winner){
         
+        cout<<endl<< user.getName() << " won!\n";
         
-            vector<int> selected;
+        // Check is player1's current score is larger than their current hiScore
+        // Player 1 is the user, but I only change their values if player 1 wins
+        if(user.isHiScore( player[indx[1]]->getHiScore() )){
+            
+            
+            // Reset user's hiSCore and update binary & text file
+            user.setHiScore(player[indx[1]]->getHiScore());
+            cout << "\nNew High Score of " << user.getHiScore() << "!\n";
+           //user.printUsr();
 
-            for (int currRoll = 0; currRoll < numRolls; currRoll++) {
-                // Roll the dice
-                for (int j = 0; j < NUM_DICE; j++) {
-                    if (find( selected.begin(), selected.end(), j) == selected.end()) {
-                        dice[j].roll();
-                    }
-                }
-
-                // Display the dice values
-                cout << endl;
-                cout << "Dice values:" << endl;
-
-                for (int j = 0; j < NUM_DICE; j++) {
-                    cout << setw(4) << dice[j].getValue() << "  ";
-                }
-
-                cout << endl;
-                for (int j = 0; j < NUM_DICE; j++) {
-                    cout << "Dice" << j + 1 << " ";
-                }
-                cout << endl << endl;
-
-                // Store the dice values in an array
-                for (int i = 0; i < NUM_DICE; i++) {
-                    diceArr[i] = dice[i].getValue();
-                }
-
-                if (currRoll < numRolls - 1) {
-                    cout << "Enter the dice numbers (1-5) to keep, separated by spaces, or -1 to stop: ";
-                    int choice;
-                    cin >> choice;
-
-                    while (choice != -1) {
-                        if (choice < 1 || choice > NUM_DICE) {
-                            cout << "Invalid choice. Please enter a number between 1 and " << NUM_DICE << ", or -1 to stop: ";
-                        } else {
-                            selected.push_back(choice - 1);
-                            cout << "Keeping Dice" << choice << ": " << dice[choice - 1].getValue() << endl;
-                        }
-                        cin >> choice;
-                    }
-                }
-            }
-
-            // Print selected dice
-            cout << endl;
-            cout << "Selected dice: " << endl;
-
-
-            for (int idx : selected) {
-                cout << setw(4) << dice[idx].getValue() << "  ";
-            }
-
-            cout << endl;
-            for (int idx : selected) {
-                cout << "Dice" << idx + 1 << " ";
-            }
-            cout << endl << endl;
-
-
-            displayOptions();
-            cin >> resp;
-
-            while (resp < 1 || resp > 2) {
-                cout << "Incorrect Response: Try Again" << endl;
-                cin >> resp;
-            }
-
-
-            switch(resp) {
-                case 1:
-                    scorecard.fillScoreCard(diceArr);
-                    scorecard.printScoreCard();
-                    break;
-
-                case 2:
-                    cout << endl << endl;
-                    cout << "Pick a Category 1-13, you can't pick a Category twice" << endl;
-                    selectCategory();
-                    break;
-            }
-
-            cout << endl << endl;
-            cout << "Do you want to play again? (Y/N) ";
-            cin >> resp1;
-        } while (resp1 == 'y' || resp1 == 'Y');
-        
-        return true;
+            return p1Winner; // return true p1 has new high score  
+            
+        } else { cout<<"\n\nGood Game!\n"; }        
+    }
+    
+    return false;
 }
 
 

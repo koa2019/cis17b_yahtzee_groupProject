@@ -4,50 +4,34 @@ using namespace std;  //STD Name-space where Library is compiled
 #include <fstream>
 #include <string>
 
-/*****************************************************************/
-//       Definition of ttlRec static member variable   
-/*****************************************************************/
-int User::ttlRec = 0;
-
 
 //****************************************************************
-//      Definition of static member().
-//      Keeps count how many records will ever be written, so we can
-//      write it in the data text file
+//         Read how many records there in binary from a text file      
 //****************************************************************
 
-void User::addTtlRec(){
-    ttlRec++;
-    wrtTtlRec();
-    //cout<<"ttlRec= "<<ttlRec<<endl;
-}
-//****************************************************************
-//      Definition of static member().
-//      
-//****************************************************************
-
-void User::readTtlRec(){
+void User::readNumRec(){
     
     ifstream in;    
     in.open("numRecrds.txt", ios::in); 
     if(!in.is_open()){ cout<<"\nError opening numRecrds.txt\n"; return;}
     int num;
     in>>num;
-    setTtlRec(num);
-    //cout<<"\nIn readTtlRec(). ttlRec= "<< ttlRec<<endl;  
+    setNumRec(num);
+    //cout<<"\nIn readNumRec(). numRec= "<< numRec<<endl;  
     in.close();
 }
+
+
 //****************************************************************
-//      Definition of static member().
-//     
+//         Write how many records there in a text file   
 //****************************************************************
 
-void User::wrtTtlRec(){
+void User::wrtNumRec(){
     ofstream out;    
     out.open("numRecrds.txt", ios::out); 
     if(!out.is_open()){ cout<<"\nError opening numRecrds.txt\n"; return;}
-    out<<ttlRec;
-    //cout<<"\nIn wrtTtlRec(). ttlRec= "<< ttlRec<<endl;  
+    out<<numRec;
+    //cout<<"\nIn wrtNumRec(). numRec= "<< numRec<<endl;  
     out.close();    
 }
 
@@ -58,8 +42,7 @@ void User::wrtTtlRec(){
 
 User::User(){   
     //cout<<"\nHit User Default constructor\n";
-    readTtlRec();  
-    id = 10*(rand()%(0+16)+1) * (rand()%(17+29)+1);
+    readNumRec();  
     namSiz=0;
     name="";
     emaiSiz=0;
@@ -70,41 +53,41 @@ User::User(){
 }
 
 /*****************************************************************/
-//                  Constructor #2
+//                     Constructor #2
+//                  Called in readInputFile()
 /*****************************************************************/
 
 User::User(string n, string e, string p){
     //cout<<"\nHit User constructor #2\n";
-        readTtlRec(); 
-        id = 10*(rand()%(0+16)+1) * (rand()%(17+29)+1);
+        readNumRec(); 
         setName(n);
-        setNamSiz(n.size());
         setEmail(e);
-        setEmaiSiz(e.size());
         setPwrd(p);
-        setPwrdSiz(p.size());
         hiScore=0;
         wrtTxt();
         wrtBin();
-        User::addTtlRec(); // increment total # of profiles created       
+        addNumRec(); // increment total # of profiles created       
+        wrtNumRec(); 
 }
 
 
 /*****************************************************************/
-//                  Constructor #3
+//                     Constructor #3
+//                  Called in Yahtzee class & main()
 /*****************************************************************/
 
-User::User(int i, string n, string e, string p){
+User::User(string n){
+    
     //cout<<"\nHit User constructor #3\n";
-        setTtlRec(i);
-        id = 10*(rand()%(0+16)+1) * (rand()%(17+29)+1);
-        setName(n);
-        setNamSiz(n.size());
-        setEmail(e);
-        setEmaiSiz(e.size());
-        setPwrd(p);
-        setPwrdSiz(p.size());
-        hiScore=0;
+    readNumRec();
+    addNumRec(); // increment total # of profiles created
+    setName(n); // namSize is automatically set when setName() is called
+    emaiSiz=0;
+    email="";
+    pwrdSiz=0;
+    password=""; 
+    hiScore=0;
+    //printUsr();
 }
 
 
@@ -112,18 +95,17 @@ User::User(int i, string n, string e, string p){
 //                  Constructor #4
 /*****************************************************************/
 
-User::User(int rec, int i, string n, string e, string p){
-    //cout<<"\nHit User constructor #4\n";
-        setTtlRec(rec);
-        setID(i);
-        setName(n);
-        setNamSiz(n.size());
-        setEmail(e);
-        setEmaiSiz(e.size());
-        setPwrd(p);
-        setPwrdSiz(p.size());
-        hiScore=0;
-}
+//User::User(int rec, string n, string e, string p){
+//    //cout<<"\nHit User constructor #4\n";
+//    setNumRec(rec);
+//    setName(n);
+//    setNamSiz(n.size());
+//    setEmail(e);
+//    setEmaiSiz(e.size());
+//    setPwrd(p);
+//    setPwrdSiz(p.size());
+//    hiScore=0;
+//}
 
 
 /*****************************************************************/
@@ -133,8 +115,7 @@ User::User(int rec, int i, string n, string e, string p){
 
 User::User(int rec){
     //cout<<"\nHit User constructor #5\n";
-    ttlRec = rec;
-    id = 10*(rand()%(0+16)+1) * (rand()%(17+29)+1);
+    numRec = rec;
     namSiz=0;
     name="";
     emaiSiz=0;
@@ -156,8 +137,7 @@ void User::wrtTxt(){
     if(!outTxt.is_open()){ cout<<"\nError opening usrData.txt\n"; exit(0);}      
  
     outTxt<<endl;
-    outTxt<<"Record   "<<ttlRec<<endl;
-    outTxt<<"ID:      "<<id<<endl;      // write id to text file
+    outTxt<<"Record   "<<numRec<<endl;
     outTxt<<"namSiz:  "<<namSiz<<endl; // write the size of this string to text file
     outTxt<<"name:    "<<name<<endl;   // write this string to text file
     outTxt<<"emaiSiz: "<<emaiSiz<<endl;// write the size of this string to text file
@@ -181,13 +161,9 @@ void User::wrtBin(){
     if(!outBin.is_open()){ cout<<"\nError opening usrData.dat\n";}
     
     // Write total records to binary file
-    outBin.write(reinterpret_cast<char *>(&ttlRec) , sizeof(int)); 
+    outBin.write(reinterpret_cast<char *>(&numRec) , sizeof(int)); 
     
-    
-    // Write id to binary file
-    outBin.write(reinterpret_cast<char *>(&id) , sizeof(int)); 
-    
-    
+       
     // Write name's length to binary file
     // and then write this string to binary file
     outBin.write(reinterpret_cast<char *>(&namSiz), sizeof(unsigned short)); 
@@ -227,9 +203,9 @@ void User::reWrtTxt(long begnFile){
     outTxt.open("usrData.txt", ios::ate | ios::in | ios::out ); // appends content to the current content of the file.
     if(!outTxt.is_open()){ cout<<"\nError opening usrData.txt\n";}
     
-    //cout<<"\ngetTtlRec() = "<<getTtlRec()<<endl;
+    //cout<<"\ngetNumRec() = "<<getNumRec()<<endl;
     
-    int charCount = (getTtlRec()==0) ? 0 : ((86)*getTtlRec());
+    int charCount = (getNumRec()==0) ? 0 : ((76)*getNumRec());
     
     //cout<<"\ncharCount = "<< charCount <<endl;
     
@@ -240,8 +216,7 @@ void User::reWrtTxt(long begnFile){
     outTxt.seekp(cursor,ios::beg);  // Sets the position of the get pointer
        
     outTxt<<endl;
-    outTxt<<"Record   "<<getTtlRec()<<endl;
-    outTxt<<"ID:      "<<getID()<<endl;      // write id to text file
+    outTxt<<"Record   "<<numRec<<endl;
     outTxt<<"namSiz:  "<<getNamSiz()<<endl; // write the size of this string to text file
     outTxt<<"name:    "<<getName()<<endl;   // write this string to text file
     outTxt<<"emaiSiz: "<<getEmaiSiz()<<endl;// write the size of this string to text file
@@ -274,11 +249,8 @@ void User::reWrtBin(long begnFile){
     outBin.seekp(cursor,ios::beg);  // Sets the position of the get pointer
         
     // Write total records to binary file
-    outBin.write(reinterpret_cast<char *>(&ttlRec) , sizeof(int));     
-    
-    // Write id to binary file
-    outBin.write(reinterpret_cast<char *>(&id) , sizeof(int)); 
-    
+    outBin.write(reinterpret_cast<char *>(&numRec) , sizeof(int));     
+   
     
     // Write name's length to binary file
     // and then write this string to binary file
@@ -567,13 +539,12 @@ string User::toLowerCase(string n){
 //                     PRINT ONE USER'S INFO  
 /*****************************************************************/
 
-void User::print1User()const{  
+void User::printUsr()const{  
     
-    cout<<"\nRecord: "  << ttlRec <<endl
-        <<"ID:       "<< id     <<endl
-        <<"Name:     "<< name   <<endl
-        <<"Email:    "<< email  <<endl
-        <<"Password: "<<password<<endl
+    cout<<"\nRecord:   "<< numRec <<endl
+        <<"Name:       "<< name   <<endl
+        <<"Email:      "<< email  <<endl
+        <<"Password:   "<<password<<endl
         <<"High Score: "<<hiScore<<endl;
 }
 
@@ -581,10 +552,9 @@ void User::print1User()const{
 //                     PRINT 1 record  
 /*****************************************************************/
 
-void User::print1URec() const{  
+void User::printUsrRec() const{  
    
-    cout<<"\nRecord:   "<< ttlRec <<endl
-        <<"ID:         "<< id     <<endl 
+    cout<<"\nRecord:   "<< numRec <<endl
         <<"NamSiz:     "<< namSiz <<endl
         <<"Name:       "<< name    <<endl
         <<"EmaiSiz:    "<< emaiSiz <<endl
@@ -608,11 +578,11 @@ void User::signUp(){
         wrtBin(); // Write to binary file 
 
         cout<<"\nProfile successfully created.";
-        print1User();     // Print 1 profile
-        cout<<"ttlRec "<< ttlRec<<endl;
-        setTtlRec(ttlRec);
-        User::addTtlRec(); // increment total # of profiles created         
-
+        printUsr();     // Print 1 profile
+        setNumRec(numRec);
+        addNumRec(); // increment total # of profiles created         
+        wrtNumRec();
+        
     } else { cout<<"\nOops! Profile not created.\n"; }
 }
 
@@ -625,8 +595,8 @@ void User::signUp(){
 void User::readInputFile(){
     
     // clear usrData text & binary files. Used for testing 
-    setTtlRec(0);
-    wrtTtlRec();
+    setNumRec(0);
+    wrtNumRec();
     ifstream out, oB;    
     out.open("usrData.txt", ios::out | ios::trunc); // read in inputs from a file    
     if(!out.is_open()){ 
@@ -641,8 +611,8 @@ void User::readInputFile(){
     out.close();
     oB.close();
     
-   User user21("mother zero","mother@aa.com","Mm!1abcd");
-   User user22("father one","father@email.com","Ff$0abcd");
-   User user23("sister two","sister@sis.com","Ss!2345"); 
-   User user24("brothr three","brothr@three.com","Ff3!12345");   
+   User usera("homer simpson","homer@simp.com","Homer!23");
+   User userb("marge simpson","marge@simp.com","Marge$ab");
+   User userd("lisa simpson","lisa@simp.com","Lisa!2345");   
+   User userc("day tripper","lucy@beatles.com","DayT#2345"); 
 }
