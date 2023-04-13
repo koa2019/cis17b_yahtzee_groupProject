@@ -1,8 +1,7 @@
-/*File:   User.h
+/* File:   User.h
  * Author: DanYell
- *
  * Created on March 28, 2023, 10:11 PM
- */
+*/
 
 #ifndef USER_H
 #define USER_H
@@ -13,8 +12,8 @@ using namespace std;  //STD Name-space where Library is compiled
 class User {
     
 protected:
-    static int ttlRec; // static variable to keep track on total records in file
-    int id;                 // unique I.D. number
+ 
+    int numRec;
     unsigned short namSiz;  // length of name string
     string name;            // name 
     unsigned short emaiSiz; // length of email string
@@ -25,23 +24,18 @@ protected:
     
 public:
     
-    User();   
+    User();   // Default constructor
     User(int);
     User(string,string,string);
+    User(string);           // Constructor #3
     User(int,string,string,string);
-    User(int,int,string,string,string);
-    //~User(){cout<<"\nHit User Destructor()."; }
+    ~User(){cout<<"\nHit User Destructor()."; }
     
     
-     // static member functions
-    static void setTtlRec(int num) { ttlRec = num; }
-    static void addTtlRec(); // Static member()
-    static void readTtlRec();   // Read total number of records from file
-    static void wrtTtlRec();    // Write the total number of records in UsrData.bin
-    
-    
-    // Mutators   
-    void setID(int num) {id = num;}
+    // Mutators
+    void readNumRec();   // Read total number of records from file & set numRec
+    void addNumRec(){ numRec++; } // increment total records by 1
+    void setNumRec(int num) { numRec = num; }
     void setNamSiz(int size){  namSiz = size; }
     void setEmaiSiz(int size){ emaiSiz = size; }
     void setPwrdSiz(int size){ pwrdSiz = size; }
@@ -54,13 +48,14 @@ public:
     void signUp();  // Calls functions to create 1 or more profiles
     void readInputFile();  // Reads 27 records from a file
     
+    
     // Validates user input before setting member variable
     bool isName();
     bool isEmail();
     bool isPwrd();
     bool isHiScore(int);
     
-    // ! MIGHT MOVE THESE TO Protected/private !
+    
     // Helper functions for validating member variables      
     bool isMinSize(string, int size = 2);
     bool isStrEqual(string, string);
@@ -68,7 +63,9 @@ public:
     bool confrmEmail(string);
     string toLowerCase(string);
 
+    
     // Write to files
+    void wrtNumRec();    // Write the total number of records in UsrData.bin
     void wrtTxt();
     void wrtBin();
     void reWrtTxt(long);  // Rewrite 1 record in User's text file
@@ -76,8 +73,7 @@ public:
     
     
     // Accessors 
-    int getID() const { return id;}
-    int getTtlRec() const { return ttlRec;}
+    int getNumRec() const { return numRec;}
     int getHiScore() const {return hiScore;}
     unsigned short getNamSiz() const {return namSiz; }
     unsigned short getEmaiSiz() const { return emaiSiz; }
@@ -85,8 +81,8 @@ public:
     string getName() const {return name;}
     string getEmail() const {return email;}
     string getPwrd() const { return password; }
-    void print1User() const;  // User friendly print out
-    void print1URec() const;
+    void printUsr() const;  // User friendly print out
+    void printUsrRec() const;  // prints each string's size
     
 };
 

@@ -1,80 +1,36 @@
 
 Record   0
-ID:      3360
-namSiz:  11
-name:    mother zero
-emaiSiz: 13
-email:   mother@aa.com
+namSiz:  13
+name:    homer simpson
+emaiSiz: 14
+email:   homer@simp.com
 pwrdSiz: 8
-pwrd:    Mm!1abcd
+pwrd:    Homer!23
 hiScore: 000
 
 Record   1
-ID:      1980
-namSiz:  10
-name:    father one
-emaiSiz: 16
-email:   father@email.com
+namSiz:  13
+name:    marge simpson
+emaiSiz: 14
+email:   marge@simp.com
 pwrdSiz: 8
-pwrd:    Ff$0abcd
+pwrd:    Marge$ab
 hiScore: 000
 
 Record   2
-ID:      110
-namSiz:  10
-name:    sister two
-emaiSiz: 14
-email:   sister@sis.com
-pwrdSiz: 7
-pwrd:    Ss!2345
-hiScore: 000
+namSiz:  12
+name:    lisa simpson
+emaiSiz: 13
+email:   lisa@simp.com
+pwrdSiz: 9
+pwrd:    Lisa!2345
+hiScore: 009
 
 Record   3
-ID:      1260
-namSiz:  12
-name:    brothr three
+namSiz:  11
+name:    day tripper
 emaiSiz: 16
-email:   brothr@three.com
+email:   lucy@beatles.com
 pwrdSiz: 9
-pwrd:    Ff3!12345
-hiScore: 000
-
-Record   4
-ID:      240
-namSiz:  5
-name:    Guest
-emaiSiz: 15
-email:   guest@email.com
-pwrdSiz: 7
-pwrd:    G!23456
-hiScore: 000
-
-Record   5
-ID:      20
-namSiz:  8
-name:    Computer
-emaiSiz: 18
-email:   computer@email.com
-pwrdSiz: 7
-pwrd:    C!23456
-hiScore: 000
-
-Record   6
-ID:      3870
-namSiz:  5
-name:    Guest
-emaiSiz: 15
-email:   guest@email.com
-pwrdSiz: 7
-pwrd:    G!23456
-hiScore: 000
-
-Record   7
-ID:      1170
-namSiz:  8
-name:    Computer
-emaiSiz: 18
-email:   computer@email.com
-pwrdSiz: 7
-pwrd:    C!23456
+pwrd:    DayT#2345
 hiScore: 000

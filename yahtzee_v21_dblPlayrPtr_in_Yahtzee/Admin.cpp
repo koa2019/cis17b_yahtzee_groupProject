@@ -41,47 +41,44 @@ Admin::Admin(string n, string e, string p) {
 
 Admin::Admin(int record) {
     
+    record = record < 0 ? 0 : record;
     //cout<<"Hit Admin Constructor #3\n";
-    user.setTtlRec(record);
+    user.setNumRec(record);
     recSiz = 0;
     begnFile = 0;
 }
 
 
 //******************************************************************************
-//              
+//                 Copy Admin values to User class object
+ // reassign user2 variables based on user object that was read from binary
 //******************************************************************************
 
 void Admin::copy2Usr(User &user2){
    
     //cout<< "\n inside copy2Usr()";
-    
-    // resets variables based on user object read from binary
-    user2.setTtlRec(user.getTtlRec());
-    user2.setID(user.getID());
+    user2.setNumRec(user.getNumRec());
     user2.setName(user.getName());       
     user2.setEmail(user.getEmail());
     user2.setPwrd(user.getPwrd());
-    user2.setHiScore(user.getHiScore());
-        
-    //cout<<"\n admin record: " << user.getTtlRec() <<endl;
+    user2.setHiScore(user.getHiScore());        
+    //cout<<"\n admin record: " << user.getNumRec() <<endl;
     //printAdUsr();
 }
 
 
 //******************************************************************************
-//              Checks is user's login matches the database
+//              Checks if user's login matches the binary's record
 //******************************************************************************
 
-bool Admin::isUsrLogin(User &user2){ 
-//bool Admin::isUsrLogin(){    
+bool Admin::isUsrLogin(){    
     
     cout<<"\n\tUser Login\n";
 
-    //cout<<"\n\n*****Reset strings after testing*****\nsister@sis.com\nSs!2345\n";
-    string tempE= "sister@sis.com",
-           tempPw="Ss!2345";
-    bool isName = false ,
+    //cout<<"\n\n*****Reset strings after testing*****\nlisa@simp.com\nLisa!2345\n";
+    string tempE= "lisa@simp.com",
+           tempPw="Lisa!2345";
+    bool isName = false,
          isPwrd = false;
     
 //    do {
@@ -112,18 +109,7 @@ bool Admin::isUsrLogin(User &user2){
         cout<<"Username and/or password does not match.\n";
         return false;  
         
-    } else { 
-        
-        // resets user2 variables based on ad object read from binary
-        user2.setTtlRec(user.getTtlRec());
-        user2.setID(user.getID());
-        user2.setName(user.getName());       
-        user2.setEmail(user.getEmail());
-        user2.setPwrd(user.getPwrd());
-        user2.setHiScore(user.getHiScore());
-        
-        return true;
-    }
+    } else { return true; }
 }
 
 
@@ -172,7 +158,7 @@ void Admin::adminLogin(){
 
 
 /******************************************************************/              
-//          ONLY allowed to access this menu  
+//             ONLY able to access this menu  
 //                  if Admin is logged in 
 /*****************************************************************/
 
@@ -200,71 +186,61 @@ void Admin::adminPortal(){
                 getAllUsrs(usrArr);
                 //usrArr = getAllUsrs();
                 
-//                usrArr[0]->printAdUsr();
+//               usrArr[0]->printAdUsr();
 //                usrArr[1]->printAdUsr();
 //                usrArr[2]->printAdUsr();
-//                usrArr[3]->printAdUsr();                                
-              
+//                usrArr[3]->printAdUsr();                                            
                 break;
             } 
             case 2:  // Find user by index in binary file 
             { 
-                Admin usr2;
+                Admin admin2;
                 int num = 0;  
                 cout<<"\nWhich record are you looking for?\n";
-                usr2.getIndex(num);                  
-                usr2.findByIndx(num);
-                usr2.printAdUsr(); 
+                admin2.getIndex(num);                  
+                admin2.findByIndx(num);
+                admin2.printAdUsr(); 
                 break;
             } 
             
             case 3: // Find user by email in binary file
             {                 
-                Admin usr3;
-                //usr3.printAdUsr();
+                Admin admin3;
+                //admin3.printAdUsr();
                 string str = "";
                 cout<<"\nEnter the email you want to find: ";
                 //cin>>str;
-                str = "mother@aa.com";
-                //str = "father@email.com";
-                //str = "sister@sis.com";                
+                str = "homer@simp.com";
+                //str = "marge@simp.com";
+                //str = "lucy@beatles.com";                
                 
-                if(usr3.findByEmail(str)){
+                if(admin3.findByEmail(str)){
                     cout<<"Located " << str << "'s profile";
-                    usr3.printAdUsr(); 
+                    admin3.printAdUsr(); 
                 }
                 
                 break;
             }      
             case 4:  // Edit hiScore in binary and text files
             {    
-                int n = 0, score = 0;  
-                Admin usr4;
+                int n = 0;  
+                Admin admin4;
                 cout<<"\nWhich record do you want to edit?\n";
-                usr4.getIndex(n); 
-                usr4.findByIndx(n);
+                admin4.getIndex(n); 
+                admin4.findByIndx(n);
                 
-                if(usr4.user.getName()[0] == 'x'){
+                if(admin4.user.getName().compare(0,6,"xxxxxx") == 0){
                     
                     cout<<"\nYou can not edit this record.\n"
-                        <<"It was deleted.\n";
+                        <<"This record was deleted.\n";
                     
-                } else {
-                    do {
-                        cout<<"Edit high Score.\nEnter a number between 0 and 999: ";
-                        cin >> score;
-                    } while(!(score>=0 && score<=999));
-
-                    if(usr4.getIsHiScore(score)){
-                        usr4.setUsrHiScore(score);  
-                    } else { cout<<"\n\nNot a high score.\n"; }
-                }
+                } else { admin4.setUsrHiScore(); }
                 break;
             }
             case 5: // Delete record in binary & text
             {   
-                Admin usr5;
-                usr5.deleteUsr();
+                Admin admin5;
+                admin5.deleteUsr();
                 break;
             } 
             case 6:
@@ -283,7 +259,95 @@ void Admin::adminPortal(){
 
 //Admin Admin::**getAllUsrs(){
 void Admin::getAllUsrs(Admin **usrArr){
-//   
+    
+    ifstream inBin;
+    string file = "usrData.dat";
+    inBin.open(file.c_str(), ios::in | ios::binary); 
+    if(!inBin.is_open()){ cout<<"\nError opening "<<file<<endl; return;}
+        
+    long cursor = 0L,
+         rSize  = 0L,
+         thisSum = 0L;
+    int  i = 0,  
+         nRec = user.getNumRec();
+    
+    // Create an array of Admin objects
+    usrArr = new Admin*[user.getNumRec()];
+    
+    // Accumulate all the bits between the beginning of file up the record I'm looking for.
+    while(i < nRec){
+     
+        usrArr[i] = new Admin(i);   
+        
+        thisSum = 0L;
+        //cout<<"\n\n i = " << i <<" cursor = "<< cursor<< " thisSUm="<<thisSum<<endl;
+        
+        
+        inBin.seekg(cursor,ios::beg);  // set is set to the beginning of the cursor's value  
+        
+        // Read in sizeof numRec and add to cursor
+        int num;
+        inBin.read(reinterpret_cast<char *>(&num) , sizeof(int)); 
+        usrArr[i]->user.setNumRec(num);
+        thisSum += sizeof(int);         
+        //cout<<"thisSum=="<<thisSum<<endl;
+       
+        
+        // Read the value of namSiz and then use it to calculate the number of bits
+        // that namSiz and name take up in memory. 
+        unsigned short size;
+        inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short) );
+        usrArr[i]->user.setNamSiz(size);
+        
+        // Read & set name to Admin class object    
+        string tempStr = "";
+        tempStr.resize(usrArr[i]->user.getNamSiz());
+        inBin.read( &tempStr[0] , size*sizeof(char) ); // write this  string to binary file    
+        usrArr[i]->user.setName(tempStr); // Set name 
+        thisSum += ( sizeof(size) + (size*sizeof(char)) );
+        //cout<<"thisSum=="<<thisSum<<endl;     
+        
+        
+        // Read email size & save to Admin class object
+        inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short) );               
+        usrArr[i]->user.setEmaiSiz(size);
+        
+        // Read & set email to Admin class object    
+        tempStr.resize(usrArr[i]->user.getEmaiSiz());
+        inBin.read(&tempStr[0], size*sizeof(char));    
+        usrArr[i]->user.setEmail(tempStr);           
+        thisSum += ( sizeof(size) + size*sizeof(char) );
+        //cout<<"thisSum=="<<thisSum<<endl;
+        
+        
+        // Read password size & save to Admin class object
+        inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short));      
+         
+        // Read & set password to Admin class object
+        tempStr.resize(size);
+        inBin.read(&tempStr[0], size*sizeof(char) );  
+        usrArr[i]->user.setPwrd(tempStr);
+        thisSum += ( sizeof(size) + (size*sizeof(char)) );   
+        //cout<<"thisSum=="<<thisSum<<endl;
+        
+        // Read in size of hiScore and add to cursor
+        inBin.read(reinterpret_cast<char *>(&num) , sizeof(int)); 
+        //cout<< sizeof(num)<<" thisSum = "<< thisSum ;
+        thisSum += sizeof(num);  
+        cursor  += thisSum;    
+        
+        //cout << "\n thisSum = " << thisSum << " cursor = " << cursor << endl;
+        
+        // if its the first record set the cursor to the zero 
+        long bFile = (i==0)? 0L : (cursor-thisSum); 
+        usrArr[i]->setBegnFile(bFile);
+        usrArr[i]->setRecSiz(thisSum);
+        //cout<<"\ni = "<<i<<" recSiz = "<<usrArr[i]->recSiz<<"  begnFile = "<<usrArr[i]->begnFile<<endl;   
+
+        usrArr[i]->printAdUsr();
+        i++;
+    }    
+    inBin.close();              
 }
 
 
@@ -292,14 +356,25 @@ void Admin::getAllUsrs(Admin **usrArr){
 //                   and rewrite binary & text files
 /******************************************************************/ 
 
-void Admin::setUsrHiScore(int s){ 
+void Admin::setUsrHiScore(){ 
     
-    user.setHiScore(s);
-    cout<<"\nNew High Score of "<<getUsrHiScore()<<"!\n";
-    cout<<"Updating binary....";
-    user.reWrtBin(begnFile); // rewrites this record in binary & text files    
-    findByIndx(getUsrRec());
-    printAdUsr();      
+    int score = 0;
+    
+    do {
+        cout<<"\nEdit " << user.getName() << "'s new high Score.\nEnter a score between 0 and 999: ";
+        cin >> score;
+    } while(!(score>=0 && score<=999));
+
+    if(user.isHiScore(score)){
+        
+        user.setHiScore(score);
+        cout<<"\nNew High Score of "<<user.getHiScore()<<"!\n";
+        cout<<"Updating binary....";
+        user.reWrtBin(begnFile); // rewrites this record in binary & text files    
+        findByIndx(user.getNumRec());
+        printAdUsr();  
+        
+    } else { cout<<"\n\nNot a high score.\n"; }
 }
 
 
@@ -319,27 +394,29 @@ void Admin::deleteUsr(){
     delUsr.printAdUsr();   
     
                 
-    // Need to set some sort of flag that its deleted
+    // Should set some sort of flag that says its deleted?
     int i;
-    string temp="";
-    for(i=0; i< delUsr.user.getNamSiz();i++){
+    string temp = "";
+    for(i=0; i < delUsr.user.getNamSiz();i++){
         temp += "x";
     }
     delUsr.user.setName(temp);
     
-    temp="";
-    for(i=0; i< delUsr.user.getEmaiSiz();i++){
+    temp = "";
+    for(i=0; i < delUsr.user.getEmaiSiz();i++){
         temp += "x";
     }
     delUsr.user.setEmail(temp);
     
-    temp="";
-    for(i=0; i< delUsr.user.getPwrdSiz();i++){
+    temp = "";
+    for(i=0; i < delUsr.user.getPwrdSiz();i++){
         temp += "x";
     }
-    delUsr.user.setPwrd(temp);    
+    delUsr.user.setPwrd(temp); 
+    
     delUsr.user.setHiScore(0);
-    delUsr.user.reWrtBin(begnFile); // rewrites this record in binary & text files  
+    
+    delUsr.user.reWrtBin(delUsr.begnFile); // rewrites this record in binary & text files  
     cout<<"\n\nRecord successfully deleted.";
     delUsr.printAdUsr();    
 }
@@ -352,11 +429,10 @@ void Admin::deleteUsr(){
 
 void Admin::findByIndx(int recIndx){
     
-    cout<<"\nLooking for record " << recIndx << " in binary file.\n";  
+    cout << "\nLooking for record " << recIndx << " in binary file.\n";  
     
     ifstream inBin;
-    string file = "usrData.dat";        
-    
+    string file = "usrData.dat"; 
     inBin.open(file.c_str(), ios::in | ios::binary); 
     if(!inBin.is_open()){ cout<<"\nError opening "<<file<<endl; return;}
         
@@ -375,31 +451,24 @@ void Admin::findByIndx(int recIndx){
         
         inBin.seekg(cursor,ios::beg);  // set is set to the beginning of the cursor's value  
         
-        // Read in sizeof id and add to cursor
+        // Read in sizeof numRec and add to cursor
         int num = 0;
         inBin.read(reinterpret_cast<char *>(&num) , sizeof(int)); 
         thisSum += sizeof(num);
         cursor  += sizeof(num);          
         
-        
-        // Read in sizeof id and add to cursor
-        inBin.read(reinterpret_cast<char *>(&num) , sizeof(int)); 
-        thisSum += sizeof(num);
-        cursor  +=  sizeof(num);  
-       
-        
+               
         // Read the value of namSiz and then use it to calculate the number of bits
         // that namSiz and name take up in memory. 
         // Add it to cursor and move on to the next variables
         unsigned short size;
         inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short) );
         thisSum += ( sizeof(size) + size*sizeof(char) );
-        cursor  += ( sizeof(size) + size*sizeof(char) );
-        
+        cursor  += ( sizeof(size) + size*sizeof(char) );        
         
         inBin.seekg(cursor,ios::beg); // move cursor to the beginning of the next record
 
-               
+        // Read the value of emaiSiz & then use it calculate the number of bits       
         inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short) );               
         thisSum += ( sizeof(size) + size*sizeof(char) );
         cursor  += ( sizeof(size) + size*sizeof(char) );
@@ -407,6 +476,7 @@ void Admin::findByIndx(int recIndx){
         inBin.seekg(cursor,ios::beg); // move cursor to the beginning of the next record
         
         
+        // Read the value of pwrdSiz & then use it calculate the number of bits
         inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short));      
         thisSum += ( sizeof(size) + size*sizeof(char) );        
         cursor  += ( sizeof(size) + size*sizeof(char) );
@@ -421,13 +491,12 @@ void Admin::findByIndx(int recIndx){
         count++;        
     }
        
-    // if its the first record set the cursor to the zero 
+    // if recIndx is 0, then set the cursor to zero 
     cursor = (count==0)? 0 : cursor-rSize; 
     setRecSiz(rSize);
-    setBegnFile(cursor); // beginning bit location of this file in binary
-    cout<<"\nrecSiz = "<<recSiz<<"  begnFile = "<<begnFile<<endl;   
-    
-    //***********    SAVE LOCATED RECORD   ************************//            
+    setBegnFile(cursor); // beginning bit location of this file in files
+    //cout << "\n inside findByIndx() recSiz = " << recSiz << "  begnFile = " << begnFile<<endl;   
+              
     read1Bin(); //read binary & save record
     
     inBin.close();    
@@ -442,95 +511,88 @@ void Admin::findByIndx(int recIndx){
 
 bool Admin::findByEmail(string emai){
     
-    cout<<endl<<endl<<"Looking for "<<emai<<"...\n";   
+    cout <<"\n\nLooking for " << emai << "...\n\n";   
     
     ifstream inBin;
-    string file = "usrData.dat";        
-    
+    string file = "usrData.dat";     
     inBin.open(file.c_str(), ios::in | ios::binary); 
     if(!inBin.is_open()){ cout<<"\nError opening "<<file<<endl; exit(0);} 
     
     bool foundEm;
-    long cursor = 0L, thisSum=0L;
+    long cursor  = 0L, 
+         thisSum = 0L;
     int count = 0,   // start at 1, so it stops before the record I'm looking for     
-        rSize = 0, // hold this records size
-        nRec = user.getTtlRec();
+        rSize = 0,  // hold this records size
+        nRec  = user.getNumRec();
     
     
     // Accumulate all the bits between the beginning of file up the record I'm looking for. 
     while( (!foundEm) && (count <= nRec) ){                 
         
-        inBin.seekg(cursor,ios::beg);  // set is set to the beginning of the cursor's value  
+        inBin.seekg(cursor,ios::beg);  // cursor is set to the beginning of the record 
         
         // Read in sizeof id and add to cursor
         int num;
         inBin.read(reinterpret_cast<char *>(&num) , sizeof(int)); 
-        thisSum +=sizeof(int);
-        cursor += sizeof(int);  
-        
-        
-        // Read in sizeof id and add to cursor
-        inBin.read(reinterpret_cast<char *>(&num) , sizeof(int)); 
-        thisSum += sizeof(int);
-        cursor += sizeof(int);  
-        
+        thisSum += sizeof(num);
+        cursor  += sizeof(num);          
+               
         
         // Read the value of namSiz and then use it to calculate the number of bits
         // that namSiz and name take up in memory. 
-        // Add it to cursor and move on to the next variables
+        // Add it to cursor and move on to the next member variables
         unsigned short size;
         inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short) );
         thisSum += ( sizeof(unsigned short) + size*sizeof(char) );
-        cursor += ( sizeof(unsigned short) + size*sizeof(char) );
+        cursor  += ( sizeof(unsigned short) + size*sizeof(char) );
         
         
         inBin.seekg(cursor,ios::beg); // move cursor to the beginning of the next record
 
         
-        // Read the value of emaiSiz and then use it calculate the number of bits
-        // that emaiSiz and email take up in memory. 
-        // Add it to cursor and move on to the next variables        
+        // Read the value of emaiSiz & then use it calculate the number of bits
         inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short) );               
-        thisSum += ( sizeof(unsigned short) + size*sizeof(char) );
-        cursor += ( sizeof(unsigned short) + size*sizeof(char) );
+        thisSum += ( sizeof(size) + size*sizeof(char) );
+        cursor  += ( sizeof(size) + size*sizeof(char) );
         
         // Read email & save to a temp variable
         string binEmail = "";
         binEmail.resize(size);
         inBin.read(&binEmail[0], size*sizeof(char));              
         
+        
         inBin.seekg(cursor,ios::beg); // move cursor to the beginning of the next record
         
         
         // Read the value of pwrdSiz and then use it calculate the number of bits
         inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short));      
-        thisSum += ( sizeof(unsigned short) + size*sizeof(char) );
-        cursor += ( sizeof(unsigned short) + size*sizeof(char) );        
+        thisSum += ( sizeof(size) + size*sizeof(char) );
+        cursor  += ( sizeof(size) + size*sizeof(char) );        
         
         
         // Read in size of hiScore and add to cursor
         inBin.read(reinterpret_cast<char *>(&num) , sizeof(int)); 
-        thisSum += sizeof(int);
-        cursor += sizeof(int);
+        thisSum += sizeof(num);
+        cursor  += sizeof(num);
         
-        //cout<<"\nthisSum="<<thisSum<<"  cursor="<<cursor<<"  count="<<count<<endl;
+        //cout << "\n thisSum = " << thisSum << "  cursor=" << cursor << "  count = " << count << endl;
         
         foundEm = user.isStrEqual(emai, binEmail); // looking for email inputted by user
         
         if(foundEm){
-            count = user.getTtlRec();  
+            count = user.getNumRec();  
             rSize = thisSum;
             setRecSiz(rSize);
             cursor = (count==0) ? 0 : (cursor-rSize); 
             setBegnFile(cursor); 
-            //cout<<"\n\trecSiz ="<<recSiz<<"  cursLoc="<<cursLoc<<"  count="<<count<<endl<<endl;
-            read1Bin(); // read this file binary & save  
+            //cout << "\n\t recSiz = " << recSiz << "  cursLoc = " << cursLoc << "  count = " << count << endl<<endl;
+            read1Bin(); // read this file in binary & save to admin class object
             return true;
         } else{
             count++;
             thisSum = 0L;    
         }
-        //cout<<count<<"=count \t   cursor = "<<cursor<<endl;   
+        //cout << " count = " << count << "   cursor = " << cursor << endl;   
     }    
        
     inBin.close();
@@ -546,8 +608,8 @@ bool Admin::findByEmail(string emai){
 
 void Admin::read1Bin(){
     
-    //cout<<"Hit read1Bin()\n";
-    //cout<<"recSiz = "<<recSiz<<"  cursor = "<<begnFile<<endl;
+    //cout << "Hit read1Bin()\n";
+    //cout << "recSiz = " << recSiz << "  cursor = " << begnFile << endl;
     
     ifstream inBin;
     string file = "usrData.dat";        
@@ -558,16 +620,12 @@ void Admin::read1Bin(){
     // sets cursor at the beginning of the file we're looking for
     inBin.seekg(begnFile,ios::beg);    
     
-    // Read & set ttlRec    
+    // Read & set numRec    
     int num;
     inBin.read(reinterpret_cast<char *>(&num) , sizeof(int)); 
-    user.setTtlRec(num);
+    user.setNumRec(num);   
     
-    // Read & set id    
-    inBin.read(reinterpret_cast<char *>(&num) , sizeof(int)); 
-    user.setID(num);    
-        
-    // Read & set name's length 
+    // Read & set the length of name 
     unsigned short size;
     inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short));
     user.setNamSiz(size);
@@ -579,7 +637,7 @@ void Admin::read1Bin(){
     user.setName(tempStr); // Set name 
     
     
-    // Read & set email's length 
+    // Read & set the length of email 
     inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short));
     user.setEmaiSiz(size);
 
@@ -609,8 +667,8 @@ void Admin::read1Bin(){
 
 
 /*****************************************************************/
-//           Read Admin's binary file, find 1 record by index
-//                     & return 1 record  
+//            Read Admin's binary file, find 1st record 
+//             & return 1 record as a Admin class object
 /*****************************************************************/
 
 void Admin::readAdBin(){ 
@@ -618,49 +676,44 @@ void Admin::readAdBin(){
     cout<<"\nReading Admin Binary...\n";
     
     ifstream inBin;
-    string file = "admin.dat";
-    
+    string file = "admin.dat";    
     inBin.open(file.c_str(), ios::in | ios::binary); 
     if(!inBin.is_open()){ cout<<"\nError opening "<<file<<endl; return;}
         
     long cursor = 0L;
      
-    // Accumulate total bits for one record                    
-    inBin.seekg(cursor,ios::beg);  // set is set to the beginning of the cursor's value  
+    // Set cursor at the very beginning of Admin's binary file              
+    inBin.seekg(cursor,ios::beg); 
 
-
-    // Read the value of namSiz and then use it to calculate the number of bits
-    // that namSiz and name take up in memory. 
-    // Add it to cursor and move on to the next variables
+    // Read the value of namSiz & set Admin member variable
     unsigned short size;
     inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short) );
     user.setNamSiz(size);
     
+    // Read name & set Admin member variable
     string str;
     str.resize(size);
     inBin.read(&str[0] , size*sizeof(char) );
     user.setName(str);
     
     
-    // Read the value of emaiSiz and then use it calculate the number of bits
-    // that emaiSiz and email take up in memory. 
-    // Add it to cursor and move on to the next variables        
+    // Read the value of emaiSiz and set Admin object        
     inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short) );      
     user.setEmaiSiz(size);
      
+    // Read email & set Admin member variable
     str="";
     str.resize(size);
     inBin.read(&str[0], size*sizeof(char) );
     user.setEmail(str);
 
     
-    // Read the value of pwrdSiz and then use it calculate the number of bits
-    // that pwrdSiz and password take up in memory. 
-    // Add it to cursor and move on to the next variables       
+    // Read the value of pwrdSiz and set Admin object     
     inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short));  
-     user.setPwrdSiz(size);
+    user.setPwrdSiz(size);
     
-    str="";
+    // Read name & set Admin member variable
+    str = "";
     str.resize(size);    
     inBin.read(&str[0], size*sizeof(char) );        
     user.setPwrd(str);  
@@ -699,20 +752,17 @@ void Admin::wrtAdBin(){
     outBin.open("admin.dat",ios::out | ios::binary); // DOES NOT appends content to the current content of the file.
     if(!outBin.is_open()){ cout<<"\nError opening admin.dat\n";}      
     
-    // Write name's length to binary file
-    // and then write this string to binary file
+    // Write name's size & name to binary file
     unsigned short size = user.getNamSiz();
     outBin.write(reinterpret_cast<char *>(&size), sizeof(unsigned short)); 
     outBin.write(user.getName().c_str(), size*sizeof(char)); 
         
-    // Write email's length to binary file
-    // and then write this string to binary file
+    // Write email's size & email to binary file
     size = user.getEmaiSiz();
     outBin.write(reinterpret_cast<char *>(&size), sizeof(unsigned short));      
     outBin.write( user.getEmail().c_str(), size*sizeof(char)); 
         
-    // Write password's length to binary file
-    // and then write this string to binary file
+    // Write password's size & password to binary file
     size = user.getPwrdSiz();
     outBin.write(reinterpret_cast<char *>(&size), sizeof(unsigned short)); 
     outBin.write(user.getPwrd().c_str(), size*sizeof(char));         
@@ -741,7 +791,7 @@ void Admin::updateAdmin(){
 /*****************************************************************/
 
 void Admin::print1Admin()const{  
-    cout<<endl<<endl
+    cout<<endl<<endl        
         <<"NamSiz:    "<< user.getNamSiz() <<endl
         <<"Name:      "<< user.getName()   <<endl
         <<"EmaiSiz:   "<< user.getEmaiSiz() <<endl
@@ -750,15 +800,19 @@ void Admin::print1Admin()const{
         <<"Password:  "<< user.getPwrd() <<endl;    
 }
 
+
 /*****************************************************************/
-//                     PRINT 1 User  & Admin members
+//               PRINT 1 User + Admin member variables
 /*****************************************************************/
 
-void Admin::printAdUsr() const{ 
-    user.print1URec();
+void Admin::printAdUsr() const{
+    
+    cout<<"\nAdmin's view";
+    user.printUsrRec();
     cout<<"Record Size    "<<recSiz<<endl
         <<"Start of file: "<<begnFile<<endl;
 }
+
 
 /*****************************************************************/
 //               Validate user's input before 
@@ -768,7 +822,7 @@ void Admin::printAdUsr() const{
 void Admin::getIndex(int &num){
    
     do {
-        cout<<"Enter a number between 0 and " << (user.getTtlRec()-1) <<endl;
+        cout<<"Enter a number between 0 and " << (user.getNumRec()-1) <<endl;
         cin>>num;
-    } while (!(num>=0 && num <= (user.getTtlRec()-1)));
+    } while (!(num>=0 && num <= (user.getNumRec()-1)));
 }

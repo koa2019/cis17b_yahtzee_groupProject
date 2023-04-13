@@ -1,20 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   Yahtzee.h
+/* File:   Yahtzee.h
  * Author: error
- *
  * Created on April 9, 2023, 4:59 PM
- */
+*/
 
 #ifndef YAHTZEE_H
 #define YAHTZEE_H
-#include "Dice.h"
-#include "User.h"
+#include "Dice.h" // aggregates instance of Dice class
+#include "User.h" // aggregates instance of User class
 
 class Yahtzee {
 private:
@@ -28,11 +20,7 @@ private:
     
 public:
     Yahtzee();
-    //bool play(User**,int *,int);
-    bool play();
-    //void play();
+    bool play(User &);
 };
-
-
 #endif /* YAHTZEE_H */
 

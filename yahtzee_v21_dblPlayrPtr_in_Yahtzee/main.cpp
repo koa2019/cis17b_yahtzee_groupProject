@@ -48,36 +48,49 @@
  * 
  * 
  v20:
- * Moved reWrtBin() and reWrtTxt() to User.cpp and passed
- * beginFile to them.
- * 
+ * Moved reWrtBin() and reWrtTxt() to User.cpp and passed beginFile to them.
  * Fixed bug in isUserLogin(). Forgot to reset hiScore in the obj.
- * 
  * Added conditional in AdminPortal() checks if a record is deleted,
- * then don't allow them to edit hiScore.
- * 
- * 
+   then don't allow them to edit hiScore.
  * Created an array of Users, so the game can run with 2 players. 
- 
  * Altered play() in Yahtzee, so it accepts a double pointer, pointer and number of players.
    Play() also returns if player 1 is the winner or not.
-  
- * in main() I made User rewrite their hiScore directly instead of having admin do it.
+ * In main() I made User rewrite their hiScore directly instead of having admin do it.
    
-   
- To Do: 
- * Figure out double pointers for 2 players inside of Yahtzee class
-  
- * Added double pointer array so I can print all Users.
+ v21:
+ * In User class changed numRec from a static int to a regular int because it was messing up
+   ttlRec when it moved between other .cpp pages.
+ * Removed id variable from User class and everywhere else because it
+   wasn't needed.
+ * Fixed bug in reWrtTxt() by changing the number of charCount. Removing id variable
+   changed the number of bits
+ * Yahtzee's play(): if player1 wins, then it'll compare their current score to
+   their hiScore saved in their record and change it accordingly.
+ * A new hiScore will only rewrite binary & text files when user is logged in,
+   so a guest player's new hiScore will not be saved to any files.
+ * Used if(admin4.user.getName().compare(0,6,"xxxxxxx")) to stop admin from 
+   editing a deleted record.
+ * Fixed BUG when you delete more than 1 record in a session
+   by adding delUsr. object to begnFile in Admin::deleteUsr().
+ * Read user binary & print all Users.
  
- * use string parse for -> if(usr4.user.getName()[0] == 'x'){
+ 
+ To Do: 
+ 
+ * Make getAllUsr() print outside of its function
+  
+ * destroy double ptr in Yahtzee class & in Admin class?
+ 
+ * Make readInput() read inputs from file again
+ 
+ * Add a bool variable to Admin as a flag for deleted records?
  
  * DRY. Clean up repetitive code.
  
  
  Ask Lehr:
  * inBin.read(&binEmail[0]  ...better way?
- * main() adm loosing ttlRec number inside of case 3
+ * Admin **usrArr getAllUsrs()
  * 
  */
 
@@ -99,20 +112,15 @@ using namespace std;  //STD Name-space where Library is compiled
 //Math/Physics/Science/Conversions/Dimensions
 
 //Function Prototypes
-void getMenu();
 
 //Code Begins Execution Here with function main
 int main(int argc, char** argv) {
     
     //Set random number seed once here
     srand(static_cast<unsigned int>(time(0)));
-    
-    
-    
+
     int choice = 0;
-    Admin admin;
-    //admin.printAdUsr();    
-    
+          
     cout<<"\n\n\tMenu\n"
         <<"1: Admin Login\n"
         <<"2: Sign Up\n"
@@ -127,91 +135,56 @@ int main(int argc, char** argv) {
         switch(choice){
             case 1: // Admin login
             {
-                Admin admin3;
-                admin3.adminLogin();
+                Admin admin;
+                admin.adminLogin();
                 break;
             } 
             case 2: // User sign up for new account
             {
                 User user1;
                 user1.signUp();                 
-                //user1.print1User();
+                //user1.printUsr();
                 break;
             }
             case 3:  // User login. If successful, then play game          
-            {           
-                User user2;
-                if(admin.isUsrLogin(user2)){
-                //if(admin.isUsrLogin()){
+            {       
+                Admin admin1;
+                if(admin1.isUsrLogin()){
                     
                     cout<<"\n\nUser login was successful.\n"; 
-                    //cout<<"\n inside main() Admin view";
-                    //admin.printAdUsr();
+                    //cout<<"\n inside main()";
+                    //admin.printAdUsr();                    
                     
                     
-                    //User user3;
-                    //cout<<"\n adm record: " << admin.getUsrRec() <<endl;
-                    //admin.copy2Usr(user3);
-                    //cout<<"\nWelcome "<<user3.getName();
-                    //user3.print1User();               
+                    // Create new User & copy admin values to user
+                    User user2;
+                    admin1.copy2Usr(user2);    
+                    cout << "\nWelcome " << user2.getName();
+                    user2.printUsr(); 
                     
-                    
-                    cout<<"\nWelcome "<<user2.getName();
-                    user2.print1User();                    
+                    // Create new instance of Yahtzee class
                     Yahtzee game1;
                     
-                    bool p1Winner = game1.play();
-
-                    string msg = p1Winner ? "P1 wins!\n" : "P2 wins!";
-                    cout<<msg<<endl;
-                    
-                    
-//                    int score = 4;                     
-//                    if(user2.isHiScore(score)) {
-//                        
-//                        //admin.setUsrHiScore(score); 
-//                        user2.setHiScore(score);
-//                        cout<<"\nNew High Score of "<<user2.getHiScore()<<"!\n";
-//                        //cout<<"Updating binary....";
-//                        user2.reWrtBin(admin.getBegnFile()); // rewrites this record in binary & text files    
-//                        admin.findByIndx(user2.getTtlRec());
-//                        cout<<"Updated profile: ";
-//                        user2.print1User();   
-//                    }                                   
-//                    else { cout<<"\n\nGood Game!\n"; }
-
+                    // Play game
+                    bool isP1HiScore = game1.play(user2);                    
+                       
+                    // if user is winner & has new hiScore, then print their update record
+                    if(isP1HiScore) {                         
+                        
+                        //user2.printUsr();
+                        user2.reWrtBin(admin1.getBegnFile()); // rewrites this record in binary & text files    
+                        cout << "\nUpdating binary....";
+                        admin1.findByIndx(user2.getNumRec());
+                        admin1.printAdUsr();   
+                    }                                                    
                 }
                 break;
-            } 
-            
+            }             
             case 4: // Play Yahtzee as a guest
-            {      
-                int nPlayer = 2;
-                
-                // create a pointer to Player's structure and create array size of 2   
-                User **player;
-                
-                // creating an array of Player pointers
-                player = new User*[nPlayer];
-                
-                //array of index to keep track of each player
-                int *indx = new int[nPlayer];
-
-                // creating each individual player by calling Player constructor
-                for (int i=0; i < nPlayer; i++) {         
-                    indx[i]=i;
-                }
-    
-                player[indx[0]] = new User("Guest","guest@email.com","G!23456");
-                player[indx[1]] = new User("Computer","computer@email.com","C!23456");
-    
-                Yahtzee game2;
-                                                  
-//                bool p1Winner = game2.play(player,indx,nPlayer);
-//               
-//                string msg2 = p1Winner ? "P1 wins!\n" : "P2 wins!";
-//                cout << msg2 << endl;
-                
+            {          
+                User guest("Guest");    
+                Yahtzee game2;                                                  
+                game2.play(guest);
                 break;
             }
             case 5: // Read inputs to fill User binary with records
@@ -228,9 +201,4 @@ int main(int argc, char** argv) {
         }
     
     return 0;
-}
-
-/**********  Function Definitions  **************/
-void getMenu(){
-    
 }
