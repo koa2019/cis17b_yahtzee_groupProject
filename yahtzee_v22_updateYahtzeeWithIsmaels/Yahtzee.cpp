@@ -180,7 +180,7 @@ bool Yahtzee::play(User &user){
             user.setHiScore(player[indx[1]]->getHiScore());
             cout << "\nNew High Score of " << user.getHiScore() << "!\n";
            //user.printUsr();
-
+            cout << "\nReading binary....";
             return p1Winner; // return true p1 has new high score  
             
         } else { cout<<"\n\nGood Game!\n"; }        

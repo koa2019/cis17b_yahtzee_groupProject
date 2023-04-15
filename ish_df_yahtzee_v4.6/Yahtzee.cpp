@@ -22,7 +22,7 @@ Yahtzee::Yahtzee() {
 //                  Play 13 rounds of Yahtzee
 //************************************************************
 
-void Yahtzee::play() {
+bool Yahtzee::play(int &highScore){
     
     const int MAXROLLS = 3;
     const int numRounds = 3;
@@ -33,8 +33,11 @@ void Yahtzee::play() {
     int resp, 
         numRolls;
     bool leave,
-         clearance;
-  
+         clearance,
+         p1Winner = false;
+    
+    
+    // Yahtzee starts here
     cout << "WELCOME TO YAHTZEE!!" << endl << endl;
     cout << "RULES: " << endl << endl << endl;
     getRules();
@@ -148,15 +151,32 @@ void Yahtzee::play() {
     } // ends round for loop i < 13              
 
     cout << "\n\n\n\n\t\tGame Over!\n";
+    
+    // get the total points from the scorecard
     score = finalSC.getTotalScore();
+    
+    // Print player's final scorecard results
     finalSC.getFinalSC();
     
-    //cout << "\n\nDo you want to play again? (Y/N) ";
-    //while (!(cin >> resp1) || (toupper(resp1) != 'Y' && toupper(resp1) != 'N')) {
-    //    cout << "Invalid choice. Please enter 'Y' or 'N': ";
-    //    cin.clear();
-    //    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    //}
+    p1Winner = true;    
+    
+    if(p1Winner){
+        
+        cout << "Player 1 won!\n";
+        
+        // Check is player1's current score is larger than their current hiScore       
+        if(highScore < score){            
+            
+            // Reset user's hiSCore and update binary & text file
+            highScore = score;
+            cout << "\nNew High Score of " << highScore << "!\n";          
+
+            return p1Winner; // return true p1 has new high score  
+            
+        } else { cout<<"\n\nGood Game!\n"; }        
+    }
+    
+    return false;
 
 } // ends play()
 

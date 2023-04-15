@@ -176,7 +176,7 @@ int main(int argc, char** argv) {
                         
                         //user2.printUsr();
                         user2.reWrtBin(admin1.getBegnFile()); // rewrites this record in binary & text files    
-                        cout << "\nUpdating binary....";
+                        cout << "\nReading binary....";
                         admin1.findByIndx(user2.getNumRec());
                         admin1.printAdUsr();   
                     }                                                    

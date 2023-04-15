@@ -21,8 +21,8 @@ public:
     Yahtzee();  // Default Constructor
     
     // Mutators
-    void play();
-    
+    bool play(int &);
+   
     // Accessors
     void getRules(); 
     void prntRound(int);
