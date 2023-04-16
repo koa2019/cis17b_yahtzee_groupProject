@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
-#include <bits/stdc++.h>
+#include <bits/stdc++.h> // vectors
 #include "Yahtzee.h"
-#include "Dice.h"
-#include "ScoreCard.h"
+#include "Dice.h"      // aggregates instance of Dice class
+#include "ScoreCard.h"  // aggregates instance of ScoreCard class
 
 using namespace std;
 
@@ -38,8 +38,6 @@ bool Yahtzee::play(int &highScore){
     
     
     // Yahtzee starts here
-    cout << "WELCOME TO YAHTZEE!!" << endl << endl;
-    cout << "RULES: " << endl << endl << endl;
     getRules();
 
     // Game runs for 13 rounds. 1 round per category
@@ -229,6 +227,8 @@ void Yahtzee::pause(char ch) {
 //          Print rules
 //******************************************
 void Yahtzee::getRules(){
+    cout << "WELCOME TO YAHTZEE!!" << endl << endl;
+    cout << "RULES: " << endl << endl << endl;
     cout << "Yahtzee is a game played with five dice, where the objective is to score as many points as possible in 13 rounds." << endl;
     cout << "Each player takes turns rolling the dice up to three times per turn, trying to achieve certain combinations." << endl;
     cout << "After each turn, the player must choose a category to score their points in, and that category cannot be used again." << endl << endl;

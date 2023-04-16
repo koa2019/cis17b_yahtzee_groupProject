@@ -37,7 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/Admin.o \
 	${OBJECTDIR}/Dice.o \
-	${OBJECTDIR}/Score_Card.o \
+	${OBJECTDIR}/ScoreCard.o \
 	${OBJECTDIR}/User.o \
 	${OBJECTDIR}/Yahtzee.o \
 	${OBJECTDIR}/main.o
@@ -77,10 +77,10 @@ ${OBJECTDIR}/Dice.o: Dice.cpp
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Dice.o Dice.cpp
 
-${OBJECTDIR}/Score_Card.o: Score_Card.cpp
+${OBJECTDIR}/ScoreCard.o: ScoreCard.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Score_Card.o Score_Card.cpp
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ScoreCard.o ScoreCard.cpp
 
 ${OBJECTDIR}/User.o: User.cpp
 	${MKDIR} -p ${OBJECTDIR}
