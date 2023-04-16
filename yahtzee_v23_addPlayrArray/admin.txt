@@ -1,0 +1,6 @@
+namSiz:  5
+name:    admin
+emaiSiz: 14
+email:   admin@info.com
+pwrdSiz: 8
+pwrd:    Pass!234

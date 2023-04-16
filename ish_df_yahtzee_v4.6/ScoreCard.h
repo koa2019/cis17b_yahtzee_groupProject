@@ -1,6 +1,5 @@
 /* File:   ScoreCard.h
  * Author: DanYell
- *
  * Created on April 14, 2023, 9:29 PM
 */
 

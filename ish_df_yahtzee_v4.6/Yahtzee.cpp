@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
-#include <bits/stdc++.h>
+#include <bits/stdc++.h> // vectors
 #include "Yahtzee.h"
-#include "Dice.h"
-#include "ScoreCard.h"
+#include "Dice.h"      // aggregates instance of Dice class
+#include "ScoreCard.h"  // aggregates instance of ScoreCard class
 
 using namespace std;
 
@@ -22,7 +22,7 @@ Yahtzee::Yahtzee() {
 //                  Play 13 rounds of Yahtzee
 //************************************************************
 
-void Yahtzee::play() {
+bool Yahtzee::play(int &highScore){
     
     const int MAXROLLS = 3;
     const int numRounds = 3;
@@ -33,10 +33,11 @@ void Yahtzee::play() {
     int resp, 
         numRolls;
     bool leave,
-         clearance;
-  
-    cout << "WELCOME TO YAHTZEE!!" << endl << endl;
-    cout << "RULES: " << endl << endl << endl;
+         clearance,
+         p1Winner = false;
+    
+    
+    // Yahtzee starts here
     getRules();
 
     // Game runs for 13 rounds. 1 round per category
@@ -148,15 +149,32 @@ void Yahtzee::play() {
     } // ends round for loop i < 13              
 
     cout << "\n\n\n\n\t\tGame Over!\n";
+    
+    // get the total points from the scorecard
     score = finalSC.getTotalScore();
+    
+    // Print player's final scorecard results
     finalSC.getFinalSC();
     
-    //cout << "\n\nDo you want to play again? (Y/N) ";
-    //while (!(cin >> resp1) || (toupper(resp1) != 'Y' && toupper(resp1) != 'N')) {
-    //    cout << "Invalid choice. Please enter 'Y' or 'N': ";
-    //    cin.clear();
-    //    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    //}
+    p1Winner = true;    
+    
+    if(p1Winner){
+        
+        cout << "Player 1 won!\n";
+        
+        // Check is player1's current score is larger than their current hiScore       
+        if(highScore < score){            
+            
+            // Reset user's hiSCore and update binary & text file
+            highScore = score;
+            cout << "\nNew High Score of " << highScore << "!\n";          
+
+            return p1Winner; // return true p1 has new high score  
+            
+        } else { cout<<"\n\nGood Game!\n"; }        
+    }
+    
+    return false;
 
 } // ends play()
 
@@ -209,6 +227,8 @@ void Yahtzee::pause(char ch) {
 //          Print rules
 //******************************************
 void Yahtzee::getRules(){
+    cout << "WELCOME TO YAHTZEE!!" << endl << endl;
+    cout << "RULES: " << endl << endl << endl;
     cout << "Yahtzee is a game played with five dice, where the objective is to score as many points as possible in 13 rounds." << endl;
     cout << "Each player takes turns rolling the dice up to three times per turn, trying to achieve certain combinations." << endl;
     cout << "After each turn, the player must choose a category to score their points in, and that category cannot be used again." << endl << endl;

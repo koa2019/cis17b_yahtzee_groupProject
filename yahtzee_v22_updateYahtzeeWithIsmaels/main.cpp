@@ -2,7 +2,7 @@
  * File:    main.cpp
  * Author:  Danielle F
  * Created: 03-28-23 @10 PM
- * Purpose:  survey project v21
+ * Purpose:  survey project v22
  * 
  *  NOTE: WHEN FIRS RUNNING THIS CODE, SELECT 5 FROM MENU, SO IT RESETS THE
  *        USERDATA.DAT FILE. THIS WAY YOU CAN START FRESH.
@@ -77,31 +77,36 @@
    by adding delUsr. object to begnFile in Admin::deleteUsr().
  * Read user binary & print all Users.
  
+ v22:
+ * Added Ismael's updated classes from ismael_yahtzee_v4.6
  
- To Do: 
- 
- * Make getAllUsr() print outside of its function
-  
- * destroy double ptr in Yahtzee class & in Admin class?
- 
- * Make readInput() read inputs from file again
- 
- * Add a bool variable to Admin as a flag for deleted records?
- 
+ Admin/User To Do:  
+ * Make getAllUsr() print outside of its function  
+ * Destroy double ptr in Yahtzee class & in Admin class? 
+ * Make readInput() read inputs from file again 
+ * Add a bool variable to Admin as a flag for deleted records? 
  * DRY. Clean up repetitive code.
+ * Have destructors do something other than cout a message. Program fails without them.
+ 
+Yahtzee To Do: 
+ * Make play() work with 2 players instead of 1
+ * how to pass Dice dice[] from Yahtzee to ScoreCard?
+ * Decided if we still need bool clearance, leave in Yatzee
+ * Is there a way to put the rolling and display of dice in a function & call it in play()?
  
  
  Ask Lehr:
  * inBin.read(&binEmail[0]  ...better way?
  * Admin **usrArr getAllUsrs()
- * 
+ * do we need User in yahtzee private members just because a function is passing it
+ * What is aggregate a class and only thing you want to add is functions?
  */
 
 //System Libraries
 #include <iostream>  //Input/Output Library
 #include <cstdlib> // rand()
 #include <ctime>   // time()
-#include <string> //string
+#include <string>  //string
 #include <cstring> //c-strings
 #include <cctype> // tolower()
 using namespace std;  //STD Name-space where Library is compiled
@@ -136,6 +141,7 @@ int main(int argc, char** argv) {
         cin.ignore();
         
         switch(choice){
+            
             case 1: // Admin login
             {
                 Admin admin;
@@ -167,16 +173,14 @@ int main(int argc, char** argv) {
                     
                     // Create new instance of Yahtzee class
                     Yahtzee game1;
-                    
-                    // Play game
-                    bool isP1HiScore = game1.play(user2);                    
+                                 
                        
                     // if user is winner & has new hiScore, then print their update record
-                    if(isP1HiScore) {                         
+                    if(game1.play(user2)) {                         
                         
                         //user2.printUsr();
                         user2.reWrtBin(admin1.getBegnFile()); // rewrites this record in binary & text files    
-                        cout << "\nUpdating binary....";
+                        cout << "\nReading binary....";
                         admin1.findByIndx(user2.getNumRec());
                         admin1.printAdUsr();   
                     }                                                    
@@ -190,7 +194,8 @@ int main(int argc, char** argv) {
                 game2.play(guest);
                 break;
             }
-            case 5: // Read inputs to fill User binary with records
+            case 5: // Erase binary & text file, then read inputs to fill
+                    // User binary with records. Used after testing & altering records.
             {
                 User user5;
                 user5.readInputFile(); 
