@@ -1,0 +1,36 @@
+
+Record   0
+namSiz:  13
+name:    homer simpson
+emaiSiz: 14
+email:   homer@simp.com
+pwrdSiz: 8
+pwrd:    Homer!23
+hiScore: 000
+
+Record   1
+namSiz:  13
+name:    marge simpson
+emaiSiz: 14
+email:   marge@simp.com
+pwrdSiz: 8
+pwrd:    Marge$ab
+hiScore: 000
+
+Record   2
+namSiz:  12
+name:    lisa simpson
+emaiSiz: 13
+email:   lisa@simp.com
+pwrdSiz: 9
+pwrd:    Lisa!2345
+hiScore: 000
+
+Record   3
+namSiz:  11
+name:    day tripper
+emaiSiz: 16
+email:   lucy@beatles.com
+pwrdSiz: 9
+pwrd:    DayT#2345
+hiScore: 000
