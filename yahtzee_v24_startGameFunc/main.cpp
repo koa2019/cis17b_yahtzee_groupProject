@@ -112,7 +112,7 @@ survey v1:
  * Tested this version as guest and 2 players. Works except for BUG1 listed below. 
  * Tested this version as guest and 1 player. Works except for BUG1 listed below. 
  * Added getUpLowSums() and printed them in printFinalSC()
- 
+ * readInput() reads inputs from file again 
  
  Admin/User To Do:  
  * Make getAllUsr() print outside of its function  
@@ -189,7 +189,8 @@ int main(int argc, char** argv) {
             case 2: // User sign up for new account
             {
                 User user1;
-                user1.signUp();                 
+                user1.signUp();
+                //cout<<"\ninside main() user1 object looks like: ";
                 //user1.printUsr();
                 break;
             }
@@ -199,7 +200,7 @@ int main(int argc, char** argv) {
                 if(admin1.isUsrLogin()){
                     
                     cout<<"\n\nUser login was successful.\n"; 
-                    //cout<<"\n inside main()";
+                    //cout<<"\ninside main() admin1 object looks like: ";
                     //admin.printAdUsr();                    
                     
                     
@@ -216,6 +217,7 @@ int main(int argc, char** argv) {
                     // if user is winner & has new hiScore, then print their update record
                     if(game1.startGame(user2)) {                         
                         
+                        //cout<<"\n\ninside main() user2 object looks like: ";
                         //user2.printUsr();
                         user2.reWrtBin(admin1.getBegnFile()); // rewrites this record in binary & text files    
                         cout << "\nReading binary....";
@@ -227,14 +229,16 @@ int main(int argc, char** argv) {
             }             
             case 4: // Play Yahtzee as a guest
             {          
-                User guest("Guest");    
+                User guest("Guest"); 
+                //cout<<"\ninside main() guest user object looks like: ";
+                guest.printUsr();
                 Yahtzee game2;                                                  
                 game2.startGame(guest);
                 break;
             }
-            case 5: // Erase binary & text file, then read inputs to fill
-                    // User binary with records. Used after testing & altering records.
-            {
+            case 5: // Reset files by erasing binary & text file, then creates records in 
+            {        // User binary with records. Use after testing & altering records.
+      
                 User user5;
                 user5.readInputFile(); 
                 break;
