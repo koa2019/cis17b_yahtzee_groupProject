@@ -24,7 +24,7 @@ Admin::Admin(){
             usrArr[i] = new Admin(i); // Calls constructor #2 
         }        
        
-        readAllUsrs();  // Reset user array with record read in from binary file
+        readBin_setArray();  // Reset user array with record read in from binary file
 }
 
 //******************************************************************************
@@ -96,7 +96,7 @@ int Admin::isUsrLogin(){
     string tempE= "lisa@simp.com", tempPw="Lisa!2345";
     //string tempE = "", tempPw = "";
     bool isName = false, isPwrd = false;
-    
+    Admin admin1;
     //do {
         //cout<<"\nEmail is case sensitive. Must use lowercase letters.\n";
         cout<<"Enter email:    ";
@@ -114,7 +114,7 @@ int Admin::isUsrLogin(){
     // look for this email in usrBin.dat. If it exists, then
     // compare email and password with record in binary file
     int indx = 0;
-    if(findByEmail(tempE,indx)){
+    if(admin1.findByEmail(tempE,indx)){
     
         isName = user.isStrEqual(usrArr[indx]->user.getEmail(),tempE);
         isPwrd = user.isStrEqual(usrArr[indx]->user.getPwrd(),tempPw); 
@@ -198,15 +198,16 @@ void Admin::adminPortal(){
             <<"3: Find by email\n\t"
             <<"4: Edit hiScore\n\t"
             <<"5: Delete a user\n\t"
-            <<"6: ReadInputFile()\n\t"
-            <<"7: Update Admin\n\t"
+            <<"6: Reset binary and text files\n\t"
+            <<"7: Update Update Admin's Profile\n\t"
             <<"9: Logout\n\t"
             <<"Enter a number: ";
         cin>>choice;
 
         switch(choice){
             case 1:
-            {    
+            {   
+                readAdBin();  // Reset user array with records read in from the latest binary file
                 printAllUsr(); // Print usrArr[]                                                     
                 break;
             } 
@@ -241,7 +242,7 @@ void Admin::adminPortal(){
             case 6:   // Reset files by erasing binary & text file, then creates records in 
             {        // User binary with records. Use after testing & altering records.      
                 user.readInputFile();
-                readAllUsrs();
+                readBin_setArray();
                 break;
             }
             case 7:
@@ -261,7 +262,7 @@ void Admin::adminPortal(){
 //******************************************************************
 //                     Read binary file & reset usrArr[]
 //******************************************************************
-void Admin::readAllUsrs(){
+void Admin::readBin_setArray(){
     
     ifstream inBin;
     string file = "usrData.dat";
@@ -271,7 +272,7 @@ void Admin::readAllUsrs(){
     long cursor = 0L,
          thisSum = 0L;
     int  i = 0;
-   
+    int num = 0;
     
     // Accumulate the size of each record and the beginning bit location for each record
     while(i < totalRec){    
@@ -280,77 +281,93 @@ void Admin::readAllUsrs(){
         //cout<<"\n\n i=" << i <<" cursor=" << cursor << " thisSum=" << thisSum <<endl;
         
         
-        inBin.seekg(cursor,ios::beg);  // set is set to the beginning of the cursor's value 
+        // set is set to the beginning of the cursor's value
+        inBin.seekg(cursor,ios::beg);  
         
        
-        int num;
-        inBin.read(reinterpret_cast<char *>(&num) , sizeof(int));  // Read value of numRec 
-        usrArr[i]->user.setNumRec(num); // Set numRec in Admin class object    
-
-        thisSum += sizeof(int); // Accumulate this records number of bits      
+        // Read & set numRec in User object
+        // Accumulate number of bits for numRec
+        inBin.read(reinterpret_cast<char *>(&num) , sizeof(int));   
+        usrArr[i]->user.setNumRec(num); 
+        thisSum += sizeof(int);  
         //cout<<"thisSum=="<<thisSum<<endl;
         
-       
-        unsigned short size;
-        inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short) ); // Read value of namSiz  
-        usrArr[i]->user.setNamSiz(size); // Set namSiz in Admin class object    
         
-      
+        
+        // Read & set namSiz in User object
+        // Resize, read & set name in User object
+        // Accumulate number of bits for namSize + name
+        unsigned short size;
+        inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short) ); 
+        usrArr[i]->user.setNamSiz(size); 
+        
         string tempStr = "";
         tempStr.resize(usrArr[i]->user.getNamSiz());   
-        inBin.read( &tempStr[0] , size*sizeof(char) ); // Read name       
-        usrArr[i]->user.setName(tempStr);             // Set name in Admin class object    
-        
-       
-        thisSum += ( sizeof(size) + (size*sizeof(char)) ); // Accumulate this records number of bits
+        inBin.read( &tempStr[0] , size*sizeof(char) );      
+        usrArr[i]->user.setName(tempStr);             
+               
+        thisSum += ( sizeof(size) + (size*sizeof(char)) ); 
         //cout<<"thisSum=="<<thisSum<<endl;    
          
+        
       
-        inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short) );// Read emaiSiz                
-        usrArr[i]->user.setEmaiSiz(size);  // Set emaiSiz in Admin class object    
+        // Read & set emaiSiz in User object
+        // Resize, read & set email in User object
+        // Accumulate number of bits for emaiSiz + email
+        inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short) );             
+        usrArr[i]->user.setEmaiSiz(size);   
         
-       
         tempStr.resize(usrArr[i]->user.getEmaiSiz());
-        inBin.read(&tempStr[0], size*sizeof(char)); // Read email   
-        usrArr[i]->user.setEmail(tempStr);         // Set email in Admin class object   
+        inBin.read(&tempStr[0], size*sizeof(char)); 
+        usrArr[i]->user.setEmail(tempStr);          
         
-        
-        thisSum += ( sizeof(size) + size*sizeof(char) ); // Accumulate this records number of bits
+        thisSum += ( sizeof(size) + size*sizeof(char) );
         //cout<<"thisSum=="<<thisSum<<endl;        
         
-       
-        inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short)); // Read pwrdSiz           
+        
+        
+        // Read & set pwrdSiz in User object
+        // Resize, read & set password in User object
+        // Accumulate number of bits for pwrdSiz + password
+        inBin.read(reinterpret_cast<char *>(&size), sizeof(unsigned short));           
+        usrArr[i]->user.setPwrdSiz(size);
        
         tempStr.resize(size);
-        inBin.read(&tempStr[0], size*sizeof(char) ); // Read password   
-        usrArr[i]->user.setPwrd(tempStr);           // Set password in Admin class object    
+        inBin.read(&tempStr[0], size*sizeof(char) );    
+        usrArr[i]->user.setPwrd(tempStr);   
+        
+        thisSum += ( sizeof(size) + (size*sizeof(char)) );
+        //cout<<"thisSum=="<<thisSum<<endl;                
         
         
-        thisSum += ( sizeof(size) + (size*sizeof(char)) ); // Accumulate this records number of bits
-        //cout<<"thisSum=="<<thisSum<<endl;        
         
-     
-        inBin.read(reinterpret_cast<char *>(&num) , sizeof(int)); // Read hiScore 
-        usrArr[i]->user.setHiScore(num);  // Set hiScore in Admin class object
+        // Read & set hiScore in class object
+        // Accumulate number of bits for hiScore
+        inBin.read(reinterpret_cast<char *>(&num) , sizeof(int)); 
+        usrArr[i]->user.setHiScore(num); 
+        thisSum += sizeof(num);  
+        //cout<<"thisSum=="<<thisSum<<endl;
         
-        thisSum += sizeof(num); // Accumulate this records number of bits  
-        cursor  += thisSum;    // Reset cursor to read the next record         
+        
+        
+        // Reset cursor to read the next record 
+        cursor  += thisSum;            
         //cout << "\n thisSum = " << thisSum << " cursor = " << cursor << endl;
         
         
-        // if its the first record set the cursor to the zero 
+        // if its the first record,then set begnGile to zero
         long bFile = (i==0)? 0L : (cursor-thisSum); 
         usrArr[i]->setBegnFile(bFile);
         usrArr[i]->setRecSiz(thisSum);
         //cout<<"\ni = "<<i<<" recSiz = "<<usrArr[i]->recSiz<<"  begnFile = "<<usrArr[i]->begnFile<<endl;   
 
         //usrArr[i]->printAdUsr();
-        i++;
+        i++; 
     }    
     
     i = (i > totalRec) ? i : totalRec;
     
-    inBin.close();              
+    inBin.close();          
 }
 
 
@@ -376,7 +393,7 @@ void Admin::setUsrHiScore(){
 
     usrArr[indx]->user.setHiScore(score);   // Reset hiScore      
     usrArr[indx]->user.reWrtBin(usrArr[indx]->begnFile); // rewrites this record in binary & text files 
-    readAllUsrs(); // Reset usrArr after the binary file is updated     
+    readBin_setArray(); // Reset usrArr after the binary file is updated     
     cout<<"\n\nRecord successfully updated.";
     usrArr[indx]->printAdUsr();          // confirm this record was reset    
 }
@@ -413,7 +430,7 @@ void Admin::deleteUsr(){
     usrArr[indx]->user.setPwrd(temp);       // Reset password 
     usrArr[indx]->user.setHiScore(0);       // Reset hiScore
     usrArr[indx]->user.reWrtBin(usrArr[indx]->begnFile); // rewrites this record in binary & text files  
-    readAllUsrs();          // Reset usrArr[] after the binary file is updated  
+    readBin_setArray();          // Reset usrArr[] after the binary file is updated  
     cout<<"\n\nRecord successfully deleted.";
     usrArr[indx]->printAdUsr();          // confirm this record was reset
 }
@@ -470,7 +487,8 @@ void Admin::getByEmail(){
     
     //emai = "homer@simp.com";
     //emai = "marge@simp.com";
-    emai = "lucy@beatles.com";          
+    //emai = "lucy@beatles.com";   
+    emai = "lisa@simp.com";
     cout <<"\n\nLooking for " << emai << "...\n\n";   
     
     bool foundEmail = false;  
