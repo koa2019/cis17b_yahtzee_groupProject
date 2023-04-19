@@ -28,8 +28,8 @@ bool Yahtzee::play(int &highScore){
     const int numRounds = 3;
     ScoreCard scorecard;
     ScoreCard finalSC;
-    Dice dice[NUM_DICE];     // aggregate instance of Dice class. Dice array object    
-    int diceArr[NUM_DICE];  // local dice int array
+    //Dice dice[NUM_DICE];     // aggregate instance of Dice class. Dice array object    
+    //int diceArr[NUM_DICE];  // local dice int array
     int resp, 
         numRolls;
     bool leave,

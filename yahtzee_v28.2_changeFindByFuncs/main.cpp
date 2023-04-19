@@ -152,11 +152,11 @@ survey v1:
  * Cleaned up adminPortal() by putting each case in its own function
  * Deleted read1bin()
  * Destroyed double ptr in Admin class
- 
+ * Updated Admin with survey_v5's Admin class
  
  Admin/User To Do:  
 
- * Make readInput() read inputs from file again. isStrEqual() returns false. 
+ * Make User::readInputFile() read inputs from file again. isStrEqual() returns false. 
  * Add a bool variable to Admin as a flag for deleted records? 
  * DRY. Clean up repetitive code.
  * Have ~User do something other than cout a message. Program fails without it.
@@ -201,7 +201,9 @@ int main(int argc, char** argv) {
 
     int choice = 0;
     Admin admin;
-     
+    User user; 
+    
+    
     cout<<"\n\n\tMenu\n"
         <<"1: Admin Login\n"
         <<"2: Sign Up\n"
@@ -216,17 +218,16 @@ int main(int argc, char** argv) {
         switch(choice){
             
             case 1: // Admin login
-            {
-               
+            {               
                 admin.adminLogin();
                 break;
             } 
             case 2: // User sign up for new account
             {
-                User user1;
-                user1.signUp();
-                //cout<<"\ninside main() user1 object looks like: ";
-                //user1.printUsr();
+               
+                user.signUp();
+                //cout<<"\ninside main() after signUp() object looks like: ";
+                //user.printUsr();
                 break;
             }
             case 3:  // User login. If successful, then play game          
@@ -240,11 +241,10 @@ int main(int argc, char** argv) {
                     admin.printAdUsr(indx);                    
                     
                     
-                    // Create new User & copy admin values to user
-                    User user2;
-                    admin.copy2Usr(user2,indx);    
-                    cout << "\nWelcome " << user2.getName();
-                    user2.printUsr(); 
+                    // Create new User & copy admin values to user                    
+                    admin.copy2Usr(user,indx);    
+                    cout << "\nWelcome " << user.getName();
+                    user.printUsr(); 
                     
                     // Create new instance of Yahtzee class
                     Yahtzee game1;
@@ -254,14 +254,14 @@ int main(int argc, char** argv) {
                     if(recordLoc<0){ cout << "\nError finding record location\n"; break; }
                     
                     // if user is winner & has new hiScore, then print their update record
-                    if(game1.startGame(user2, recordLoc)) {                         
+                    if(game1.startGame(user, recordLoc)) {                         
                         
-                        //cout<<"\n\ninside main() user2 object looks like: ";
-                        //user2.printUsr();                       
+                        //cout<<"\n\ninside main() user object looks like: ";
+                        //user.printUsr();                       
                           
-                        admin.readAllUsrs();
-                        cout << "\nAdmin is reading binary file....\n";
-                        admin.printAdUsr(user2.getNumRec());   
+                        admin.readBin_setArray();
+                        cout << "\nAdmin is reading updated binary file....\n";
+                        admin.printAdUsr(user.getNumRec());   
                     }                                                    
                 }
                 break;
@@ -277,8 +277,7 @@ int main(int argc, char** argv) {
             }
             case 5:   // Reset files by erasing binary & text file, then creates records in 
             {        // User binary with records. Use after testing & altering records.    
-                User user5;
-                user5.readInputFile(); 
+                user.readInputFile(); 
                 break;
             }
             default: 
