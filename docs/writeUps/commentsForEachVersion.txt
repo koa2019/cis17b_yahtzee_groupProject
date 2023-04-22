@@ -1,0 +1,291 @@
+v1: 
+ *      Reads inputs from user and confirms them in main().
+ *      If all inputs are valid, then it prints inputs.
+  
+ v2:  
+ *      Creates one name string, one email string, one password string.
+ *      Adds functions that confirm each input meets certain criteria.
+ *      Prints one name, one email, one password    
+
+ v3:  
+ *	Writes & appends to text and binary file:
+ *      size of name string, one name string,
+ *      size of email string, one email string,
+ *      size of password string, one password string.
+ *      Reads first three strings in from binary file.
+ 
+ v4:  
+ *      Reads in third record in from binary file
+ *      by accumulating the size of each string.  
+ *      Stops at the beginning of record 3.
+
+ v5:
+ *      At this point program can read in three strings and validate
+ *      they meet certain requirements, saves the three variables, then
+ *      it writes these 3 strings and their lengths to a text & binary file.
+ *      The program opens binary file and looks for the third record in it.
+ *      Once it finds the record it reads and saves the length of each string
+ *      as well as the actual string. Since this is all working 
+ *      I added a User class. It took a LOT of adjustments to get this working again.
+ *      This version now does everything it was doing in version 4, 
+ *      but now it saves the strings and their lengths inside of class. 
+ *      Writing and reading files runs in main(). I will them into functions 
+ *      once I add a rand() to randRec.
+ 
+v6:  
+ *      Added a rand() to randRec, BUT I eventually need to figure out how many 
+ *      records are in data.txt because Admin class will be the only one who has 
+ *      permission to read the binary file, and they'll be looking for a specific  
+ *      user rather than a random user.
+ *      Added int hiScore=0 to class. Added getHiScore(), and
+ *      added setHiScore(int score) that accepts a int and checks if is greater
+ *      than the current hiScore.
+ *      Wrote hiScore to text and binary.
+ *      Confirmed hiScore is being read from binary file. 
+ *      Created 1 instance of User class and saved the contents of 1 file that 
+ *      was located in from the binary file. But I had to change how the 
+ *      mutator member functions set the variables.
+ 
+v7:  
+ *    Sets a max number of user someone can add during 1 session.
+ *    Added a while loop to add 1-4 user's. 
+ *    Added a record count & used iy when writing to text file.
+ *    Changed password minSize to 7.
+ *    Put writing and reading to files in their own functions.
+ 
+yahtzee_v0_adminClass_broken_v1:    
+ * Is based off userClass_v7.
+ * Changed User to Admin and moved it into its own .h and .cpp files.
+ * Created specific functions that set,write,read Admin's login profile.
+ * In main() asked Admin to login and then checked if their input matched the values in the Admin.dat file. 
+ * If login was successful, then a menu runs, else exits program.
+ * Made checkHiScore() return a int instead of bool. 
+
+v9: Is an exact copy of yahtzee_v7_userClass_whileLoop.
+ 
+yahtzee_v10_adminClassv10: 
+ * Is a copy of yahtzee_v7_userClass_whileLoop.
+ * Needs to Removes adding multiple Users.
+
+yahtzee_v10_userClass_v10: 
+ * Added unique id variable to class.
+ * Added id to wrtTxt(), wrtBin() & readBin().
+ * Created a menu with login or sign up options.
+ * Added 2nd contructor that passes a random number to set id with.
+ * login() compares two strings, but NEEDS to search binary for an email.
+
+v11:   
+ * Added Admin class & moved all of User class to it, so Admin is parent class. User class will inherit Admin and add hiScore to its class.
+ 
+v12:   
+ * Adding a static member and static member() to fix 
+   number of records counter. Added static void addTtlRec() to increment.
+ * Fixed ttlRecs to hold in between runs by adding a text file that reads 
+   total # records in & initiates it every time ADMIN constructor runs.
+ * Added ttlRec to wrtTxt(),wrtBin(), readBin().
+ * Added readInputFile() cause I was tired of doing it manually.
+ * Moved signUp() & readInputFile() to User class.
+ * Created adminPortal with a Admin Menu inside of the admin.cpp 
+   so it could call private functions. You can only access this menu
+   if you sign in correctly.
+ * Add max retries in user validation functions
+ * Added overloaded readBin() that accepts an email.
+ * Added wrt1Record() and called it in both readBin()
+ * Added wrtAdminTxt() & wrtAdminBin() as private Admin members
+ * Added char arguments to wrtTxt()
+ * Added a switch menu in main() with options to sign up, user login, admin login
+ * Added number of rolls to User class
+ * Fixed User overwriting ttlRec & ID by passing the values from Admin to
+   User in  main().
+ * Changed bool readBin() to long findEmail(), so I can pass the cursor
+   when i need to rewrite a file in binary. If email is not found in
+   binary, then it sets cursor to -99.
+
+ yahtzee_v13_adminClass:
+ * added reWrtBin(int sizeOfRecord, long cursorPosition of this email).
+ * Does NOT rewrite. Someone sugguested using ios::ate and seekp().
+ * Delete binary sugguestion was to copy files up to email to a temp.dat, 
+ * skip the target record, then continue writing to temp.dat. 
+ * Then delete usrData.dat and rename temp.dat to usrData.dat;
+
+yahtzee_v13_makeParentUserClass_scratched:
+ * Changed class heirarchy: Admin inherits User. 
+ * Added reWrtBin(int sizeOfRecord, long cursorPosition of this email).
+ * BUG! Does NOT rewrite binary inside of reWrtBin().
+
+yahtzee_v14_adminClass: 
+ * I simplified cis17A_project2_yahtzee_v7 & v8 by eliminating Score class 
+ * & only have Player class in main().
+ * Adding Player class which aggregates an instance of SCard class to main().
+ * Added yahtzee() in menu which uses the Player class to play the game.
+ * Added print() in SCard class that write the upper, lower,
+ * & grand totals. They're based on static variable that will need to be changed
+ * when I added Ismael's scorecard class
+ * Added get() in Player that call SCard class various print total functions.
+ * It would be more efficient(less code) to have Player inherit SCard instead of
+ * aggregating an instance of it.
+
+yahtzee_v15_UserBaseAdminDerived:
+ * Is a copy of survey project v1.
+ * Admin inherits User
+
+yahtzee_v16_reWrtTextFile  
+ * Rewrites 1 record in User text file after it rewrites binary.
+ * Fixed bug in readInput() by creating 4 instances of User.
+ * Fixed bug in findByIndx() by subtracting thisSum from cursor 
+
+ yahtzee_v17_boolFindByEmail:
+ * Changed findByEmail to return bool.
+ * AdminPortal() case 4: Edit binary finds the record by index instead of by email
+ * Added getAllUsrs() to print all users from within the function,
+ * BUT I want it to return a double pointer.
+
+yahtzee_v18_admin_aggregateUser:
+ * Admin aggregate an instance of User instead of inheriting it. Awful.
+ * Removed code for getAllUsrs()
+
+yahtzee_v19_addYahtzeeClass
+ 
+ v19:
+ * Added Ismael's Yahtzee, Score_Card, and Dice classes to main().
+ * Added setUsrHiScore(score) & called it main() so it rewrite
+ * User's binary and text files.
+
+yahtzee_v20_yahtzee:
+ * Moved reWrtBin() & reWrtTxt() to User.cpp and passed beginFile to them.
+ * Fixed bug in isUserLogin(). Forgot to reset hiScore in the obj.
+ * Added conditional in AdminPortal() checks if a record is deleted, then don't allow them to edit hiScore.
+ * Created an array of Users, so the game can run with 2 players. 
+ * Altered play() in Yahtzee, so it accepts a double pointer, pointer and number of players.
+   Play() also returns if player 1 is the winner or not.
+ * In main() I made User rewrite their hiScore directly instead of having admin do it.
+
+
+yahtzee_v21_dblPlayrPtr_in_Yahtzee: 
+ * In User class changed numRec from a static int to a regular int because it was messing up
+   ttlRec when it moved between other .cpp pages.
+ * Removed id variable from User class and everywhere else because it
+   wasn't needed.
+ * Fixed bug in reWrtTxt() by changing the number of charCount. Removing id variable
+   changed the number of bits
+ * Yahtzee's play(): if player1 wins, then it'll compare their current score to
+   their hiScore saved in their record and change it accordingly.
+ * A new hiScore will only rewrite binary & text files when user is logged in,
+   so a guest player's new hiScore will not be saved to any files.
+ * Used if(admin4.user.getName().compare(0,6,"xxxxxxx")) to stop admin from 
+   editing a deleted record.
+ * Fixed BUG when you delete more than 1 record in a session
+   by adding delUsr. object to begnFile in Admin::deleteUsr().
+ * Read user binary & print all Users. 
+
+
+ish_Yahtzee_Game_V4.3:
+ * Is a copy of Ismael's code.
+
+
+ish_df_yahtzee_Game_v4.4 and v4.5
+ * I reorganized & cleaned up the flow of play() by creating:
+   prntRound() & rules().
+ * Created a 2nd instance of ScoreCard to hold the player's actual scores.
+ * Created setFinalSC() and passed scorecard to it.
+ * Fixed BUG with numRolls by switching if with a while loop.
+ * Added a conditional if numRolls==3, then force switch case 2 else displayOptions();
+ * Added a pause(), so it makes the game more readable between rolls
+
+
+ish_df_yahtzee_v4.6:
+ * Created bool isSelected[] to stop already selected categories from being
+   displayed in possible points scoreboard. Used it inside of recordScore().
+ * Reset isSelected() flags in setFinalSC() to stop categories from
+   being overwrite.
+ * Changed play() to return a bool and accepts a reference variable,
+   that represents the player's current high Score.
+   If player 1 is winner, then return true;
+   If player 1 is winner AND their current score is larger than their high score, then
+   reassign highScore's value.
+
+
+yahtzee_v22_updateYahtzeeWithIsmaels:
+ * Added Ismael's updated classes from ismael_yahtzee_v4.6
+
+
+yahtzee_v23.1_addPlayrArray:
+
+	Comments: 
+ 	* If it's your first time running this code, select 5 from the menu
+   	that runs in main(). This reset's the code by resetting the User's binary file, 
+   	userdata.dat. This way you can start with fresh code that I haven't tested on.
+ 	* Yahtzee default construct will always create an array of players with a minimum
+   	of 2 players. If player choose 1 player, then the code won't show the 2nd
+   	player's scorecard.
+ 	* Play() accepts a User object from main() and will only alter their hiScore
+   	if player1 wins and has a higher score then user's object. Player 1 represents
+   	the User object that was passed to play(). It is essential a shell object that 
+   	allows User to play without alter any of their actual values unless they win.
+
+ * Added  getNPlayer();  Get number of players
+ * Aggregated 2 instances of ScoreCard in Yahtzee's private members. Made them
+   static arrays.
+ * Moved int *indx to Yahtzee's private members
+ * Created an array of players inside of Yahtzee's default constructor 
+   instead of inside play(). This way I can access player[] in other functions
+ * Added for( pIndx<nPlayer) to control each player's turn
+ * Reset values inside switch() default so it could jump out of all the loops 
+   and print final scorecards. 
+ * Added getUpLowSums() & void printFinalSC(string name="Player")
+ * Removed bool clearance, leave in Yatzee 
+
+
+yahtzee_v23.2_addPlayrArray: 
+ * Added isP1Winner(), printDice(), finalSC() so i could clean up play().
+
+
+yahtzee_v24_startGameFunc:
+ * Cleaned up play() by creating startGame() to handle the number of rounds loop
+   and play() handles each player's turn individually.  
+ * Tested this version as guest and 2 players. Works except for BUG1 listed below. 
+ * Tested this version as guest and 1 player. Works except for BUG1 listed below. 
+ * Added getUpLowSums() and printed them in printFinalSC()
+ * readInput() reads inputs from file again-->Found a bug later 
+
+
+yahtzee_v25_fullHouse:
+ *  Fixed BUG in full_house conditional by adding extra conditionals in it.
+
+
+yahtzee_v26_moveDice2ScoreCard:
+ * Moved the creation of Dice dice[] and int diceArr[] from Yahtzee to ScorCard & their code to setDice() & pushThisDice().
+ * Fixed BUG when exiting the game early by adding extra conditional with the
+   rounds loop.  if(nPlayer > 1 && rnd < MAXRNDS).
+ * Added selectDice() & selectCategory(), bool isNewHiScore() in Yahzee 
+   to clean up the play().
+ * Moved constant variables to the top of Classes h file
+ * BUG: admin getAllUsr() not showing updating hiScore
+ * fixed BUG: reWRtTxt() not working when indx is greater than 0 by
+   not reading inputs from input.txt in readInputFile()?
+
+
+yahtzee_v27_adminDoublePtrArray:
+ * getAllUsr() returns a double pointer array with all the user's read from binary file.
+
+
+yahtzee_v28.1_doublePtrAdminConstructor:
+ * Added Admin double ptr in private member & allocated memory for it in default constructor.
+   Set its values in readAllUsrs(). Now there's an array Admin can reference anywhere in the class
+   without having to read binary to look for a record by index or email.
+
+
+yahtzee_v28.2_changeFindByFuncs:
+ * Deleted findByIndx(). Instead getIndx() returns a valid indx and prints the
+   usrArr[indx]
+ * Changed findByEmail(). It doesn't read binary file anymore. It loops through
+   userArr and compares its email member variable to the string that was passed 
+   to its arguments.  
+ * isUsrLogin() returns an int. indx or -66 when email is NOT found
+ * startGame() passes record's location to Yhatzee, so it can rewrite the record
+   inside of it rather than in main().
+ * Overloaded printAdUsr(user2.getNumRec(), so it passes numRec
+ * Cleaned up adminPortal() by putting each case in its own function
+ * Deleted read1bin()
+ * Destroyed double ptr in Admin class
+ * Updated Admin with survey_v5's Admin class
