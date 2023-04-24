@@ -1,0 +1,30 @@
+homer simpson
+homer@simp.com
+Homer!23
+marge simpson
+marge@simp.com
+Marge!23
+lisa simpson
+lisa@simp.com
+Lisa!2345
+day tripper
+lucy@beatles.com
+DayT#2345
+harry potter
+harry@potter.com
+Harry!23
+Rhianna
+rhi@email.com
+Rhianna#1
+hamburger helper
+hamburger@help.com
+Help!234
+taylor swift
+taylor@swift.com
+Taylor$35
+adam sandler
+adam@sandler.com
+Adam!567
+wednesday adams
+wed@adams.com
+Wednesday1!
