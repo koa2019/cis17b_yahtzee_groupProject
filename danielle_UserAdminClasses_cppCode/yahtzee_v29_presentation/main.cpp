@@ -4,17 +4,20 @@
  * Created: 04-24-23 @7 PM
  * Purpose:  yahtzee_v29_presentation
   
-Comments: 
+Comments to User:
+ * For ease of use, when you login in as a user or admin I have printed  
+   their login info to the screen. Type it in when prompted.  
  * If it's your first time running this code, select 5 from the menu
-   that runs in main(). This reset's the code by resetting the User's binary file, 
-   userdata.dat. This way you can start with fresh code that I haven't tested on.
+   that runs in main(). This reset's the code by resetting the User's binary file 
+   to 5 records. This way you can start with fresh code that I haven't tested on.
  * Yahtzee default construct will always create an array of players with a minimum
    of 2 players. If player choose 1 player, then the code won't show the 2nd
    player's scorecard.
  * Play() accepts a User object from main() and will only alter their hiScore
-   if player1 wins and has a higher score then user's object. Player 1 represents
-   the User object that was passed to play(). It is essential a shell object that 
-   allows User to play without alter any of their actual values unless they win.
+   if player 1 wins AND has a higher score then user object's hiScore. 
+   Player 1 represents the User object that was passed to play().
+   It is essential a shell object that allows User to play without
+   alter any of their actual values unless they win.
 
  v28.2:
  * Deleted findByIndx(). Instead getIndx() returns a valid indx and prints the
@@ -67,6 +70,8 @@ using namespace std;  //STD Name-space where Library is compiled
 //Math/Physics/Science/Conversions/Dimensions
 
 //Function Prototypes
+void getUserLogin();
+
 
 //Code Begins Execution Here with function main
 int main(int argc, char** argv) {
@@ -106,39 +111,8 @@ int main(int argc, char** argv) {
                 break;
             }
             case 3:  // User login. If successful, then play game          
-            {       
-                //Admin admin1;
-                int indx = admin.isUsrLogin();
-                if(!(indx == -66)){
-                    
-                    cout<<"\n\nUser login was successful.\n"; 
-                    cout<<"\ninside main() admin1 object looks like: ";
-                    admin.printAdUsr(indx);                    
-                    
-                    
-                    // Create new User & copy admin values to user                    
-                    admin.copy2Usr(user,indx);    
-                    cout << "\nWelcome " << user.getName();
-                    user.printUsr(); 
-                    
-                    // Create new instance of Yahtzee class
-                    Yahtzee game1;
-                                 
-                    long recordLoc = admin.getBegnFile(indx);
-                    
-                    if(recordLoc<0){ cout << "\nError finding record location\n"; break; }
-                    
-                    // if user is winner & has new hiScore, then print their update record
-                    if(game1.startGame(user, recordLoc)) {                         
-                        
-                        //cout<<"\n\ninside main() user object looks like: ";
-                        //user.printUsr();                       
-                          
-                        admin.readBin_setArray();
-                        cout << "\nAdmin is reading updated binary file....\n";
-                        admin.printAdUsr(user.getNumRec());   
-                    }                                                    
-                }
+            {      
+                getUserLogin();                
                 break;
             }             
             case 4: // Play Yahtzee as a guest
@@ -163,4 +137,44 @@ int main(int argc, char** argv) {
         }
     
     return 0;
+}
+
+// ***************FUNCTION DEFINITIONS************************
+void getUserLogin(){
+    
+    Admin admin;
+    User user;
+    
+    int indx = admin.isUsrLogin();
+    
+    if(!(indx == -66)){
+
+        cout<<"\n\nUser login was successful.\n"; 
+        cout<<"\ninside main() admin1 object looks like: ";
+        admin.printAdUsr(indx);                    
+
+
+        // Create new User & copy admin values to user                    
+        admin.copy2Usr(user,indx);    
+        cout << "\nWelcome " << user.getName();
+        user.printUsr(); 
+
+        // Create new instance of Yahtzee class
+        Yahtzee game1;
+
+        long recordLoc = admin.getBegnFile(indx);
+
+        if(recordLoc<0){ cout << "\nError finding record location\n"; return; }
+
+        // if user is winner & has new hiScore, then print their update record
+        if(game1.startGame(user, recordLoc)) {                         
+
+            //cout<<"\n\ninside main() user object looks like: ";
+            //user.printUsr();                       
+
+            admin.readBin_setArray();
+            cout << "\nAdmin is reading updated binary file....\n";
+            admin.printAdUsr(user.getNumRec());   
+        }                                                    
+    }
 }

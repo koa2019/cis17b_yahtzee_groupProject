@@ -92,10 +92,14 @@ int Admin::isUsrLogin(){
     
     cout<<"\n\n\tUser Login\n";
 
-    //cout<<"\n\n*****Reset strings after testing*****\nlisa@simp.com\nLisa!2345\n";
-    string tempE= "lisa@simp.com", tempPw="Lisa!2345";
-    //string tempE = "", tempPw = "";
     bool isName = false, isPwrd = false;
+    int num = rand()%(0+totalRec);
+    
+    //string tempE = "", tempPw = "";
+    cout<<"\n\n*****Hide this after testing*****\n"<< usrArr[num]->user.getEmail()<<"\n"<< usrArr[num]->user.getPwrd()<<"\n*********************************\n";
+    string tempE = usrArr[num]->user.getEmail(), tempPw =usrArr[num]->user.getPwrd(); // use for testing when you don't want to type it in each time
+    
+    
     Admin admin1;
     do {
         cout<<"\nEmail is case sensitive. Must use lowercase letters.\n";
@@ -151,9 +155,9 @@ void Admin::adminLogin(){
    
     //*************************************************************************
     // This section is for testing. Comment it after all testing is finished
-    //cout<<"******************************\n";
-    //cout<< user.getName() << endl << user.getPwrd() << endl;
-    //cout<<"******************************\n";
+    cout<<"******************************\n";
+    cout<< user.getName() << endl << user.getPwrd() << endl;
+    cout<<"******************************\n";
     
     // Use these when you don't want to keep typing in Admin's login info
     tempNam  = user.getName();
@@ -488,32 +492,39 @@ bool Admin::findByEmail(string emai, int &indx){
 void Admin::getByEmail(){
     
     int ind = 0, count = 0, size = 0;
-    string emai = "";
-    //emai = "homer@simp.com";
-    //emai = "marge@simp.com";
-    //emai = "lucy@beatles.com";   
-    emai = "lisa@simp.com";
+    int num = rand()%(0+totalRec);
+    string tempEmail = "";
+    
+    
+    cout<<"\n\n*****Hide this after testing*****\n"<< usrArr[num]->user.getEmail()<<"\n*********************************\n";
+    tempEmail = usrArr[num]->user.getEmail(); // use for testing when you don't want to type it in each time
+    //tempEmail = "homer@simp.com";
+    //tempEmail = "marge@simp.com";
+    //tempEmail = "lucy@beatles.com";  
+    
     
     cout<<"\nEnter the email you want to find: ";
-    cin >> emai;    
+    cin >> tempEmail;
+    cin.ignore();    
     
-    cout <<"\n\nLooking for " << emai << "...\n\n";   
+            
+    cout <<"\n\nLooking for " << tempEmail << "...\n\n";   
     
     bool foundEmail = false;  
-    string tempEmail = "";  // Read email & save to a temp string
+    string binaryEmail = "";  // Read email & save to a temp string
 
     
     while( (!foundEmail) && (count < totalRec) ){
         
-        size = usrArr[count]->user.getEmaiSiz();
-        tempEmail.resize(size);
-        tempEmail = usrArr[count]->user.getEmail();
-        foundEmail = user.isStrEqual(emai, tempEmail); // looking for email inputted by user
-        //cout<< "\n\t" << emai << "==" << tempEmail << endl ;
+        //size = usrArr[count]->user.getEmaiSiz(); // get emaiSiz read from binary
+        //binaryEmail.resize(size);                 // resize string to emaiSiz
+        binaryEmail = usrArr[count]->user.getEmail(); // get email read from binary
+        foundEmail = user.isStrEqual(tempEmail, binaryEmail); // compare binary email with email inputted by user
+        //cout<< "\n\t" << tempEmail << "==" << binaryEmail << endl ;
         
         if(foundEmail){
             int indx = usrArr[count]->user.getNumRec();
-            cout<<"Located " << emai << "'s profile";
+            cout<<"Located " << tempEmail << "'s profile.\n";
             usrArr[indx]->printAdUsr();
             count = totalRec;
         } 

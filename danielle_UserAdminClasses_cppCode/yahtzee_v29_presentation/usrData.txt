@@ -6,7 +6,7 @@ emaiSiz: 14
 email:   homer@simp.com
 pwrdSiz: 8
 pwrd:    Homer!23
-hiScore: 000
+hiScore: 099
 
 Record   1
 namSiz:  13
@@ -14,8 +14,8 @@ name:    marge simpson
 emaiSiz: 14
 email:   marge@simp.com
 pwrdSiz: 8
-pwrd:    Marge$ab
-hiScore: 000
+pwrd:    Marge$23
+hiScore: 109
 
 Record   2
 namSiz:  12
@@ -24,7 +24,7 @@ emaiSiz: 13
 email:   lisa@simp.com
 pwrdSiz: 9
 pwrd:    Lisa!2345
-hiScore: 000
+hiScore: 144
 
 Record   3
 namSiz:  11
@@ -33,7 +33,7 @@ emaiSiz: 16
 email:   lucy@beatles.com
 pwrdSiz: 9
 pwrd:    DayT#2345
-hiScore: 000
+hiScore: 079
 
 Record   4
 namSiz:  12
@@ -42,13 +42,4 @@ emaiSiz: 16
 email:   harry@potter.com
 pwrdSiz: 8
 pwrd:    Harry!23
-hiScore: 000
-
-Record   5
-namSiz:  12
-name:    bart simpson
-emaiSiz: 13
-email:   bart@simp.com
-pwrdSiz: 8
-pwrd:    Bart!234
-hiScore: 062
+hiScore: 201
