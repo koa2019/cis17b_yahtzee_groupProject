@@ -611,7 +611,7 @@ void User::readInputFile(){
     
     
     User usera("homer simpson","homer@simp.com","Homer!23");
-    User userb("marge simpson","marge@simp.com","Marge$ab");
+    User userb("marge simpson","marge@simp.com","Marge$23");
     User userc("lisa simpson","lisa@simp.com","Lisa!2345");   
     User userd("day tripper","lucy@beatles.com","DayT#2345"); 
     User usere("harry potter","harry@potter.com","Harry!23");
