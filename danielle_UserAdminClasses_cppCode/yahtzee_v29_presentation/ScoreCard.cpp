@@ -8,10 +8,33 @@
 
 using namespace std;
 
-//*****************************************************************
-//              
-//*****************************************************************
 
+//************************************************************
+//                  Default Constructor    
+//************************************************************
+
+ScoreCard::ScoreCard() {
+    //Public properties of the class
+    round = 0;
+    upperScore = 0;
+    lowerScore = 0;
+    
+    for (int i = 0; i < NUM_CATGRY; i++) {
+        scores[i] = -1;
+        isSelected[i] = 0;
+    }
+   //printScoreCard();
+   
+    // Initialize Dice class object
+    for(int i=0; i < NUM_DICE; i++){
+        diceArr[i] = 0;
+    }  
+}
+
+
+//*****************************************************************
+//               Set Dice class array
+//*****************************************************************
 void ScoreCard::setDice(){
     
      // Re-Roll Dice. loops through selected vector, and checks which dice # to re-roll ?
@@ -48,28 +71,6 @@ void ScoreCard::printDice(Dice dice[]) const {
  
 }
 
-
-//************************************************************
-//                  Default Constructor    
-//************************************************************
-
-ScoreCard::ScoreCard() {
-    
-    round = 0;
-    upperScore = 0;
-    lowerScore = 0;
-    
-    for (int i = 0; i < NUM_CATGRY; i++) {
-        scores[i] = -1;
-        isSelected[i] = 0;
-    }
-   //printScoreCard();
-   
-    // Initialize Dice class object
-    for(int i=0; i < NUM_DICE; i++){
-        diceArr[i] = 0;
-    }  
-}
 
 
 //************************************************************
