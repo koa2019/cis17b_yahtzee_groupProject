@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+Author: Danielle 
+Date: 05-03-23 
+Purpose: Yahtzee_v2
+
+*Moved Yahtzee's script code from <body> to Yahtzee() in <head>
+*Moved Yahtzee() to Yahtzee.js
+*Created User.js with User() as its default constructor
+*Converted all ScoreCard functions that don't have vector in it to JS.
+*Fixed BUG: Yahtzee.prototype.startGame = function () by 
+ creating a new Array() object in main().
+
+  
+To do:
+*Pass object from Yahtzee to play()
+*get User()->readNumRec() to work
+*Convert vector<int> selected to js, javascript.
+
+-->
+
+<html>
+    <head>
+        <title>Yahtzee</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="ScoreCard.js"></script>
+        <script type="text/javascript" src="Yahtzee.js"></script>
+        <script type="text/javascript" src="User.js"></script>
+
+        <script type="text/javascript">
+
+            function main() {
+                alert("Hit Yahtzee.html");
+                var user = new Array();
+                user = new User();
+                //user.printUser();              
+                
+                var game = new Array();
+                game = new Yahtzee();
+
+            }
+
+        </script>
+    </head>
+
+<body>
+<!--           <body OnLoad="main()">-->
+
+        <div>Yahtzee<br/><br/></div>
+
+
+        <!--        <script language="JavaScript" type="text/javascript">
+                    //alert("Begin body script");
+                    main();
+                    // or document.write(main(),"</br>");
+                    //alert("End of body script");
+                </script>-->
+    </body>
+</html>
