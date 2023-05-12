@@ -100,11 +100,21 @@
             function main() {
                 var user = new Array();
                 user = new User();
+                user.setName("Homer");
                 //user.printUser();              
 
                 var game = new Array();
                 game = new Yahtzee();
-
+                var isHiScore = false;
+                isHiScore = game.startGame(user);
+                //alert("p1 isHiScore === " + isHiScore);
+                console.log("p1 isHiScore === " + isHiScore);
+                
+                if(isHiScore===true){
+                    user.reWrtBin();// rewrites this record in database
+                    //alert("Updating binary...."); 
+                    console.log("Updating binary....");
+                }
             }
 
         </script>

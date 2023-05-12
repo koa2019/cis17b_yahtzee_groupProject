@@ -167,7 +167,7 @@ void Yahtzee::selectCategory(int a, string name, int rnd){
    a = (a<0) ? 0 : a;
    rnd = (rnd<0) ? 0 : rnd;
    
-   // set player's final scorecard object                
+   // Ask player to pick category & set player's final scorecard object                
    finalSC[indx[a]].setFinalSC(scorecard[indx[a]]);  
    
 
