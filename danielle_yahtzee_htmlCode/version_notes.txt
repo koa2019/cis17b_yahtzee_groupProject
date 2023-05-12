@@ -1,0 +1,5 @@
+yahtzee_v3
+* ScoreCard.prototype.setFinalSC = function (scorecard) passed an object.
+
+To-do:
+* FIGURE OUT WHAT TO REPLACE cin>>choice WITH IN JS for ScoreCard.prototype.setFinalSC().

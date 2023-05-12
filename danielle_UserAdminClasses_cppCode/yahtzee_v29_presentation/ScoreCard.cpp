@@ -101,21 +101,22 @@ void ScoreCard::recordScore(int category, int score) {
 void ScoreCard::fillScoreCard() {
 //void ScoreCard::fillScoreCard(int diceArr[]) {
     
-    //int NUM_DICE = 5;
+    int NUM_DICESIDES = 6;
     vector<int> scores(NUM_CATGRY, 0);
-    vector<int> counts(6, 0);    
+    vector<int> counts(NUM_DICESIDES, 0);    
     
     // Sort array in ascending order ?
     sort(diceArr, diceArr + NUM_DICE);
 
-    // ? Accumulating something in scores[]
+    // ? Loops 5 times and is Accumulating something in scores[]
     for (int i = 0; i < NUM_DICE; i++) {
-        counts[diceArr[i] - 1]++;
-        scores[diceArr[i] - 1] += diceArr[i];
+        int index = diceArr[i] - 1; 
+        counts[index]++;             // Counting how many of dice have same value
+        scores[index] += diceArr[i]; // Setting points in upper section of scorecard
     }
 
     // ? Record scores to upper section?  
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < NUM_DICESIDES; i++) {
         recordScore(i + 1, scores[i]);
     }
 
@@ -129,6 +130,7 @@ void ScoreCard::fillScoreCard() {
 
     // Check for Three and four of a kind
     for (int count : counts) {
+        //cout<< count << endl;
         if (count >= 3) {
             three_of_a_kind = true;
             if (count >= 4) {
