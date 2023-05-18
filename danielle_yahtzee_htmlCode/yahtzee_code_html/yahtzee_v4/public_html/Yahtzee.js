@@ -231,9 +231,7 @@ Yahtzee.prototype.play = function (player, scorecard, finalSC, pIndx) {
 
 
         // Set & print scorecard with possible points based on dice values
-        //scorecard[pIndx].fillScoreCard();
-//        document.write("<br/>      " + name + "'s Possible Points: <br/>");
-//        scorecard[pIndx].printScoreCard();
+        scorecard[pIndx].fillScoreCard();
 //
 //        resp = 0;
 //
