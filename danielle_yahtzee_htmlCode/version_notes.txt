@@ -28,7 +28,7 @@ yahtzee_v4:
 * Yahtzee.js writes the div for user to input number of players
 * Tried converting cin>>name in getNPlayer() wtih document.getElementById("nPlayerSubmit").addEventListener("click", this.getNPlayer).
 * BUG: in Yahtzee.js: document.getElementById("nPlayerSubmit").addEventListener("click", this.getNPlayer)
-
+* fillScoreCard() rewrites values on ScoreCard.html
 
 To-do:
 

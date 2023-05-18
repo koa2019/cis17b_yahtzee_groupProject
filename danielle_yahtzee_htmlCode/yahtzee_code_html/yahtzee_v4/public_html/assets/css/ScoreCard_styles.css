@@ -16,6 +16,9 @@
 #diceMsgBrdCol {
     background-color: white;
 }
+#scorecardCol {
+    background-color: lightgreen;
+}
 
 /* Clear floats after the columns */
 .row:after {
@@ -23,7 +26,6 @@
   display: table;
   clear: both;
 }
-
 /* ^^CSS for 2 columns^^ */
 
 

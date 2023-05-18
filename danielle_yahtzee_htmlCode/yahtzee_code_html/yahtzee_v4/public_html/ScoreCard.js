@@ -5,7 +5,7 @@ const NUM_CATGRY = 13; // number of scoring categories
 function ScoreCard() {
 
     // Public properties of ScoreCard class
-    //console.log("Begin of ScoreCard()");
+    //console.log("Hit ScoreCard()");
     this.round = 0;
     this.upperScore = 0;
     this.lowerScore = 0;
@@ -25,10 +25,11 @@ function ScoreCard() {
     for (var i = 0; i < NUM_DICE; i++) {
         this.dice[i] = 0;
     }
-    //alert("End of ScoreCard()");
+    //console.log("End of ScoreCard()");
 };
 
 
+// Write one scores element to ScoreCard.html
 ScoreCard.prototype.setScoreCard = function (indx) {
     
     //console.log("Hit setScoreCard()");    
@@ -36,7 +37,7 @@ ScoreCard.prototype.setScoreCard = function (indx) {
    
     // set the button's value to the value entered by the user
     button.value = this.scores[indx];
-    //console.log("scores["+indx+"] = "+button.value);
+    //console.log("setScoreCard().  scores["+indx+"] = "+button.value);
 
     // display the value on the button
     button.innerHTML = button.value;  
@@ -57,7 +58,7 @@ ScoreCard.prototype.fillScoreCard = function () {
 
     // Sort array in ascending order ?
     this.dice.sort(); // sort(dice, dice + NUM_DICE);
-    //document.write("Sorted this.dice...");
+    //console.log("Sorted this.dice...");
     //this.printDice();    
 
 
@@ -142,7 +143,7 @@ ScoreCard.prototype.fillScoreCard = function () {
     // Chance set pts in scores[]
     //this.recordScore(NUM_CATGRY, accumulate(this.dice, this.dice + NUM_DICE, 0));    
 
-    //document.write("<br/>Inside fillScorecard(). Points Possible...<br/>"); 
+    //console.log("<br/>Inside fillScorecard(). Points Possible...<br/>"); 
     //this.printScoreCard();     
 };
 
@@ -153,21 +154,26 @@ ScoreCard.prototype.fillScoreCard = function () {
 
 ScoreCard.prototype.recordScore = function (category, score) {
 
-    //document.write("<br/>Inside recordScore()  <br/>");
+    //console.log("Inside recordScore()");
     //this.get_isSelected();   
-    //document.write("round = " + this.round + "<br/>");
-
-    // if it's not last round, then set scores array
+    //console.log("round = " + this.round);
+    var indx = category - 1; //ScoreCard's range [0,12]
+    
+    // if it's not last round, then set scores array in Yahtzee object
     if (this.round >= 0 && this.round <= 12) {
-        this.scores[category - 1] = score;
+        this.scores[indx] = score;
+        this.setScoreCard(indx); // rewrite points on ScoreCard.html
     }
 
     // if it is last round AND this category has NOT be selected then set scores array
     else if (this.round > 12 && (this.isSelected[category - 1] === false)) {
-        this.scores[category - 1] = score;
-    } else {
-        this.scores[category - 1] = -1;
-    } // set this category to null value
+        this.scores[indx] = score;
+        this.setScoreCard(indx); // rewrite points on ScoreCard.html
+        
+    } else { // -1 sets this category to null value
+        this.scores[indx] = -1;
+        this.setScoreCard(indx); // rewrite points on ScoreCard.html
+    } 
 };
 
 
@@ -180,16 +186,16 @@ ScoreCard.prototype.recordScore = function (category, score) {
 ScoreCard.prototype.setFinalSC = function (scorecard) {
 
     var choice = 0;
-    document.write("<br/><br/>******INSIDE setFinalSC()**************");
-    document.write("<br/>Pick a Category between 0 and 12.<br/>");
+    console.log("******INSIDE setFinalSC()**************");
+    console.log("Pick a Category between 0 and 12.<br/>");
 
     //cin >> choice;
     //choice -= 1; // subtract one because array range [0,12] 
-    document.write("Choice = " + choice + "<br/>");  // View choice
+    console.log("Choice = " + choice + "<br/>");  // View choice
 
     // Conditional stops a category from being overwritten on final scorecard
     if (this.isSelected[choice] === true) {
-        document.write("Category " + choice + " has already been selected.<br/>Choose another category:  ");
+        console.log("Category " + choice + " has already been selected.<br/>Choose another category:  ");
     }
 
     // Set points in player's final scoreboard
@@ -200,10 +206,10 @@ ScoreCard.prototype.setFinalSC = function (scorecard) {
     scorecard.isSelected[choice] = true;
 
 
-    document.write("finalSC.scores[" + choice + "] = " + this.scores[choice] + "<br/>");
-    //document.write("finalSC.isSelected[" + choice + "]   = " + this.isSelected[choice] + "<br/>");
-    //document.write("scorecard.isSelected[" + choice + "] = " + scorecard.isSelected[choice] + "<br/>");
-    document.write("******END OF setFinalSC()**************<br/><br/>");
+    console.log("finalSC.scores[" + choice + "] = " + this.scores[choice] + "<br/>");
+    //console.log("finalSC.isSelected[" + choice + "]   = " + this.isSelected[choice] + "<br/>");
+    //console.log("scorecard.isSelected[" + choice + "] = " + scorecard.isSelected[choice] + "<br/>");
+    console.log("******END OF setFinalSC()**************<br/><br/>");
 };
 
 
@@ -211,13 +217,13 @@ ScoreCard.prototype.setFinalSC = function (scorecard) {
 ScoreCard.prototype.roll = function (i) {
 
     this.dice[i] = (1 + (Math.floor(Math.random() * 6)));
-    //alert("Hit roll(). this.dice["+i+"] = " + this.dice[i]);
+    //console.log("Hit roll(). this.dice["+i+"] = " + this.dice[i]);
 };
 
 
 // Set which round it is
 ScoreCard.prototype.setRound = function (r) {
-    //alert("Hit setRound()<br/>");
+    //console.log("Hit setRound()<br/>");
     this.round = r;
 };
 
@@ -251,7 +257,7 @@ ScoreCard.prototype.setDice = function () {
 
 
 ScoreCard.prototype.isFound = function (indx) {
-    document.write("   Hit isFound(). indx = " + indx + "<br/>");
+    console.log("   Hit isFound(). indx = " + indx + "<br/>");
     //var i = (indx === isSelected[indx]) ? indx : undefined;
     return indx >= 0;
 };
@@ -263,7 +269,7 @@ ScoreCard.prototype.pushThisDice = function (choice) {
 
     choice -= 1;
     this.selected.push(choice); //selected.push_back(choice - 1);        
-    //document.write("<br/>selected dice" + this.selected + "<br/>");
+    //console.log("<br/>selected dice" + this.selected + "<br/>");
 };
 
 
@@ -326,24 +332,24 @@ ScoreCard.prototype.getTotalScore = function () {
 // Prints this player's final ScoreCard Class members
 ScoreCard.prototype.printFinalSC = function (name) {
 
-    //document.write("<br/>Hit printFinalSC()"); 
+    //console.log("<br/>Hit printFinalSC()"); 
     var bonusMin = 63;
-    document.write("<br/><br/>" + name + "'s Final ScoreCard<br/>");
+    console.log("<br/><br/>" + name + "'s Final ScoreCard<br/>");
     this.printScoreCard();
     this.setUpLowSums();
 
-    document.write("upperScore:   " + this.getUpperScore() + "<br/>");
-    document.write("Bonus:        " + ((this.round === NUM_CATGRY && this.upperScore >= bonusMin) ? 25 : 0) + "<br/>");
-    document.write("lowerScore:   " + this.getLowerScore() + "<br/>");
-    document.write("Total points: " + this.getTotalScore() + "<br/>");
-    //document.write("*****End of printFinalSC()*****<br/><br/>");
+    console.log("upperScore:   " + this.getUpperScore() + "<br/>");
+    console.log("Bonus:        " + ((this.round === NUM_CATGRY && this.upperScore >= bonusMin) ? 25 : 0) + "<br/>");
+    console.log("lowerScore:   " + this.getLowerScore() + "<br/>");
+    console.log("Total points: " + this.getTotalScore() + "<br/>");
+    //console.log("*****End of printFinalSC()*****<br/><br/>");
 };
 
 
 // Print one element in scores array
 ScoreCard.prototype.getScoreIndex = function (i) {
-    document.write(this.scores[i]);
-    //return this.scores[i];
+    console.log("Hit getScoreIndex(). score[] = "+ this.scores[i]);
+    return this.scores[i];
 };
 
 
@@ -373,21 +379,19 @@ ScoreCard.prototype.getLowerScore = function () {
 ScoreCard.prototype.printScoreCard = function () {
 
     for (var i = 0; i < NUM_CATGRY; i++) {
-        document.write("[" + (i) + "]   ");
+        console.log("["+i+"]   ");
         this.getScoreIndex(i);
-        document.write("<br/>");
     }
-    document.write("<br/><br/>");
 };
 
 
 // Print bool isSelected[13]
 ScoreCard.prototype.printIsSelected = function () {
-    document.write("isSelected = { ");
+    console.log("isSelected = { ");
     for (var i = 0; i < NUM_CATGRY; i++) {
-        document.write(this.isSelected[i] + ", ");
+        console.log(this.isSelected[i] + ", ");
     }
-    document.write(" }<br/>");
+    console.log(" }<br/>");
 };
 
 
