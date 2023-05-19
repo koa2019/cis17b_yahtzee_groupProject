@@ -7,7 +7,62 @@
         <!-- css -->
         <link rel="stylesheet" href="./assets/css/ScoreCard_styles.css" type="text/css" />
 
-       
+        <script type="text/javascript" src="ScoreCard.js"></script>
+        <script type="text/javascript" src="Yahtzee.js"></script>
+        <script type="text/javascript" src="User.js"></script>
+
+        <script type="text/javascript">
+
+            function main() {
+
+                 
+                // add event listeners to all buttons with class "category-button"
+                var buttons = document.getElementsByClassName("category-button");
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].addEventListener("click", handleClick);
+                }
+                
+                // add event listeners to all buttons with class "category-button"
+                var diceBtn = document.getElementsByClassName("dice");
+                for (var i = 0; i < diceBtn.length; i++) {
+                    diceBtn[i].addEventListener("click", handleDiceClick);
+                }
+                
+                printPlayMenu(); // write to ScoreCard.html
+                //****BUG: addEventListener isn't working******
+                document.getElementById("nPlayerSubmit").addEventListener("click", getNPlayer);
+                //document.getElementById("msgDiv").style.visibility = "hidden"; // "visible";
+                  
+                // User object 
+                var user = new Array();
+                user = new User();
+                user.setName("Homer");
+                //user.printUser();              
+
+                // Create Yahtzee object and start game
+                var yahtzee = new Array();
+                yahtzee = new Yahtzee();
+                var isHiScore = false;
+                isHiScore = yahtzee.startGame(user);
+                
+                           
+                console.log("main(). p1 isHiScore === " + isHiScore);
+                if (isHiScore === true) {
+                    user.reWrtBin();// rewrites this record in database
+                    //alert("Updating binary...."); 
+                    console.log("Updating binary....");
+                }
+            }
+//            function printPlayMenu(){              
+//                // write html div for getNPlayers() to ScoreCard.html
+//                var nPlayDiv = document.getElementById("nPlayersDiv");
+//                var string = '<label><br/><br/>How many players?<br/></label>';
+//                string += '<select name="nPlayers" id="nPlayers-select">';
+//                string += '<option value="1">1</option><option value="2">2</option></select>';
+//                string += '<button type="submit" id="nPlayerSubmit">Submit</button>';
+//                nPlayDiv.innerHTML = string;                    
+//            }
+        </script>
 
     </head>
     <body OnLoad="main()">
@@ -21,14 +76,14 @@
                 
                 <div id="messageBoard">                    
                     <!--html tags will be written in these divs from Yahtzee.js-->
-                    <div id="nPlayersDiv"></div>
                     <div id="roundDiv"></div>
                     <div id="rollDiv"></div>
                     <div id="msgDiv"></div>
+                    <div id="nPlayersDiv"></div>
                 </div>
                 
                 
-                <div class="dice-container" id="diceDiv">
+                <div class="dice-container">
                     <button class="dice" id="dice0">-</button>
                     <button class="dice" id="dice1">-</button>
                     <button class="dice" id="dice2">-</button>
@@ -129,61 +184,6 @@
 
         </div> <!--class="row"-->
 
-         <!-- js -->
-        <script type="text/javascript" src="./assets/javascript/ScoreCard.js"></script>
-        <script type="text/javascript" src="./assets/javascript/Yahtzee.js"></script>
-        <script type="text/javascript" src="./assets/javascript/User.js"></script>
-
-        <script type="text/javascript">
-
-            function main() {
-
-                 
-                // add event listeners to all buttons with class "category-button"
-                var buttons = document.getElementsByClassName("category-button");
-                for (var i = 0; i < buttons.length; i++) {
-                    buttons[i].addEventListener("click", catgyOnClick);
-                }
-                
-                // add event listeners to all buttons with class "category-button"
-                var diceBtn = document.getElementsByClassName("dice");
-                for (var i = 0; i < diceBtn.length; i++) {
-                    diceBtn[i].addEventListener("click", diceOnClick);
-                }                
-            
-              
-                //printPlayMenu(); // write to ScoreCard.html
-                
-                //document.getElementById("nPlayerSubmit").addEventListener("click", setNumPlayer);                
-                //document.getElementById("msgDiv").style.visibility = "hidden"; // "visible";
-                document.getElementById("diceDiv").style.visibility = "hidden"; // "visible"; 
-                document.getElementById("scorecardCol").style.visibility = "hidden"; // "visible";  
-                
-               
-                
-                // User object 
-                var user = new Array();
-                user = new User();
-                user.setName("Homer");
-                //user.printUser();              
-
-                // Create Yahtzee object and start game
-                var yahtzee = new Array();
-                yahtzee = new Yahtzee();
-                yahtzee.promptNPlayer(); //printNPlayerDiv();
-                var isHiScore = false;
-                isHiScore = yahtzee.startGame(user);
-                
-                           
-                console.log("main(). p1 isHiScore === " + isHiScore);
-                if (isHiScore === true) {
-                    user.reWrtBin();// rewrites this record in database
-                    //alert("Updating binary...."); 
-                    console.log("Updating binary....");
-                }
-            }
-            
-        </script>
 
     </body>
 </html>

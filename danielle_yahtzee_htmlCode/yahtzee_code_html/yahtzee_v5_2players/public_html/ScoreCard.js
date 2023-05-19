@@ -2,9 +2,9 @@
 const NUM_DICE = 5;
 const NUM_CATGRY = 13; // number of scoring categories
 
+// ScoreCard object constructor. Public properties of ScoreCard class
 function ScoreCard() {
-
-    // Public properties of ScoreCard class
+    
     //console.log("Hit ScoreCard()");
     this.round = 0;
     this.upperScore = 0;
@@ -17,30 +17,54 @@ function ScoreCard() {
     // Initialize arrays
     for (var c = 0; c < NUM_CATGRY; c++) {
         this.scores[c] = -1;
-        this.setScoreCard(c);
+        this.setScoreCard(c); // Writes element to ScoreCard.html
         this.isSelected[c] = false;
     }
 
    // Initialize array of Dice class object
     for (var i = 0; i < NUM_DICE; i++) {
-        this.dice[i] = 0;
+        this.roll(i);
+        //console.log("ScoreCard() dice["+i+"]="+this.dice[i]);
     }
     //console.log("End of ScoreCard()");
 };
 
 
-// Write one scores element to ScoreCard.html
+//************************************************************
+//      Write one scores element to ScoreCard.html
+//************************************************************
+
 ScoreCard.prototype.setScoreCard = function (indx) {
     
     //console.log("Hit setScoreCard()");    
     var button = document.getElementById("catgy"+indx);
-   
-    // set the button's value to the value entered by the user
-    button.value = this.scores[indx];
+    button.value = this.scores[indx];  // set the button's value to the value entered by the user
+    button.innerHTML = button.value; // display the value on the button  
     //console.log("setScoreCard().  scores["+indx+"] = "+button.value);
+};
 
-    // display the value on the button
-    button.innerHTML = button.value;  
+//************************************************************
+//      Write one Dice element to ScoreCard.html
+//************************************************************
+
+ScoreCard.prototype.writeDice = function (indx) {
+    alert("Hit writeDice()"); 
+    console.log("Hit writeDice()");    
+    //var diceBtn = document.getElementById("dice"+indx);
+    //diceBtn.value = this.dice[indx];  // set the button's value to the value entered by the user
+    //diceBtn.innerHTML = diceBtn.value; // display the value on the button  
+    console.log("writeDice().  dice["+indx+"] = "+diceBtn.value);
+};
+
+
+// Write all dice to html
+ScoreCard.prototype.printDice = function (i) {
+
+    //console.log("Hit printDice()");
+    for (var i = 0; i < NUM_DICE; i++) {
+        this.writeDice(i);
+        //console.log("Dice[" +i+ "]="+this.writeDice(i));
+    }
 };
 
 
@@ -53,10 +77,10 @@ ScoreCard.prototype.fillScoreCard = function () {
     var NUM_DICE_SIDES = 6;
     var temp_scores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // vector<int> scores(NUM_CATGRY, 0);   
     var counts = [0, 0, 0, 0, 0, 0];              // vector<int> counts(6, 0);   
-    //alert("scores[1] = " + scores[1] + "  counts[1] = " + counts[1]);
+    console.log("Hit fillScoreCard()");
 
 
-    // Sort array in ascending order ?
+    // Sort array in ascending order
     this.dice.sort(); // sort(dice, dice + NUM_DICE);
     //console.log("Sorted this.dice...");
     //this.printDice();    
@@ -64,7 +88,7 @@ ScoreCard.prototype.fillScoreCard = function () {
 
     // Loops 5 times and is Accumulating how many dice are the same and their total pts
     for (var i = 0; i < NUM_DICE; i++) {
-        var index = this.getDice(i) - 1;
+        var index = (this.getDice(i) - 1);
         counts[index]++;                     // Counting how many of dice have same value
         temp_scores[index] += this.dice[i]; //  Setting points in upper section of scorecard
         //console.log("index = " + index + "  this.dice[" + i + "] = " + this.dice[i]);
@@ -215,9 +239,7 @@ ScoreCard.prototype.setFinalSC = function (scorecard) {
 
 // Roll a single this.dice
 ScoreCard.prototype.roll = function (i) {
-
     this.dice[i] = (1 + (Math.floor(Math.random() * 6)));
-    //console.log("Hit roll(). this.dice["+i+"] = " + this.dice[i]);
 };
 
 
@@ -225,6 +247,8 @@ ScoreCard.prototype.roll = function (i) {
 ScoreCard.prototype.setRound = function (r) {
     //console.log("Hit setRound()<br/>");
     this.round = r;
+    var string = "Round " + this.round;
+    document.getElementById("roundDiv").innerHTML = string;//.append(string);
 };
 
 
@@ -243,11 +267,11 @@ ScoreCard.prototype.setDice = function () {
         // syntax: array.find(function(currentValue, index, arr),thisValue)
         var n = 0;
         n = this.selected.find(this.isFound);
-        console.log("keeping dice" + (n));
+        //console.log("keeping dice" + (n));
         if (n === undefined) {
             //if(this.selected.find(this.selected.begin(), this.selected.end(), j) === this.selected.end()) {
 
-            console.log("...Re-Rolling Dice");
+            //console.log("...Re-Rolling Dice");
             this.roll(j); // re-roll this this.dice
         }
     }
@@ -267,9 +291,9 @@ ScoreCard.prototype.isFound = function (indx) {
 //*****************************************************************
 ScoreCard.prototype.pushThisDice = function (choice) {
 
-    choice -= 1;
+    //choice -= 1;
     this.selected.push(choice); //selected.push_back(choice - 1);        
-    //console.log("<br/>selected dice" + this.selected + "<br/>");
+    //console.log("In  pushThisDice().  this.selected = dice" + this.selected);
 };
 
 
@@ -352,9 +376,12 @@ ScoreCard.prototype.getScoreIndex = function (i) {
     return this.scores[i];
 };
 
-
-ScoreCard.prototype.getDice = function (i) {
+ScoreCard.prototype.getDice = function (i) {    
     return this.dice[i];
+};
+
+ScoreCard.prototype.writeDice = function (i) {
+    document.getElementById("dice"+i).innerHTML = this.getDice(i);
 };
 
 // Print round
@@ -391,17 +418,5 @@ ScoreCard.prototype.printIsSelected = function () {
     for (var i = 0; i < NUM_CATGRY; i++) {
         console.log(this.isSelected[i] + ", ");
     }
-    console.log(" }<br/>");
-};
-
-
-// Print this.dice[5]
-ScoreCard.prototype.printDice = function () {
-
-    console.log("Hit printDice()");
-    for (var i = 0; i < NUM_DICE; i++) {
-        document.getElementById("dice-"+(i+1)).innerHTML = this.getDice(i);
-        console.log("Dice[" +i+ "]="+this.getDice(i));
-    }
-    
+    console.log(" }");
 };
