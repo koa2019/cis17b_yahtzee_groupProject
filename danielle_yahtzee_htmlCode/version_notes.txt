@@ -29,6 +29,13 @@ yahtzee_v4:
 * Tried converting cin>>name in getNPlayer() wtih document.getElementById("nPlayerSubmit").addEventListener("click", this.getNPlayer).
 * BUG: in Yahtzee.js: document.getElementById("nPlayerSubmit").addEventListener("click", this.getNPlayer)
 * fillScoreCard() rewrites values on ScoreCard.html
+* Added bonus table row on ScoreCard.html.
+
+* Converted: 
+	* Yahtzee displayOptions() to printPlayMenu().
+	* In printPlayMenu(), I replaced cin>>resp with event listener setChoice().
+	* getNPlayer() to promptNPlayer(). nightmare!
+
 
 To-do:
 
@@ -44,8 +51,8 @@ To-do:
 	* BUG: in Yahtzee.js: document.getElementById("nPlayerSubmit").addEventListener("click", this.getNPlayer)
 
 * Yahtzee.js:
-
-	* displayOptions(): convert cin>>resp
+	
+	
 	* selectDice(): convert cin >> choice
 	* convert getRules()
 	* Make getP1Winner() work
