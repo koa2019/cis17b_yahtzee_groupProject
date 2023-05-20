@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Yahtzee Board</title>
+        <!-- css -->
+        <link rel="stylesheet" href="./assets/css/reset.css" type="text/css" />
+        <link rel="stylesheet" href="./assets/css/ScoreCard_styles.css" type="text/css" />
+
+
+
+    </head>
+    <body>
+        <h1>Yahtzee Board</h1>
+
+        <!--row1-->
+        <div class="row" > <!--https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_two_columns-->
+
+            <!-- row1_column1 for dice and message board div -->
+            <div class="column" id="diceMsgCol">
+
+                <!--Yahtzee.js will write things in these divs -->    
+
+                <div  id="msgBrdCol">                     
+                    <div id="nPlayrDiv"></div>
+                    <div id="msgDiv"></div>
+                    <div id="menuDiv"></div>                   
+                </div> <!--class="msgBrdCol"-->  
+
+                <div  id="rndRollCol"> 
+                    <div id="nameDiv"></div>
+                    <div id="roundDiv"></div>
+                    <div id="rollDiv"></div>
+                </div> <!--class="rndRollCol"--> 
+
+
+                <div id="diceCol"> <!--Column#2 for Dice div-->
+                    <div class="row">
+                        <div class="row dice-container" id="diceDiv">
+                            <button class="dice" id="dice0"  name="0">-</button>
+                            <button class="dice" id="dice1"  name="1">-</button>
+                            <button class="dice" id="dice2"  name="2">-</button>
+                            <button class="dice" id="dice3"  name="3">-</button>
+                            <button class="dice" id="dice4"  name="4">-</button>
+                        </div>
+
+                        <div class="row">
+                            <p>dice1   dice2   dice3   dice4   dice5   </p>
+                            <div id="selectDiceDiv"></div>
+                            <!--<label>dice2</label>
+                            <label>dice3</label>
+                            <label>dice4</label>
+                            <label>dice5</label>-->
+                        </div>
+                    </div>
+                </div> <!--class="diceCol"-->   
+            </div> <!--class="diceMsgCol"-->
+
+
+
+            <!-- row1_column2 for ScoreCard div -->
+            <div class="column" id="scorecardCol">
+                <div id="finalSCDiv"></div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr id="tr0">
+                            <td>Aces</td>
+                            <td><button id="catgy0" class="category-button" name="0">-</button></td>
+
+                        </tr>
+                        <tr id="tr1">
+                            <td>Twos</td>
+                            <td><button id="catgy1" class="category-button" name="1">-</button></td>
+                        </tr>
+                        <tr id="tr2">
+                            <td>Threes</td>
+                            <td><button id="catgy2" class="category-button" name="2">-</button></td>
+                        </tr>
+                        <tr id="tr3">
+                            <td>Fours</td>
+                            <td><button id="catgy3"  class="category-button" name="3">-</button></td>
+                        </tr>
+                        <tr id="tr4">
+                            <td>Fives</td>
+                            <td><button id="catgy4"  class="category-button" name="4">-</button></td>
+                        </tr>
+                        <tr id="tr5">
+                            <td>Sixes</td>
+                            <td><button id="catgy5"  class="category-button" name="5">-</button></td>
+                        </tr>
+                        <tr id="tr6">
+                            <td>Three of a kind</td>
+                            <td><button id="catgy6"  class="category-button" name="6">-</button></td>
+                        </tr>
+                        <tr id="tr7">
+                            <td>Four of a kind</td>
+                            <td><button id="catgy7" class="category-button" name="7">-</button></td>
+                        </tr>
+                        <tr id="tr8">
+                            <td>Full House</td>
+                            <td><button id="catgy8" class="category-button" name="8">-</button></td>
+                        </tr>
+                        <tr id="tr9">
+                            <td>Small Straight</td>
+                            <td><button id="catgy9"  class="category-button" name="9">-</button></td>
+                        </tr>
+                        <tr id="tr10">
+                            <td>Large Straight</td>
+                            <td><button id="catgy10"  class="category-button" name="10">-</button></td>
+                        </tr>
+
+                        <tr id="tr11">
+                            <td>Yahtzee</td>
+                            <td><button id="catgy11"  class="category-button" name="11">-</button></td>
+                        </tr>
+                        <tr id="tr12">
+                            <td>Chance</td>
+                            <td><button id="catgy12"  class="category-button" name="12">-</button></td>
+                        </tr>
+                        <tr id="tr13">
+                            <td>Upper Total</td>
+                            <td  id="catgy13">-</td>
+                        </tr>
+                        <tr id="tr14">
+                            <td>Bonus</td>
+                            <td id="catgy14">-</td>
+                        </tr>
+                        <tr id="tr15">
+                            <td>Lower Total</td>
+                            <td id="catgy15">-</td>
+                        </tr>
+                        <tr id="tr16">
+                            <td>Grand Total</td>
+                            <td id="catgy16">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> <!--class="col"-->
+
+        </div> <!--class="row"-->
+
+        <!-- js -->
+        <script type="text/javascript" src="./assets/javascript/ScoreCard.js"></script>
+        <script type="text/javascript" src="./assets/javascript/Yahtzee.js"></script>
+        <script type="text/javascript" src="./assets/javascript/User.js"></script>
+
+        <script type="text/javascript">
+            // User object 
+            var user = new Array();
+            user = new User();
+            user.setName("Homer");
+            //user.printUser();              
+
+            main(user);
+
+        </script>
+
+    </body>
+</html>
