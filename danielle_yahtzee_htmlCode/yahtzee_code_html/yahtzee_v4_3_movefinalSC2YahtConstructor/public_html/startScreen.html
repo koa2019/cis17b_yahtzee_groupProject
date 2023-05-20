@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YAHTZEE</title>
+        <style>
+            body {
+                background-image: url(Grass.png);
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .foreground-image {
+                position: absolute;
+                top: 40%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                height: 70vh;
+                width: auto;
+                z-index: -1;
+                opacity: 1;
+            }
+
+            .start-button {
+                position: absolute;
+                top: 83%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: darkorange; /* fallback color */
+                background: linear-gradient(to right, #FFD800 0%, #FFD800 33%, #FFAA00 33%, #FFAA00 66%, #FF6400 66%, #FF6400 100%);
+                color: white !important;
+                padding: 22px 55px;
+                margin: 8px 0;
+                border: none;
+                cursor: pointer;
+                border-radius: 10px;
+                border-color: black;
+                font-size: 40px;
+                font-weight: bolder;
+                text-shadow:
+                    -2px -2px 0 #000,
+                    2px -2px 0 #000,
+                    -2px 2px 0 #000,
+                    2px 2px 0 #000;
+            }
+
+            .start-button:hover {
+                background-color: #3e8e41;
+            }
+            
+        </style>
+    </head>
+<body>
+    <img class="foreground-image" src="https://logodix.com/logo/543554.png" alt="Foreground Image">
+    <h1></h1>
+    <button class="start-button"  onclick="window.location.href = 'login.html'">Start</button>
+</body>
+</html>

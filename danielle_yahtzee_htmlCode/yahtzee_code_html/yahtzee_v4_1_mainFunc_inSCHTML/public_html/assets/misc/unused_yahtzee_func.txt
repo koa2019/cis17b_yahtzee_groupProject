@@ -1,0 +1,125 @@
+
+//*****************************************************************
+//                    Prompt for nPlayers
+//*****************************************************************
+//Yahtzee.prototype.promptNPlayer = function () {
+//    var string = "Enter 1 or 2 players?";
+//    var num = prompt(string);
+//    this.setNPlayer(num);//this.nPlayer = num;
+//    //console.log("num=" + num + "  this.nPlayer=" + this.nPlayer);
+//};
+
+
+//*****************************************************************
+//             Prompt for menu choice 
+//*****************************************************************
+Yahtzee.prototype.menuPrompt = function () {
+
+    var string = "Play Menu:\n";
+    string += "1: Select which dice you want to keep before rolling again.\n";
+    string += "2: Pick category and end your turn\n";
+    string += "3: Roll again.\n";
+    string += "4: Exit\n";
+    string += "Enter a number: ";
+    var resp = prompt(string);
+    this.choice = resp;
+    console.log("menuPrompt.  resp=" + resp + "  this.choice=" + this.choice);
+    //return resp;
+};
+
+
+
+
+//*****************************************************************
+//          Get winner and Print player's final scorecard 
+//*****************************************************************
+//Yahtzee.prototype.isNewHiScore = function (user, p1HiScore) {
+//
+//    console.log("Hit isNewHiScore()");
+//
+//    /* Player 1 represents the user object. ONLY change their values if p1 wins.
+//     Check is p1's score from this game is larger than their hiScore stored in binary file */
+//    if (user.isHiScore(p1HiScore)) {
+//
+//        // Reset user's hiSCore and update binary & text file            
+//        user.setHiScore(p1HiScore);
+//
+//        console.log("<br/>New High Score of " + user.getHiScore() + "!<br/>");
+//        console.log("user New hiScore = " + user.getHiScore());
+//
+//        // Certain printout depending on if User is logged in or not
+//        //if(user.getName() === "Guest"){ console.log("<br/>Sign up or Login to save your score.<br/>");
+//
+//        return true; // player 1 HAS new high score                
+//    }
+//
+//    return false; // player 1 does NOT have new high score 
+//};
+
+
+
+
+//*****************************************************************
+//          Get winner and Print player's final scorecard 
+//*****************************************************************
+
+//Yahtzee.prototype.getP1Winner = function (player, finalSC, indx) {
+//
+//    alert("Hit getP1Winner()"+indx);
+//    console.log("<br/>####### Hit getP1Winner()<br/>");
+//    console.log("<br/>####### Hit getP1Winner()<br/>");
+//    finalSC[indx].setRound(13);            // Set round to last round for each player, so it'll 
+////    finalSC[1].setRound(NUM_CATGRY);            // check if they hit upperScore bonus in printFinalSC()
+////    finalSC[0].printFinalSC(player[0].getName());    // Print player 1's final scorecard 
+////
+////    if (this.nPlayer > 1) {
+////        finalSC[1].printFinalSC(player[1].getName());
+////    }  // Print player 2's final scorecard 
+////
+////    console.log("<br/><br/>   Game Over!<br/>");
+////
+////    // if nPlayer == 1, then p1 automatically winner
+////    if (this.nPlayer === 1) {
+////        return true;
+////    } else { // If there is more than 1 player
+////
+////        console.log("<br/>" + player[0].getName() + " vs " + player[1].getName() + "<br/>");
+////        console.log(player[0].getHiScore() + "     vs " + player[1].getHiScore());
+////
+////        var msg = "";
+////
+////        // Check is p1 is winner, tie or loser
+////        if (player[0].getHiScore() > player[1].getHiScore())
+////        {
+////            msg = player[0].getName() + " won!\n";
+////            console.log("<br/>" + msg + "<br/>");
+////            return true;
+////
+////        } else if (player[0].getHiScore() === player[1].getHiScore()) {
+////
+////            msg = "Tie Game!\n";
+////            console.log("<br/>" + msg + "<br/>");
+////            return true;
+////
+////        } else {
+////
+////            msg = "Uh-Oh..." + player[1].getName() + " won!\n";
+////            console.log("<br/>" + msg + "<br/>");
+////            return false;
+////        }       
+////    }
+//};
+
+
+
+
+//*****************************************************************
+//              Select category to save to final scorecard
+//*****************************************************************
+//Yahtzee.prototype.selectCategory = function (a, name, rnd) {
+//
+//    a = (a < 0) ? 0 : a;
+//    rnd = (rnd < 0) ? 0 : rnd;
+//};
+
+
