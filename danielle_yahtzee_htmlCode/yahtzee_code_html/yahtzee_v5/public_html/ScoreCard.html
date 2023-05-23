@@ -61,7 +61,9 @@
 
             <!-- row1_column2 for ScoreCard div -->
             <div class="column" id="scorecardCol">
+                
                 <div id="finalSCDiv"></div>
+                
                 <table>
                     <thead>
                         <tr>
@@ -70,7 +72,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         <tr id="tr0">
                             <td>Aces</td>
                             <td><button id="catgy0" class="category-button" name="0">-</button></td>
@@ -153,13 +154,25 @@
         <script type="text/javascript" src="./assets/javascript/User.js"></script>
 
         <script type="text/javascript">
-            // User object 
+            
+            // Use string from database to set a User object 
             var user = new Array();
             user = new User();
+            user.setNumRec(1);
             user.setName("Homer");
+            var db_hiScore = 0;
             //user.printUser();              
 
-            main(user);
+            // Pass User object to Yahtzee.js
+            // If player 1 wins AND has a new hiScore then
+            // Yahtzee.js will update User's object and return true
+            var isHiScore = false;
+            isHiScore = main(user);
+            if(isHiScore===true){ 
+                user.reWrtBin(); // Rewrite user's record in database
+            }
+           
+            
 
         </script>
 
