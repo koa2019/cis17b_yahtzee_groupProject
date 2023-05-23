@@ -80,6 +80,7 @@ Yahtzee.prototype.startGame = function (user, SCobj) {
     this.getRules();   
     this.welcomeMsg(name);          // print welcome message depending on num players
 
+
     // Game runs for MAXRND = 13 rounds. 1 round per category
     for (var rnd = 1; rnd <= 1; rnd++) {
 
@@ -93,63 +94,58 @@ Yahtzee.prototype.startGame = function (user, SCobj) {
             this.play(SCobj.player[this.index], SCobj.scorecard[this.index], SCobj.finalSC[this.index]);
         }
         this.setIndex(0);
-    } // ends round for(rnd < 13 )            
-
-    console.log("Outside of rounds loop");
-    //this.p1Winner = this.getP1Winner(player, finalSC);  // Print player's final scorecards
-    //var isTrue = this.getP1Winner(player, finalSC);  // Print player's final scorecards
-    //this.getP1Winner(SCobj.player, SCobj.finalSC, 0);  // Print player's final scorecards
-    
-    
-    SCobj.finalSC[0].setRound(13);       // Set round to last round for each player, so it'll 
-    SCobj.finalSC[1].setRound(13);       // check if they hit upperScore bonus in printFinalSC()
-    SCobj.finalSC[0].printFinalSC(SCobj.player[0].getName());// Print player 1's final scorecard 
-    
-    // if 2 players, then print player 2's final scorecard
-    if(this.nPlayer > 1) { SCobj.finalSC[1].printFinalSC( SCobj.player[1].getName() ); }  // Print player 2's final scorecard 
-    
-    console.log("Game Over!<br/>");
-    
-    // if nPlayer === 1, then p1 automatically winner
-    if(this.nPlayer === 1) { this.p1Winner = true; } 
-    
-    else { // If there is more than 1 player
-    
-        console.log("<br/>"+ SCobj.player[0].getName() + " vs " + SCobj.player[1].getName() + "<br/>");
-        console.log(SCobj.player[0].getHiScore() + "     vs " + SCobj.player[1].getHiScore());
-        
-        var msg = "";
-        
-        // Check is p1 is winner, tie or loser
-        if( SCobj.player[0].getHiScore() > SCobj.player[1].getHiScore() )
-        {
-           msg = SCobj.player[0].getName() + " won!<br>"; 
-           this.p1Winner = true;
-            
-        } else if(SCobj.player[0].getHiScore() === SCobj.player[1].getHiScore()){
-        
-            msg ="Tie Game!\n";
-            this.p1Winner = true;
-            
-        } else { 
-            
-            this.p1Winner = false; 
-            msg = "Uh-Oh..." + SCobj.player[1].getName() + " won!\n";
-        }
-        
-        SCobj.console.log("<br/>"+ msg +"<br/>");        
-    }
+    } // ends round for(rnd < 13 )           
 
 
-    if (!this.p1Winner) { // if player 1 is NOT winner
-
-        //alert("p1Winner===false"); 
-        console.log("<br/><br/>Good Game!<br/>");
-        return false;
-
-    } else {
-        return this.isNewHiScore(user, SCobj.player[0].getHiScore()); // return whether or not p1 has new hiScor
-    }
+//    SCobj.finalSC[0].setRound(13);       // Set round to last round for each player, so it'll 
+//    SCobj.finalSC[1].setRound(13);       // check if they hit upperScore bonus in printFinalSC()
+//    SCobj.finalSC[0].printFinalSC(SCobj.player[0].getName());// Print player 1's final scorecard 
+//    
+//    // if 2 players, then print player 2's final scorecard
+//    if(this.nPlayer > 1) { SCobj.finalSC[1].printFinalSC( SCobj.player[1].getName() ); }  // Print player 2's final scorecard 
+//    
+//    console.log("Game Over!<br/>");
+//    
+//    // if nPlayer === 1, then p1 automatically winner
+//    if(this.nPlayer === 1) { this.p1Winner = true; } 
+//    
+//    else { // If there is more than 1 player
+//    
+//        console.log("<br/>"+ SCobj.player[0].getName() + " vs " + SCobj.player[1].getName() + "<br/>");
+//        console.log(SCobj.player[0].getHiScore() + "     vs " + SCobj.player[1].getHiScore());
+//        
+//        var msg = "";
+//        
+//        // Check is p1 is winner, tie or loser
+//        if( SCobj.player[0].getHiScore() > SCobj.player[1].getHiScore() )
+//        {
+//           msg = SCobj.player[0].getName() + " won!<br>"; 
+//           this.p1Winner = true;
+//            
+//        } else if(SCobj.player[0].getHiScore() === SCobj.player[1].getHiScore()){
+//        
+//            msg ="Tie Game!\n";
+//            this.p1Winner = true;
+//            
+//        } else { 
+//            
+//            this.p1Winner = false; 
+//            msg = "Uh-Oh..." + SCobj.player[1].getName() + " won!\n";
+//        }
+//        
+//        SCobj.console.log("<br/>"+ msg +"<br/>");        
+//    }
+//
+//
+//    if (!this.p1Winner) { // if player 1 is NOT winner
+//
+//        //alert("p1Winner===false"); 
+//        console.log("<br/><br/>Good Game!<br/>");
+//        return false;
+//
+//    } else {
+//        return this.isNewHiScore(user, SCobj.player[0].getHiScore()); // return whether or not p1 has new hiScor
+//    }
 
     console.log("End of startGame()");
 };
@@ -173,8 +169,9 @@ Yahtzee.prototype.play = function (player, scorecard, finalSC) {
     // loop as long as numRolls does NOT equal 3
     while (!(numRolls === MAXROLLS)) {
 
+
         var string = name + "'s turn. Roll " + (numRolls+1);
-        console.log(string);
+        console.log("                                       "+string);
         document.getElementById("rollDiv").innerHTML = string;//.append(string);
         //this.pause('r');          //replace with addEventListener to mimic rolling dice
         scorecard.reRoll();   // Re-Roll dice   
@@ -184,8 +181,7 @@ Yahtzee.prototype.play = function (player, scorecard, finalSC) {
         // Set & print scorecard with possible points based on dice values
         scorecard.fillScoreCard();
         
-        console.log("In play(). numRolls = "+ numRolls);
-        
+    
         // if it is last roll, force switch case 2 to run
         if (numRolls === MAXROLLS) {
             this.menuChoice = 2;
@@ -196,8 +192,7 @@ Yahtzee.prototype.play = function (player, scorecard, finalSC) {
             resp =  this.menuChoice;
             //var resp = this.checkMenuChoice();
             console.log("Hit numRolls < MAXROLLS.  menuChoice = " + resp);
-        }
-        
+        }        
         //console.log("In play()  resp = " + resp);
 
 
@@ -227,13 +222,13 @@ Yahtzee.prototype.play = function (player, scorecard, finalSC) {
 
                 // if it is NOT the last round, then print player's final scorecard
                 if (!(rnd === MAXRND)) {
-                    finalSC.printFinalSC(name);
+                    //finalSC.printFinalSC(name);
 
                 } else { // If it IS the last round AND there are 2 players,
                      // AND it's player 1's turn, then print their final scorecard
 
                     if ((this.nPlayer > 1) && (this.index === 0)) {
-                        finalSC.printFinalSC(name);
+                        //finalSC.printFinalSC(name);
 
                     } else {
                         alert("Tallying final score...");
@@ -252,7 +247,7 @@ Yahtzee.prototype.play = function (player, scorecard, finalSC) {
             {        // all the loops & print final scorecards
 
                 alert("Hit switch default...<Leaving program>");
-                console.log("Hit switch default...Leaving program");
+                console.log("           Hit switch default...Leaving program");
                 finalSC[0].setRound(finalSC.NUM_CATGRY); // set round in final ScoreCard to end game
                 numRolls = MAXROLLS;
                 //return;
@@ -292,7 +287,8 @@ Yahtzee.prototype.selectDice = function (scorecard) {
         
     // Push the dice they WANT OR DON'T into vector? 
     do {
-        this.printSelectDiceDiv(scorecard);
+        ans = this.printSelectDiceDiv(scorecard);
+        console.log("ans="+ans);
         //ans = prompt(string); //cin >> menuChoice; 
         //console.log("  selectDice().  ans="+ans); 
         
@@ -310,12 +306,15 @@ Yahtzee.prototype.selectDice = function (scorecard) {
 //*****************************************************************
 Yahtzee.prototype.printSelectDiceDiv = function (scorecard) {
     
-    console.log("Hit printSelectDiceDiv()");   
+    console.log("   Hit printSelectDiceDiv()");   
+            
+        
     var div = document.getElementById('selectDiceDiv');
     var string = "<br><p>Select the dice numbers (1-5) to keep, or Click button to stop:</p>";
     //string += '<input type="text" id="selectDiceInput" name="selectDiceInput" min="1" max="1" required size="1">';
     string += '<button type="submit" id="selectOnClick">Stop</button><br>'; //onclick="menuOnClick()"
     div.innerHTML = string;
+    
     
     // add event listeners to all buttons with class "category-button"
     var diceBtn = document.getElementsByClassName("dice");
@@ -323,9 +322,15 @@ Yahtzee.prototype.printSelectDiceDiv = function (scorecard) {
         diceBtn[i].addEventListener("click", this.diceOnClick);//this.diceOnClick(scorecard));
     }
     
+    
     // add event listener to select button in id=selectDiceDiv
     var selectBtn = document.getElementById("selectOnClick");
     selectBtn.addEventListener("click", this.selectOnClick);    
+    
+    var ans = -66;
+    //var ans = prompt(string); //cin >> menuChoice; 
+    //console.log("  selectDice().  ans="+ans); 
+    return ans;
     
 };
 
@@ -408,7 +413,7 @@ Yahtzee.prototype.catgyOnClick2 = function () {
     i = this.name;
     
     //resp = document.getElementById('catgyInput').value; //cin>>resp;
-    console.log("Hit SC catgyOnClick() value="+input+"  this.name=" + i);
+    console.log("Hit catgyOnClick2() value="+input+"  this.name=" + i);
     input *= 1;
     i *= 1;
     var num = Number(i);//parseInt(i);

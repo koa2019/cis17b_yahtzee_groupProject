@@ -21,7 +21,7 @@ function ScoreCard() {
         this.wasPicked[c] = false;
     }
     //console.log("this.wasPicked[0] = "+this.wasPicked[0]);
-    console.log("Hit ScoreCard().  this.wasPicked[ "+this.wasPicked);
+    //console.log("Hit ScoreCard().  this.wasPicked[ "+this.wasPicked);
     
     // Initialize array of Dice class object
     for (var i = 0; i < NUM_DICE; i++) {
@@ -184,7 +184,7 @@ ScoreCard.prototype.setFinalSC = function (scorecard) {
     var string = "<br>Pick a Category between 0 and 12.<br/>";
     string += "Enter a number: ";
     string += '<input type="text" id="catgyInput" name="catgyInput" min="1" max="4" required size="1">';
-    //string += '<button type="submit" id="catgyBtn">Enter</button>'; //onclick="menuOnClick()"
+    string += '<button type="submit" id="catgyBtn">Enter</button>'; //onclick="menuOnClick()"
     msgDiv.innerHTML = string;    
     // event listener submit button
     //document.getElementById("catgyBtn").addEventListener("click", this.catgyOnClick); 
