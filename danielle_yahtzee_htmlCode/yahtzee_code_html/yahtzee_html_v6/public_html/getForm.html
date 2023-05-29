@@ -1,0 +1,52 @@
+<!-- 
+    Dr. Mark E. Lehr
+    Example for CSC/CIS 17B
+        JSON stringify
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Create the _Get Object</title>
+        <script type="text/javascript" src="././assets/javascript/getForm.js"></script>
+    </head>
+
+    <body>
+        <script type="text/javascript">
+            var url = document.location.href;
+            $_GET = getForm(url);
+            
+            for (property in $_GET) {
+                document.write(property + "=" + decodeURIComponent($_GET[property]) + "</br>");
+            }
+            
+            var newText = JSON.stringify($_GET);
+            document.write("UserData = " + newText + "</br>");
+
+            // Retrieve existing data from local storage
+            var existingData = localStorage.getItem('UserData');
+            var existingArray = existingData ? JSON.parse(existingData) : [];
+
+            // Add new data to the existing array
+            existingArray.push($_GET);
+
+            // Save the updated array to local storage
+            var updatedData = JSON.stringify(existingArray);
+            localStorage.setItem('UserData', updatedData);
+
+            // Get the updated array back
+            var retrievedObject = localStorage.getItem('UserData');
+
+            var dataArray = JSON.parse(retrievedObject);
+            
+            // Writes all records that are in localstorage
+            for (var i = 0; i < dataArray.length; i++) {
+                var obj = dataArray[i];
+                document.write("User " + (i + 1) + ":</br>");
+                for (property in obj) {
+                    document.write(property + "=" + obj[property] + "</br>");
+                }
+            }
+        </script>
+    </body>
+</html>
