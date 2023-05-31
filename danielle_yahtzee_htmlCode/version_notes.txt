@@ -37,6 +37,14 @@ yahtzee_v4:
 	* getNPlayer() to promptNPlayer(). nightmare!
 
 
+yahtzee_html_v5:
+
+
+yahtzee_html_v6:
+* i figured how to aggregate ScoreCard class within Yahtzee
+constructor and be able to access scorecard and finalFC throughout
+Yahtzee.js.
+
 To-do:
 
 * ScoreCard.html.
