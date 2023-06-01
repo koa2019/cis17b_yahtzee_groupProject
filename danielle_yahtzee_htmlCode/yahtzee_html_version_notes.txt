@@ -45,6 +45,17 @@ yahtzee_html_v6:
 constructor and be able to access scorecard and finalFC throughout
 Yahtzee.js.
 
+
+yahtzee_html_v7_noPrompts:
+I removed all the prompts and wrote the input divs to the page dynamically. 
+The game is not stopping and getting the input from printMenu(), selectDice(), or
+pickCategory(). If I put prompts in, the game will stop when it's supposed to, but
+it won't display the dice or scorecard on the html.
+
+Moved showPickCategory(), categoryClick(), and setFinalSC() to Yahtzee, so I could
+reference scorecard's object when setting the finalScoreCard.scores.
+
+
 To-do:
 
 * ScoreCard.html.
