@@ -287,6 +287,12 @@ ScoreCard.prototype.setRound = function (r) {
     this.writeRound();
 };
 
+ScoreCard.prototype.increRound = function () {
+    this.round++;   
+    //console.log("Hit setRound(). round = " + this.getRound());
+    this.setRound();
+};
+
 ScoreCard.prototype.setFName = function (name) {
     this.fName=name;
 };
@@ -337,8 +343,8 @@ ScoreCard.prototype.writeTotals = function () {
     document.getElementById('catgy14').innerHTML = bonus;
     document.getElementById('catgy15').innerHTML = this.getLowerScore();
     document.getElementById('catgy16').innerHTML = this.getTotalScore();   
-    console.log("Hit writeTotals().  scores[ "+this.scores+" ]\n"  
-                + "upperScore="+this.getUpperScore() +"  lowerScore="+this.getLowerScore()+" total="+this.getTotalScore());
+    //console.log("Hit writeTotals().  scores[ "+this.scores+" ]\n"  
+                //+ "upperScore="+this.getUpperScore() +"  lowerScore="+this.getLowerScore()+" total="+this.getTotalScore());
 
 };
 
@@ -362,8 +368,6 @@ ScoreCard.prototype.writeRound = function() {
     var string = "Round " + this.getRound();
     document.getElementById("roundDiv").innerHTML = string;//.append(string);
 };
-
-
 
 
 ScoreCard.prototype.writeDice = function () {

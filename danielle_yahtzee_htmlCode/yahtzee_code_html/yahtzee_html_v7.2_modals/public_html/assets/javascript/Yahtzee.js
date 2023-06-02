@@ -28,10 +28,10 @@ function Yahtzee(user) {
         this.finalSC[i] = new ScoreCard(this.player[i].getName());   // final scorecard. Aggregates Array of ScoreCard class       
     }
 
-    console.log(this.finalSC[this.index]);
     this.player[this.index].setName(user.getName());// Reset player 1's name with user's name   
     this.scorecard[this.index].setFName(user.getName());
     this.scorecard[this.index].fillScoreCard();
+    console.log(this.finalSC[this.index]);
     this.setHTML();
 }
 
@@ -45,22 +45,22 @@ Yahtzee.prototype.setHTML = function () {
         var diceBtn = document.getElementById('dice' + i);
         diceBtn.setAttribute('onclick', 'yahtzee.diceOnClick(yahtzee)');
     }
-
+    this.printMenu();
     document.getElementById("diceDiv").style.visibility = "hidden";//"visible"; 
     document.getElementById("scorecard-div").style.visibility = "hidden";//"visible";
-
+    document.getElementById("menu-div").style.visibility = "hidden";//"visible";
     //this.showScorecard(); // prints scorecard dynamically
-    //document.getElementById("menu-modal").style.visibility = "hidden";//"visible" 
+    //document.getElementById("show-menu-btn").style.visibility = "hidden";//"visible" 
 
 
-    var menuDiv = document.getElementById('menuDiv');
-    var menuBtn = this.makeBtn('submit', 'Show Menu', 'menu-modal');
-    menuBtn.setAttribute('onclick', 'yahtzee.printMenu(); yahtzee.play()');
+    var menuDiv = document.getElementById('show-menu-div');
+    var menuBtn = this.makeBtn('submit', 'Show Menu', 'show-menu-btn');
+    menuBtn.setAttribute('onclick', 'yahtzee.showMenuOnClick()');
     menuDiv.append(menuBtn);
 
 
     //var rollDiv = document.getElementById('diceCol');
-    //var rollBtn = this.makeBtn('submit', 'Show Dice', 'menu-modal');
+    //var rollBtn = this.makeBtn('submit', 'Show Dice', 'show-menu-btn');
     //rollBtn.setAttribute('onclick', 'yahtzee.showDiceDivOnClick()');
     //rollDiv.append(rollBtn);
 
@@ -79,25 +79,12 @@ Yahtzee.prototype.startGame = function (user) {
     console.log("Hit startGame()");
     //document.getElementById("row2").style.visibility = "visible";// "hidden";//
     this.getRules();
-    this.welcomeMsg(this.player[this.index].getName());          // print welcome message depending on num players
-
-
-    // Game runs for MAXRND = 13 rounds. 1 round per category
-    //for (var rnd = 1; rnd <= MAXRND; rnd++) {
-
-
-    //this.finalSC[this.index].setRound(rnd); // set round for finalSC. scorecard.getUpLowSums() uses it.
-    //this.scorecard[this.index].setRound(rnd);// set round for possible scorecard. scorecard.recordSCore() uses it.
-
-    // loop as long as numRolls does NOT equal 3
-
-
-    //this.play();
-
-    // }
-    //return this.isNewHiScore();
+    this.welcomeMsg(this.player[this.index].getName());   // print welcome message depending on num players
+    this.numRolls++;
+    this.scorecard[this.index].writeRollRound(this.numRolls);
+    this.play();
+    //return this.isNewHiScore();};
 };
-
 
 //**********************************************************
 //              This player's turn
@@ -105,37 +92,34 @@ Yahtzee.prototype.startGame = function (user) {
 Yahtzee.prototype.play = function () {
 
     console.log("Hit play()");
-    
-    
-    if(this.finalSC[this.index].getRound() <= MAXRND) {
-        
+    var rnd=this.finalSC[this.index].getRound();
+    if (rnd <= MAXRND) {
+
         this.scorecard[this.index].reRoll(); // Re-Roll dice       
         this.scorecard[this.index].fillScoreCard(); // Set & print scorecard with possible points based on dice values
 
         while (!(this.numRolls === MAXROLLS)) {
 
-            //this.numRolls++;
             this.scorecard[this.index].writeRollRound(this.numRolls);
-
-
 
             // if it is last roll, force switch case 2 to run
             if (this.numRolls === MAXROLLS) {
                 this.setMenuChoice(2);
                 response = this.getMenuChoice();
                 console.log("Hit numRolls === MAXROLLS.  menuChoice = " + response);
-                //document.getElementById("menuDiv").style.visibility = "hidden";//"visible"
+                //document.getElementById("menu-div").style.visibility = "hidden";//"visible"
             }
-//        else {
-//            //document.getElementById("menuDiv").style.visibility = "visible";//"hidden"
-//            //this.printMenu();
-//            response = this.checkMenuChoice();
-//            console.log("Hit numRolls < MAXROLLS.  menuChoice = " + response);
-//
-//        }
+        //else {
+            //document.getElementById("menu-div").style.visibility = "visible";//"hidden"
+            //response = this.checkMenuChoice();
+            //console.log("Hit numRolls < MAXROLLS.  menuChoice = " + response);
+        //}
             this.callSwitch();
         } // ends while(!(numRoll == MAXROLLS))  
-
+        rnd++;
+        this.finalSC[this.index].setRound(rnd); // set round for finalSC. scorecard.getUpLowSums() uses it.
+        this.scorecard[this.index].setRound(rnd);// set round for possible scorecard. scorecard.recordSCore() uses it.
+        //console.log('round = ' + this.finalSC[this.index].increRound());
     } // ends if rnd<=MAXRND
 
 };
@@ -187,11 +171,13 @@ Yahtzee.prototype.diceOnClick = function () {
 
 //    Handles Event listener to stop selecting dice you want to save
 Yahtzee.prototype.stopDiceOnClick = function () {
-    document.getElementById("diceCol").style.visibility = "visible";//
+    //document.getElementById("diceCol").style.visibility = "visible";//
     document.getElementById("diceDiv").style.visibility = "hidden";//diceDiv
-    this.numRolls++;
-    console.log("Hit stopDiceOnClick(). numRolls=" + this.numRolls);
+    this.showMenuOnClick();
+    console.log("Hit stopDiceOnClick().");
     this.play();
+    //this.scorecard[this.index].reRoll(); // Re-Roll dice       
+    //this.scorecard[this.index].fillScoreCard(); // Set & print scorecard with possible points based on dice value 
 };
 
 
@@ -291,15 +277,6 @@ Yahtzee.prototype.isP1Winner = function () {
     return this.getP1Winner();
 };
 
-//*****************************************************************
-//              Select dice player wants to keep
-//*****************************************************************
-//Yahtzee.prototype.showDiceDivOnClick = function () {
-//// Put random ans because the game isn't stopping and waiting for the user's input from the html page
-//    var ans = (1 + (Math.floor(Math.random() * 5)));
-//};
-
-
 
 Yahtzee.prototype.checkMenuChoice = function () {
     var randNum = (1 + (Math.floor(Math.random() * 3))); //[1,4]
@@ -315,27 +292,28 @@ Yahtzee.prototype.checkMenuChoice = function () {
 Yahtzee.prototype.menuOnClick = function () {
 
 
-    var response = document.getElementById('menuChoiceInput').value; //cin>>response;
+    var response = document.getElementById('menu-select').value; //cin>>response;
     this.setMenuChoice(response);
     alert("Hit menuOnClick(). value = " + response + "  menuChoice=" + this.getMenuChoice());
     console.log("Hit menuOnClick(). response=" + response + "  menuChoice=" + this.getMenuChoice());
-    this.callSwitch(response);
+    this.callSwitch();
 
-    document.getElementById("menu-modal").style.visibility = "visible";//"hidden";//
-    document.getElementById("menuDiv").style.visibility = "hidden";//"visible";//
+    //document.getElementById("show-menu-btn").style.visibility = "visible";//"hidden";//
+    document.getElementById("show-menu-btn").style.visibility = "hidden";//"visible";//
 };
 
 
 
-Yahtzee.prototype.callSwitch = function (response) {
+Yahtzee.prototype.callSwitch = function () {
 
-    console.log("Hit callSwitch(). response=" + response + "  menuChoice=" + this.getMenuChoice());
-   
-    switch (response * 1) { // choose dice to keep, pick a category, re-roll or exit game
+    console.log("Hit callSwitch().  menuChoice=" + this.getMenuChoice());
+
+    switch (1*this.getMenuChoice()) { // choose dice to keep, pick a category, re-roll or exit game
 
         case 1:  // Select dice you want to keep in between rolls
         {
             console.log("Hit switch case 1");
+            this.numRolls++;
             document.getElementById("scorecard-div").style.visibility = "hidden";//"visible";           
             break;
         }
@@ -363,9 +341,11 @@ Yahtzee.prototype.callSwitch = function (response) {
             }
             break;
         }
-        case 3:  // Roll dice again by breaking out of switch()
-        {
+        case 3:
+        {   // Roll dice again by breaking out of switch()
             console.log("Hit switch case 3. Reroll");
+            this.scorecard[this.index].reRoll(); // Re-Roll dice       
+            this.scorecard[this.index].fillScoreCard(); // Set & print scorecard with possible points based on dice values
             this.numRolls++; // increment numRolls every time dice are rolled    
             break;
         }
@@ -375,10 +355,18 @@ Yahtzee.prototype.callSwitch = function (response) {
             this.finalSC[0].setRound(MAXRND); // stops the for loop in startGame()
             console.log("           Hit switch default...Leaving program");
         }
-    } // ends switch(response)         
-    console.log("Hit end of switch. numRolls=" + this.numRolls + "\n");
+    } // ends switch(response)    
+    console.log("Hit end of switch. numRolls = " + this.numRolls +"\n");
 };
 
+Yahtzee.prototype.showMenuOnClick = function () {
+   
+    document.getElementById("show-menu-btn").style.visibility = "hidden";//"visible";
+    document.getElementById("diceDiv").style.visibility = "visible";//"hidden";//
+    document.getElementById("scorecard-div").style.visibility = "visible"; //"hidden";//
+    document.getElementById("msgDiv").innerHTML = ""; //"hidden";//
+    document.getElementById("menu-div").style.visibility = "visible"; //"hidden";//
+};
 
 
 //*****************************************************************
@@ -386,41 +374,35 @@ Yahtzee.prototype.callSwitch = function (response) {
 //*****************************************************************
 Yahtzee.prototype.printMenu = function () {
 
-    document.getElementById("menu-modal").style.visibility = "hidden";//"visible";
-    document.getElementById("diceDiv").style.visibility = "visible";//"hidden";//
-    document.getElementById("scorecard-div").style.visibility = "visible"; //"hidden";//
-    document.getElementById("msgDiv").innerHTML = ""; //"hidden";//
-
-    var msgDiv = document.getElementById('menuDiv');
-    var p = document.createElement('p');
-    var string = "<br> Options: <br>";
-    string += "1: Select which dice you want to keep before rolling again.<br>";
-    string += "2: Pick category and end your turn<br>";
-    string += "3: Roll again.<br>";
-    string += "4: Exit<br>";
-    p.innerHTML = string;
-    msgDiv.append(p);
-
-    var label = document.createElement('label');
-    label.setAttribute('for', 'menuChoiceInput');
-    label.innerHTML = "Enter a number: ";
-    msgDiv.append(label);
-
-    var input = document.createElement('input');
-    input.setAttribute('type', 'text');
-    input.setAttribute('name', 'menuChoiceInput');
-    input.setAttribute('min', 1);
-    input.setAttribute('max', 4);
-    //input.setAttribute('required', 1); 
-    input.setAttribute('id', 'menuChoiceInput');
-    input.setAttribute('value', "");
-    msgDiv.append(input);
-
+    var msgDiv = document.getElementById('menu-div');
+    var select = document.createElement('select');
+    select.setAttribute('id','menu-select');
+    
+    var option1 = document.createElement('option');
+    option1.setAttribute('value',1);
+    option1.innerHTML = 'Select Dice';
+    
+    var option2 = document.createElement('option');
+    option2.setAttribute('value',2);
+    option2.innerHTML = 'Pick a Scorecard Category';    
+    
+    var option3 = document.createElement('option');
+    option3.setAttribute('value',3);
+    option3.innerHTML = 'Roll';
+    
+    var option4 = document.createElement('option');
+    option4.setAttribute('value',4);
+    option4.innerHTML = 'Exit';
+   
+    msgDiv.append(select);
+    select.append(option1);
+    select.append(option2);
+    select.append(option3);
+    select.append(option4);
 
     var btn = this.makeBtn('submit', 'Pick Category', 'menuBtn');
     btn.setAttribute('onclick', 'yahtzee.menuOnClick(yahtzee)');
     msgDiv.append(btn);
-    //dialog.showModal();
     console.log("Hit printMenu().");
 };
 
