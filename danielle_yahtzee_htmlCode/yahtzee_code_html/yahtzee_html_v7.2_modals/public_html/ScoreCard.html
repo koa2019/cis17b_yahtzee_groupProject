@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Yahtzee Board</title>
+        <!-- css -->
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+        <link rel="stylesheet" href="./assets/css/reset.css" type="text/css" />
+        <link rel="stylesheet" href="./assets/css/ScoreCard_styles.css" type="text/css" />
+        <!-- js -->
+        <script type="text/javascript" src="./assets/javascript/Yahtzee.js"></script>
+        <script type="text/javascript" src="./assets/javascript/ScoreCard.js"></script>
+        <script type="text/javascript" src="./assets/javascript/User.js"></script>
+    </head>
+
+    <body>
+
+        <div class="container">
+
+            <h1>Yahtzee Board</h1>
+
+            <!--row1-->
+            <div id="startDiv"></div>
+
+            <!--row2-->
+            <div class="row" id="row2"> <!--https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_two_columns-->
+
+                <!-- row2_column1 for dice and message board div -->
+                <div class="column" id="diceMsgCol">
+
+                    <div  id="msgBrdCol">                     
+                        <div id="nPlayrDiv"></div>
+                        <div id="msgDiv"></div>
+                        <div id="menuDiv"></div>  
+                        <div id="categoryDiv"></div> 
+                    </div> <!--class="msgBrdCol"-->  
+
+                    <div  id="rndRollCol"> 
+                        <div id="nameDiv"></div>
+                        <div id="roundDiv"></div>
+                        <div id="rollDiv"></div>
+                    </div> <!--class="rndRollCol"-->                     
+
+                    <div id="diceCol"> 
+                        <div class="row">
+                            <div class="row dice-container" id="diceDiv"></div>
+                        </div>
+                    </div> 
+                </div> <!--row2_column1  class="diceMsgCol"-->
+
+
+
+                <!-- row2_column2 for ScoreCard div -->
+                <div class="column" id="scorecard-col">
+                    <div id="scorecard-div">
+                        <div id="finalSCDiv"></div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr id="0" class="categoryId"> 
+                                    <td>Aces</td>
+                                    <td><button id="catgy0" class="category-button" value="0">-</button></td>
+                                </tr>
+                                <tr id="1" class="categoryId">
+                                    <td>Twos</td>
+                                    <td><button id="catgy1" class="category-button" value="1">-</button></td>
+                                </tr>
+                                <tr id="2" class="categoryId">
+                                    <td>Threes</td>
+                                    <td><button id="catgy2" class="category-button" value="2">-</button></td>
+                                </tr>
+                                <tr id="3" class="categoryId">
+                                    <td>Fours</td>
+                                    <td><button id="catgy3"  class="category-button" value="3">-</button></td>
+                                </tr>
+                                <tr id="4" class="categoryId">
+                                    <td>Fives</td>
+                                    <td><button id="catgy4"  class="category-button" value="4">-</button></td>
+                                </tr>
+                                <tr id="5" class="categoryId">
+                                    <td>Sixes</td>
+                                    <td><button id="catgy5"  class="category-button" value="5">-</button></td>
+                                </tr>
+                                <tr id="6" class="categoryId">
+                                    <td>Three of a kind</td>
+                                    <td><button id="catgy6"  class="category-button" value="6">-</button></td>
+                                </tr>
+                                <tr id="7" class="categoryId">
+                                    <td>Four of a kind</td>
+                                    <td><button id="catgy7" class="category-button" value="7">-</button></td>
+                                </tr>
+                                <tr id="8" class="categoryId">
+                                    <td>Full House</td>
+                                    <td><button id="catgy8" class="category-button" value="8">-</button></td>
+                                </tr>
+                                <tr id="9" class="categoryId">
+                                    <td>Small Straight</td>
+                                    <td><button id="catgy9"  class="category-button" value="9">-</button></td>
+                                </tr>
+                                <tr id="10" class="categoryId">
+                                    <td>Large Straight</td>
+                                    <td><button id="catgy10"  class="category-button" value="10">-</button></td>
+                                </tr>
+                                <tr id="11" class="categoryId">
+                                    <td>Yahtzee</td>
+                                    <td><button id="catgy11"  class="category-button" value="11">-</button></td>
+                                </tr>
+                                <tr id="12" class="categoryId">
+                                    <td>Chance</td>
+                                    <td><button id="catgy12"  class="category-button" value="12">-</button></td>
+                                </tr>
+                                <tr id="13">
+                                    <td>Upper Total</td>
+                                    <td  id="catgy13">-</td>
+                                </tr>
+                                <tr id="14">
+                                    <td>Bonus</td>
+                                    <td id="catgy14">-</td>
+                                </tr>
+                                <tr id="15">
+                                    <td>Lower Total</td>
+                                    <td id="catgy15">-</td>
+                                </tr>
+                                <tr id="16">
+                                    <td>Grand Total</td>
+                                    <td id="catgy16">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> <!--row2_column2  id="scorecard-col"-->
+            </div> <!--row2-->
+        </div> <!--container-->
+
+        <script type="text/javascript">
+
+            //document.getElementById("row2").style.visibility = "hidden";//"visible" 
+
+            // Using a string to mimic JSON from database to set a new User object 
+            var user = new Array();
+            user = new User();
+            user.setNumRec(1);
+            user.setName("Homer");
+            user.setHiScore(40);
+            //user.printUser();              
+
+
+            
+            // Create Yahtzee object and pass User object to Yahtzee.js and start game
+            var yahtzee = new Array();
+            yahtzee = new Yahtzee(user);
+
+            yahtzee.startGame(user);
+            // If player 1 wins AND has a new hiScore then
+            // Yahtzee.js will update User's object and return true
+            //var isNewHiScore = false;
+//            isNewHiScore = yahtzee.startGame(user);
+//            console.log("main(). p1 isNewHiScore === " + isNewHiScore);
+//            if (isNewHiScore === true) {
+//                console.log("main(). user new hiScore === " + user.getHiScore());
+//                //alert('main(). user new hiScore = ' + user.getHiScore());
+//                user.reWrtBin(); // Rewrite user's record in database
+//            }
+
+        </script>
+
+    </body>
+</html>

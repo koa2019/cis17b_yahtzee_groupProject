@@ -3,51 +3,41 @@ var NUM_DICE = 5;
 var NUM_CATGRY = 13; // number of scoring categories
 
 // ScoreCard object constructor. Public properties of ScoreCard class
-function ScoreCard() {
+function ScoreCard(name) {
     
     //console.log("Hit ScoreCard() Constructor");
-    this.setFName("");
-    this.round=0; //this.setRound(0);
+    this.setFName(name);
+    this.round=1; //this.setRound(0);
     this.upperScore = 0;
     this.lowerScore = 0;
     this.isCatgryPicked = [NUM_CATGRY]; // Stops categories from being overwritten or displayed twice
     this.scores = [NUM_CATGRY];     // points for each of 13 categories in scorecard
     this.dice = [NUM_DICE]; // ? Are we using this cuz we have a local one in play() or do we need to connect it with local in play()
-    this.selected = [];  // Create vector for the this.dice we're keeping for final points
+    this.selectedDice = [];  // Create vector for the this.dice we're keeping for final points
 
     // Initialize array of Dice class object
     for (var i = 0; i < NUM_DICE; i++) {
-        this.dice[i] = 0;
-        this.printDice(i); 
+        this.roll(i);//this.dice[i] = 0;
+        //this.printDice(i); 
         //console.log("ScoreCard() dice["+i+"]="+this.dice[i]);
     }
+    //this.printDice();
     
     // Initialize arrays
     for (var c = 0; c < NUM_CATGRY; c++) {
         this.scores[c] = -1;
         this.writeAScore(c); // Writes element to ScoreCard.html
         this.isCatgryPicked[c] = false;
-    }
+    }      
 };
-
-
-
-//************************************************************
-//      Write one scores element to ScoreCard.html
-//************************************************************
-ScoreCard.prototype.writeAScore = function (indx) {    
-    //console.log("Hit writeAScore()");    
-    document.getElementById('catgy'+indx).innerHTML = this.scores[indx]; // display the value on the button   
-};
-
 
 
 //************************************************************
 //               Fill scorecard with possible points
 //************************************************************
-ScoreCard.prototype.fillScoreCard = function (name) {    
-    
-    this.setFName(name);
+ScoreCard.prototype.fillScoreCard = function () {    
+   
+ 
     var NUM_DICE_SIDES = 6;
     var temp_scores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];   
     var counts = [0, 0, 0, 0, 0, 0];
@@ -121,8 +111,8 @@ ScoreCard.prototype.fillScoreCard = function (name) {
     
     // Chance set pts in scores[]
     this.recordScore(13, chance);
-
-   console.log("Hit fillScorecard(). Points Possible...[ "+ this.scores+" ]");   
+    this.writeTotals();
+    console.log("Hit fillScorecard().\nPoints Possible...[ "+ this.scores+" ]\ndice =" + this.dice);   
 };
 
 
@@ -144,7 +134,7 @@ ScoreCard.prototype.recordScore = function (category, score) {
         this.writeAScore(indx); // rewrite points on ScoreCard.html
     }
 
-    // if it is last round AND this category has NOT be selected, then set scores array with possible points
+    // if it is last round AND this category has NOT be picked, then set scores array with possible points
     else if (this.getRound() > 12 && (this.isCatgryPicked[category - 1] === false)) {
         this.scores[indx] = score; // on the last round, it will set the unpicked category to zero instead of -1. Every category has to be picked.
         this.writeAScore(indx); // rewrite points on ScoreCard.html
@@ -158,12 +148,12 @@ ScoreCard.prototype.recordScore = function (category, score) {
 
 
 //*****************************************************************
-//             Keep this dice in selected vector
+//             Keep this dice in selectedDice vector
 //*****************************************************************
 ScoreCard.prototype.pushThisDice = function (choice) {
     //choice -= 1;
-    this.selected.push(choice);     
-    console.log("      Hit  ScoreCard.pushThisDice().  this.selected = dice" + this.selected);
+    this.selectedDice.push(choice);     
+    console.log("      Hit  ScoreCard.pushThisDice().  this.selectedDice = " + this.selectedDice);
 };
 
 
@@ -173,26 +163,27 @@ ScoreCard.prototype.pushThisDice = function (choice) {
 //*****************************************************************
 ScoreCard.prototype.reRoll = function () {
 
-    console.log("Hit reRoll().  this.selected dice = " + this.selected);
+    console.log("Hit reRoll().  this.selectedDice = " + this.selectedDice);
 
-    // Re-Roll Dice. loops through selected vector, and checks which this.dice # to re-roll ?
+    // Re-Roll Dice. loops through selectedDice vector, and checks which this.dice # to re-roll ?
     for (var j = 0; j < NUM_DICE; j++) {
 
         // https://www.w3schools.com/jsref/jsref_find.asp
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
         // syntax: array.find(function(currentValue, index, arr),thisValue)
-        //var n = this.selected.find(this.isFound(j), j);
+        //var n = this.selectedDice.find(this.isFound(j), j);
         //console.log("Hit reRoll()...keeping dice" + (n));
         
         
-        //if(this.selected.find(this.selected.begin(), this.selected.end(), j) === this.selected.end()) {
+        //if(this.selectedDice.find(this.selectedDice.begin(), this.selectedDice.end(), j) === this.selectedDice.end()) {
 
             //console.log("...Re-Rolling Dice"+j);
             this.roll(j); // re-roll this this.dice
         //}
     }
     this.dice.sort();
-    this.printDice();      // Write all dice to html
+    //this.printDice();      // Write all dice to html
+    this.writeDice();
     this.consoleLogDice();
 };
 
@@ -212,33 +203,6 @@ ScoreCard.prototype.isFound = function (indx) {
 //************************************************************
 ScoreCard.prototype.roll = function (i) {
     this.dice[i] = (1 + (Math.floor(Math.random() * 6)));
-};
-
-
-
-//************************************************************
-//              Write 1 dice's value to html
-//************************************************************
-ScoreCard.prototype.writeADice = function (i) {
-    //console.log("Hit writeADice()");  
-    var diceBtn = document.getElementById("dice"+i);
-    var val = this.getDice(i);
-    diceBtn.value = val;
-    diceBtn.innerHTML = val;
-    //console.log("Hit writeADice().   dice["+i+"] = "+val);
-};
-
-
-
-//**********************************************************
-//                  Write all dice to html
-//**********************************************************
-ScoreCard.prototype.printDice = function () {
-    //console.log("Hit printDice()");
-    for (var i = 0; i < NUM_DICE; i++) {
-        this.writeADice(i);
-        //console.log("Dice[" +i+ "]="+this.dice[i]);
-    }
 };
 
 
@@ -307,25 +271,76 @@ ScoreCard.prototype.getTotalScore = function () {
 };
 
 
+
+
+//************************************************************
+//              Set bool wasPicked[13]
+//************************************************************
+ScoreCard.prototype.setWasPicked = function (i) {
+    this.isCatgryPicked[i] = true;
+    console.log("isCatgryPicked[" + i + "] = "+ this.isCatgryPicked[i]);
+};
+
+ScoreCard.prototype.setRound = function (r) {
+    this.round = r;   
+    //console.log("Hit setRound(). round = " + this.getRound());
+    this.writeRound();
+};
+
+ScoreCard.prototype.setFName = function (name) {
+    this.fName=name;
+};
+
+ScoreCard.prototype.getSelectedDice = function () {
+    console.log("      Hit  getSelectedDice().  selectedDice = " + this.selectedDice);
+    return this.selectedDice;
+};
+ScoreCard.prototype.getScoreIndex = function (i) {
+    console.log("Hit getScoreIndex(). score[] = "+ this.scores[i]);
+    return this.scores[i];
+};
+
+ScoreCard.prototype.getDice = function (i) {    
+    return this.dice[i];
+};
+ScoreCard.prototype.getDiceArr = function () {    
+    return this.dice;
+};
+ScoreCard.prototype.getRound = function () {
+    return this.round;
+};
+
+ScoreCard.prototype.getUpperScore = function () {
+    return this.upperScore;
+};
+
+ScoreCard.prototype.getLowerScore = function () {
+    return this.lowerScore;
+};
+
 //**********************************************************
 //      Prints this player's final ScoreCard Class members
 //**********************************************************
 ScoreCard.prototype.printFinalSC = function (name) {
+    var string1 = name + "'s Final ScoreCard ";
+    document.getElementById('finalSCDiv').innerHTML = string1;  
+    this.writeScoreCard();
+    this.writeTotals();
+};
 
+ScoreCard.prototype.writeTotals = function () {
     var bonusMin = 63;
     var bonus = (this.getUpperScore() >= bonusMin) ? 25 : 0;
-    var string1 = name + "'s Final ScoreCard ";
-    this.writeScoreCard ();
     this.setUpLowSums();
-    document.getElementById('finalSCDiv').innerHTML = string1;    
+     
     document.getElementById('catgy13').innerHTML = this.getUpperScore();
     document.getElementById('catgy14').innerHTML = bonus;
     document.getElementById('catgy15').innerHTML = this.getLowerScore();
     document.getElementById('catgy16').innerHTML = this.getTotalScore();   
-    console.log("Hit printFinalSC(). "+string1+" [ "+this.scores+" ]\n"  
+    console.log("Hit writeTotals().  scores[ "+this.scores+" ]\n"  
                 + "upperScore="+this.getUpperScore() +"  lowerScore="+this.getLowerScore()+" total="+this.getTotalScore());
-};
 
+};
 
 //************************************************************
 // Print scores array. Each element represents 1 points category on ScoreCard
@@ -337,29 +352,9 @@ ScoreCard.prototype.writeScoreCard = function () {
     }
 };
 
-
-
-//************************************************************
-//              Set bool isCatgryPicked[13]
-//************************************************************
-ScoreCard.prototype.setWasPicked = function (i) {
-    this.isCatgryPicked[i] = true;
-    console.log("isCatgryPicked[" + i + "] = "+ this.isCatgryPicked[i]);
-};
-
-
-
-//************************************************************
-//                  Set which round it is
-//************************************************************
-ScoreCard.prototype.setRound = function (r) {
-    this.round = r;   
-    //console.log("Hit setRound(). round = " + this.getRound());
-    this.writeRound();
-};
-
-ScoreCard.prototype.setFName = function (name) {
-    this.fName=name;
+ScoreCard.prototype.writeAScore = function (indx) {    
+    //console.log("Hit writeAScore()");    
+    document.getElementById('catgy'+indx).innerHTML = this.scores[indx]; // display the value on the button   
 };
 
 ScoreCard.prototype.writeRound = function() {
@@ -368,37 +363,20 @@ ScoreCard.prototype.writeRound = function() {
     document.getElementById("roundDiv").innerHTML = string;//.append(string);
 };
 
-//**********************************************************
-//              Return one element in scores array
-//**********************************************************
-ScoreCard.prototype.getScoreIndex = function (i) {
-    console.log("Hit getScoreIndex(). score[] = "+ this.scores[i]);
-    return this.scores[i];
+
+
+
+ScoreCard.prototype.writeDice = function () {
+    //console.log("Hit writeScoreCard(). scores[ "+ this.scores+" ]"); 
+    for (var i = 0; i < NUM_DICE; i++) {
+        var dice = document.getElementById('dice'+i);
+        dice.setAttribute('value', this.getDice(i));
+        dice.innerHTML = this.getDice(i); // display the value on the button   
+    }
 };
 
-ScoreCard.prototype.getDice = function (i) {    
-    return this.dice[i];
-};
-
-
-//************************************************************
-//              Return round
-//************************************************************
-ScoreCard.prototype.getRound = function () {
-    return this.round;
-};
-
-
-//************************************************************
-//                  Return upperScore
-//************************************************************
-ScoreCard.prototype.getUpperScore = function () {
-    return this.upperScore;
-};
-
-//************************************************************
-//                  Return upperScore
-//************************************************************
-ScoreCard.prototype.getLowerScore = function () {
-    return this.lowerScore;
+ScoreCard.prototype.writeRollRound = function (numRolls) {
+    var string = this.fName + "'s turn.  Round " + this.round + " Roll " + numRolls;
+        console.log("                                       " + string);
+        document.getElementById("rollDiv").innerHTML = string;
 };
