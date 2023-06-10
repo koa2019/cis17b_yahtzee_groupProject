@@ -5,43 +5,36 @@
 // Default constructor  Called in Yahtzee.html
 function User(){   
     //this.readNumRec();  
-    this.numRec = 0;
-    this.namSiz=0;
+    this.id = 0;
     this.name="Guest";
-    this.emaiSiz=0;
     this.email="email@email.com";
-    this.pwrdSiz=0;
     this.password="password";  
-    this.hiScore=0;
-    //alert("Hit User Default constructor");
+    //console.log("Hit User Default constructor");
 }
 
+User.prototype.setUser=function(id, fname, score){
+    this.setId(id);
+    this.setName(fname);
+    this.setHiScore(score);
+};
 
-// Constructor #2. Called in Yahtzee.js
-function User(i){   
-    //this.readNumRec(); 
-    this.numRec = 0;
-    this.namSiz=0;
-    this.name="Player "+i;
-    this.emaiSiz=0;
-    this.email="email@email.com";
-    this.pwrdSiz=0;
-    this.password="password";  
-    this.hiScore=0;
-    //alert("Hit User constructor#2");
-}
+User.prototype.setUser2=function(id, fname){
+    this.setId(id);
+    this.setName(fname);
+};
+
 
 //To String function of the ScoreCard Class
 User.prototype.printUser=function(){
-    document.write("numRec = " + this.getNumRec + "<br/>");
+    document.write("id = " + this.getId + "<br/>");
     document.write("name = " + this.getName + "<br/>");
     document.write("email = " + this.getEmail + "<br/>");
     document.write("password = " + this.getPassword + "<br/>");
     document.write("hiScore = " + this.getHiScore + "<br/>");
 };
 
-User.prototype.setNumRec=function(num) { 
-    this.numRec = num; 
+User.prototype.setId=function(num) { 
+    this.id = num; 
 };
 
 User.prototype.setName=function(str){
@@ -60,8 +53,8 @@ User.prototype.setHiScore=function(s) {
     this.hiScore = s; 
 };
 
-User.prototype.getNumRec=function(){
-    return this.numRec;
+User.prototype.getId=function(){
+    return this.id;
 };
 
 User.prototype.getName=function(){
@@ -98,6 +91,7 @@ User.prototype.isHiScore=function(score){
 //                  REWRITE 1 RECORD TO BINARY FILE     
 /*****************************************************************/
 
-User.prototype.reWrtBin=function(){
-    console.log("Hit User.reWrtBin()");
+User.prototype.reWrtRecord=function(){
+    console.log("Hit User.reWrtRecord()");
+    alert("Hit User.reWrtRecord()");
 };
