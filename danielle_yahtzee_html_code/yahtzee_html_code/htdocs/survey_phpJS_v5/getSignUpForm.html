@@ -1,0 +1,39 @@
+<!-- 
+    Dr. Mark E. Lehr
+    Example for CSC/CIS 17B
+        Object serialization
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Create the _Get Object</title>       
+        <script type="text/javascript" src="././assets/javascript/getForm.js"></script>
+        <script type= "text/javascript" src="./assets/javascript/cookies.js"></script> 
+        <style>
+            body {
+                background-color: black;
+                color: limegreen;
+                font-size: 24px;
+                font-weight: bold;
+            }
+            #message-div {
+                margin: auto;
+                text-align: center;
+            }
+        </style>          
+    </head>
+
+    <body>
+        <div id="message-div"></div>
+
+        <script type="text/javascript">
+         
+            // reads cookie passed from login.html and returns object with cookies key:value pairs
+            //var cookie = readCookie();
+            //console.log('Hit getForm.html. cookie = ' + cookie);
+            var url = document.location.href;
+            setNewUserCookie(url);         
+        </script>
+  </body>
+</html>
