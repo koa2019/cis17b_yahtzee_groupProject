@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Create the _Get Object</title>
+    <script type="text/javascript" src="././assets/javascript/getForm.js"></script>
+    <style>
+        body {
+            background-image: url('good.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            var expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        var url = document.location.href;
+        $_GET = getForm(url);
+        $_GET.hiScore = 0;
+
+        var newText = JSON.stringify($_GET);
+
+        // Retrieve existing data from local storage
+        var existingData = localStorage.getItem('UserData');
+        var existingArray = existingData ? JSON.parse(existingData) : [];
+
+        // Add new data to the existing array
+        existingArray.push($_GET);
+
+        // Save the updated array to local storage
+        var updatedData = JSON.stringify(existingArray);
+        localStorage.setItem('UserData', updatedData);
+
+        // Set the cookie
+        setCookie('UserData', newText, 7);  // Set the cookie to expire in 7 days
+
+        // Display an alert message
+        alert("Your account has been created.");
+
+
+        // Call DBFill.php script
+        fetch('./DBFill.php')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+
+        window.location.href = "login.html";
+    </script>
+</body>
+</html>
+
+
+
+

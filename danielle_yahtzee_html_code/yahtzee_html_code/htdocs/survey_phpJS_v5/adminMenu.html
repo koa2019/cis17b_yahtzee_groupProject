@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<!--
+Need to connect this page to something admin logs in successfully.
+--> 
+<html>
+<head>
+    <title>Admin Menu</title>
+    <link rel="shortcut icon" href="./assets/img/favicon.ico">
+    <link rel="stylesheet" href="./assets/css/adminMenu.css" type="text/css" />
+    <script type="text/javascript" src="./assets/javascript/adminMenu.js"></script>
+    <script type="text/javascript" src="./assets/javascript/cookies.js"></script>
+</head>
+<body>
+    <h1>Admin Menu</h1>
+    <div class="menu-container">
+        <button class="menu-button" onclick="showAllUsers()">Show all users</button>
+    <!--<button class="menu-button" onclick="findOneIndex()">Find one index</button>
+        <button class="menu-button" onclick="findByEmail()">Find by email</button>
+        <button class="menu-button" onclick="editHiScore()">Edit hiScore</button>
+        <button class="menu-button" onclick="deleteUser()">Delete a User</button> 
+    -->
+        <button class="menu-button" onclick="updateAdminProfile()">Update Admin's Profile</button>
+        <button class="menu-button" onclick="window.location.href = 'login.html'">Logout</button>
+    </div>
+    <div id="display-area" class="display-area"></div>
+</body>
+</html>
