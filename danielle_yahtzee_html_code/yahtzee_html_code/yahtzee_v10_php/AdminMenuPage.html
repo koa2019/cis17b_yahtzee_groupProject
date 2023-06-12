@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Menu</title>
+    <style>
+        body {
+            background-image: url("https://secure.img1-cg.wfcdn.com/im/31068505/compr-r85/1265/126588735/8ft-worsted-pool-table-cloth-billiard-felt-mat-cover-fast-pre-cut-rails.jpg");
+            background-size: cover;
+        }
+
+        .menu-button {
+            width: 200px;
+            height: 50px;
+            background-color: maroon;
+            color: white;
+            border: solid;
+            border-color: gold;
+            margin: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .menu-button:hover {
+            background-color: darkgreen; 
+        }
+        
+        .display-area {
+            width: 80%;
+            height: 300px;
+            background-color: #f0f0f0;
+            color: black;
+            border-radius: 10px;
+            padding: 10px;
+            overflow-y: scroll;
+            margin: auto;
+            margin-top: 25px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        
+    </style>
+    <script>
+        // Helper function to show data
+        function displayData(data) {
+            document.getElementById('display-area').innerHTML = JSON.stringify(data, null, 2);
+        }
+
+        // Function to do option 1: Show all users
+        function showAllUsers() {
+            var users = JSON.parse(localStorage.getItem('UserData'));
+            displayData(users);
+        }
+
+        // Function to do option 2: Find one index
+        function findOneIndex() {
+            var index = prompt("Enter the index you want to find:");
+            var users = JSON.parse(localStorage.getItem('UserData'));
+            if(users && index < users.length){
+                displayData(users[index]);
+            }
+        }
+
+        // Function to do option 3: Find by email
+        function findByEmail() {
+            var email = prompt("Enter the email of the user:");
+            var users = JSON.parse(localStorage.getItem('UserData'));
+            if(users){
+                var user = users.find(user => decodeURIComponent(user.Email) === email); // Changed to user.Email
+                displayData(user);
+            }
+        }
+
+        // Function to do option 4: Edit hiScore
+        function editHiScore() {
+            var email = prompt("Enter the email of the user:");
+            var hiScore = prompt("Enter the new hiScore:");
+            var users = JSON.parse(localStorage.getItem('UserData'));
+            if(users){
+                var user = users.find(user => decodeURIComponent(user.Email) === email); // Changed to user.Email
+                if(user){
+                    user.hiScore = hiScore;
+                    localStorage.setItem('UserData', JSON.stringify(users));
+                    displayData(users);
+                }
+            }
+        }
+
+        // Function to do option 5: Delete a User
+        function deleteUser() {
+            var email = prompt("Enter the email of the user:");
+            var users = JSON.parse(localStorage.getItem('UserData'));
+            if(users){
+                var index = users.findIndex(user => decodeURIComponent(user.Email) === email); // Changed to user.Email
+                if(index !== -1){
+                    users.splice(index, 1);
+                    localStorage.setItem('UserData', JSON.stringify(users));
+                    displayData(users);
+                }
+            }
+        }
+        
+        // Function to do option 6: Update Admin's Profile
+        function updateAdminProfile() {
+            var name = prompt("Enter new name:");
+            var email = prompt("Enter new email:");
+            var password = prompt("Enter new password:");
+            var chekpass = prompt("Confirm password:");
+            var hiScore = prompt("Enter new hiScore:");
+            var users = JSON.parse(localStorage.getItem('UserData'));
+            if(users && users.length > 0){
+                users[0] = {Name: name, Email: email, Password: password, chekPass: chekpass, hiScore: hiScore};
+                localStorage.setItem('UserData', JSON.stringify(users));
+                displayData(users);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Admin Menu</h1>
+    <div class="menu-container">
+        <button class="menu-button" onclick="showAllUsers()">Show all users</button>
+        <button class="menu-button" onclick="findOneIndex()">Find one index</button>
+        <button class="menu-button" onclick="findByEmail()">Find by email</button>
+        <button class="menu-button" onclick="editHiScore()">Edit hiScore</button>
+        <button class="menu-button" onclick="deleteUser()">Delete a User</button>
+        <button class="menu-button" onclick="updateAdminProfile()">Update Admin's Profile</button>
+        <button class="menu-button" onclick="window.location.href = 'login.html'">Logout</button>
+    </div>
+    <div id="display-area" class="display-area"></div>
+</body>
+</html>

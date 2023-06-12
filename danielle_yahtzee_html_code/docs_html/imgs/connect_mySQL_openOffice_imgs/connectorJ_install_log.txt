@@ -1,0 +1,40 @@
+1: Action 21:45:22: INSTALL. 
+1: 1: MySQL Connector J 2: {78A9DB14-236C-4092-91B1-7749D8C9C2A4} 
+1: Action 21:45:22: FindRelatedProducts. Searching for related applications
+1: Action 21:45:22: ValidateProductID. 
+1: Action 21:45:22: CostInitialize. Computing space requirements
+1: Action 21:45:22: FileCost. Computing space requirements
+1: Action 21:45:22: CostFinalize. Computing space requirements
+1: Action 21:45:22: InstallValidate. Validating install
+1: Action 21:45:22: InstallInitialize. 
+1: Action 21:45:22: RemoveExistingProducts. Removing applications
+1: Action 21:45:22: ProcessComponents. Updating component registration
+1: Action 21:45:22: GenerateScript. Generating script operations for action:
+1: Updating component registration
+1: Action 21:45:22: UnpublishFeatures. Unpublishing Product Features
+1: Action 21:45:22: RemoveFiles. Removing files
+1: Action 21:45:22: InstallFiles. Copying new files
+1: File: Copying new files,  Directory: ,  Size: 
+1: Action 21:45:22: RegisterUser. Registering user
+1: Action 21:45:22: RegisterProduct. Registering product
+1: Registering product
+1: Action 21:45:22: PublishFeatures. Publishing Product Features
+1: Feature: Publishing Product Features
+1: Action 21:45:22: PublishProduct. Publishing product information
+1: Action 21:45:22: InstallFinalize. 
+1: Action 21:45:22: ProcessComponents. Updating component registration
+1: Action 21:45:22: InstallFiles. Copying new files
+1: File: CHANGES,  Directory: C:\Program Files (x86)\MySQL\Connector J 8.0\,  Size: 280321
+1: File: INFO_BIN,  Directory: C:\Program Files (x86)\MySQL\Connector J 8.0\,  Size: 185
+1: File: INFO_SRC,  Directory: C:\Program Files (x86)\MySQL\Connector J 8.0\,  Size: 136
+1: File: LICENSE,  Directory: C:\Program Files (x86)\MySQL\Connector J 8.0\,  Size: 71003
+1: File: mysql-connector-j-8.0.33.jar,  Directory: C:\Program Files (x86)\MySQL\Connector J 8.0\,  Size: 2481560
+1: File: README,  Directory: C:\Program Files (x86)\MySQL\Connector J 8.0\,  Size: 1628
+1: Action 21:45:22: RegisterProduct. Registering product
+1: {78A9DB14-236C-4092-91B1-7749D8C9C2A4}
+1: Action 21:45:22: PublishFeatures. Publishing Product Features
+1: Feature: ProductFeature
+1: Action 21:45:22: PublishProduct. Publishing product information
+1: Action 21:45:22: RollbackCleanup. Removing backup files
+1: 1: MySQL Connector J 2: {78A9DB14-236C-4092-91B1-7749D8C9C2A4} 3: 1 
+1: The action 'Install' for product 'Connector/J 8.0.33' completed successfully.
