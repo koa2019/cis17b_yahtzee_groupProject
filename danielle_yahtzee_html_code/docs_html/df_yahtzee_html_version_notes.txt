@@ -1,0 +1,87 @@
+yahtzee_v1:
+
+
+
+yahtzee_v2:
+*Moved Yahtzee's script code from <body> to Yahtzee() in <head>
+*Moved Yahtzee() to Yahtzee.js
+*Created User.js with User() as its default constructor
+*Converted all ScoreCard functions that don't have vector in it to JS.
+*Fixed BUG: Yahtzee.prototype.startGame = function () by 
+ creating a new Array() object in main().
+
+yahtzee_v3
+* Passed User object from Yahtzee.html to to Yahtzee.js startGame().
+* ScoreCard.prototype.setFinalSC = function (scorecard) passed an object.
+* getUpperScore(), getLowerScore(), getRound() return a value rather than a document.write().
+* Converted ScoreCard.getTotalScore()
+* Converted 95% of ScoreCard.js fillScoreCard()
+* Converted 95% of Yahtzee.js startGame90 and play()
+* Changed vector<int> selected to selected = [5] in ScoreCard.js
+
+yahtzee_v4:
+* Created 2 columns on ScoreCard.html: diceMsgCol & scorecardCol.
+  * BUG! class="column: aren't floating left?
+* Added Logan's code to write the scorecards category button when it is clicked.
+* setScoreCard() rewrites value in the scorecard.
+* printDice() rewrites each dice on ScoreCard.html
+* Yahtzee.js writes the div for user to input number of players
+* Tried converting cin>>name in getNPlayer() wtih document.getElementById("nPlayerSubmit").addEventListener("click", this.getNPlayer).
+* BUG: in Yahtzee.js: document.getElementById("nPlayerSubmit").addEventListener("click", this.getNPlayer)
+* fillScoreCard() rewrites values on ScoreCard.html
+* Added bonus table row on ScoreCard.html.
+
+* Converted: 
+	* Yahtzee displayOptions() to printPlayMenu().
+	* In printPlayMenu(), I replaced cin>>resp with event listener setChoice().
+	* getNPlayer() to promptNPlayer(). nightmare!
+
+
+yahtzee_html_v5:
+
+
+yahtzee_html_v6:
+* i figured how to aggregate ScoreCard class within Yahtzee
+constructor and be able to access scorecard and finalFC throughout
+Yahtzee.js.
+
+
+yahtzee_html_v7_noPrompts:
+I removed all the prompts and wrote the input divs to the page dynamically. 
+The game is not stopping and getting the input from printMenu(), selectDice(), or
+pickCategory(). If I put prompts in, the game will stop when it's supposed to, but
+it won't display the dice or scorecard on the html.
+
+Moved showPickCategory(), categoryClick(), and setFinalSC() to Yahtzee, so I could
+reference scorecard's object when setting the finalScoreCard.scores.
+
+v7.2_modals: 
+Removed all loops and replaced them with if conditionals and 
+it stopped the game from running through all 13 rounds. Added buttons to
+control game play. added checkRounds() and checkNumRolls() to yahtzee.js.
+
+
+To-do:
+
+* ScoreCard.html.
+        *BUG! the 2 colums class="column: aren't floating left?
+
+* ScoreCard.js:
+	* setFinalSC(): convert cin>>choice 
+	* fillScoreCard() convert:
+		* isYahtzee = all_of(counts.begin(), counts.end(), [&](int count) { return count == NUM_DICE; }); 
+		* this.recordScore(7, three_of_a_kind ? accumulate(dice, dice + NUM_DICE, 0) : 0);
+	* selectDice: not re-rolling dice. 
+	* BUG: in Yahtzee.js: document.getElementById("nPlayerSubmit").addEventListener("click", this.getNPlayer)
+
+* Yahtzee.js:
+	
+	
+	* selectDice(): convert cin >> choice
+	* convert getRules()
+	* Make getP1Winner() work
+	* change MAXRND to 13 and then replace finalSC.NUM_CATGRY with MAXRND.
+
+* User.js convert: 
+	* get User(i)->readNumRec() to work
+	* reWrtBin()

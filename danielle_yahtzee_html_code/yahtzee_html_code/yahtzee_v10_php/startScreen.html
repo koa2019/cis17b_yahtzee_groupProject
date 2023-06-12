@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YAHTZEE</title>
+    <!-- css -->
+    <link rel="stylesheet" href="./assets/css/reset.css" type="text/css" />
+    <link rel="stylesheet" href="./assets/css/startScreen.css" type="text/css" />
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <img class="foreground-image" src="https://logodix.com/logo/543554.png" alt="Foreground Image">
+    <button class="start-button" onclick="runPhpFile()">Start</button>
+    <script>
+        function runPhpFile() {      
+            $.ajax({
+                url: './DBSelect.php',
+                type: 'POST',
+                success: function(response) {
+                    console.log('PHP file executed successfully');
+                    // Handle the response here, if needed
+                    window.location.href = 'login.html';
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error executing PHP file:', error);
+                    // Handle the error here, if needed
+                }
+            }); 
+            checkDataIntegrity();
+        }
+        
+        function checkDataIntegrity() {
+            // Create 'UserData' in localStorage if it doesn't exist
+            if (!localStorage.getItem('UserData')) {
+                //this user gets erased anyways
+                const defaultUser = {
+                    "Name": "John Doe",
+                    "Email": "john.doe@example.com",
+                    "Password": "password123",
+                    "chekPass": "password123",
+                    "hiScore": 0
+                };
+                localStorage.setItem('UserData', JSON.stringify([defaultUser]));
+            }
+
+            // First, parse the localStorage data
+            let localStorageData = JSON.parse(localStorage.getItem('UserData'));
+
+            // Convert localStorage data into a Map object for easier comparison
+            let localStorageMap = new Map();
+            localStorageData.forEach((user) => {
+                localStorageMap.set(user.Email, user);
+            });
+
+            // Next, parse the cookie data
+            let cookieData = JSON.parse(decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)databaseinfo\s*\=\s*([^;]*).*$)|^.*$/, "$1")));
+
+            // Convert cookie data into a Map object for easier comparison
+            let cookieDataMap = new Map();
+            cookieData.forEach((user) => {
+                cookieDataMap.set(user.email, user);
+            });
+
+            // Now compare the two Maps
+            if (localStorageMap.size !== cookieDataMap.size) {
+                overwriteLocalStorage(cookieData);
+                return;
+            }
+
+            for (let [email, user] of localStorageMap) {
+                if (!cookieDataMap.has(email)) {
+                    overwriteLocalStorage(cookieData);
+                    return;
+                }
+                let cookieUser = cookieDataMap.get(email);
+                if (user.Name !== cookieUser.first_name || user.hiScore !== cookieUser.hiScore) {
+                    overwriteLocalStorage(cookieData);
+                    return;
+                }
+            }
+
+            // If we made it this far, the data matches
+            alert("Game is ready to test!");
+        }
+
+        function overwriteLocalStorage(cookieData) {
+            // Convert cookieData format to localStorageData format
+            let newLocalStorageData = cookieData.map(user => {
+                return {
+                    "Name": user.first_name,
+                    "Email": user.email,
+                    "Password": user.password,
+                    "chekPass": user.password,
+                    "hiScore": user.hiScore
+                };
+            });
+
+            // Overwrite the localStorage data
+            localStorage.setItem('UserData', JSON.stringify(newLocalStorageData));
+
+            alert("Cookies have been created!");
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+

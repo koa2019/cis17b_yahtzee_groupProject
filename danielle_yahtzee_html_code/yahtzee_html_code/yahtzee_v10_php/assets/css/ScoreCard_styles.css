@@ -1,0 +1,204 @@
+/*CSS for 2 columns */
+/*https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_two_columns*/
+body {
+    background-image: url(../img/Grass.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+/*    background-color: #A9A9A9;*/
+}
+
+.container{
+/*     background-color: white;*/
+     background-image: url(../img/table1.png);
+}
+.row {
+    height: 100%;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  
+  float: left;
+  height: 100%;  /*  height: 1200px;*/
+  padding: 10px;
+}
+
+/*class for each dice button*/
+.dice-class {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border: 1px solid #000;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* dice button effect */
+.dice:hover {
+    background-color: #f2f2f2;
+}
+
+/* container for all 5 dice  */
+.dice-container {
+    font-size: 14px;
+    text-align: center;
+/*    background-color: white;*/
+    color: green;
+    padding: 20px;    
+    margin: 0 auto;    
+}
+
+/*  */
+#diceCol {
+/*    float: left;*/
+/*    background-color: white;*/
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    font-size: 24px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#show-menu-div{
+    text-align: center;
+}
+
+/* message board div */
+#msgBrdCol {
+    background-color: white;
+    font-weight: bold;    
+    font-size: 20px;
+}
+#scorecard-col {
+    background-color: white;
+    font-weight: bold;    
+    font-size: 20px;
+}
+
+/* number of players div */
+#nPlayrDiv {
+     padding: 20px;
+}
+
+/* message board div */
+#msg-div {    
+    text-align: center;
+    font-size: 20px;
+    padding: 10px;
+   
+}
+#category-div {
+    text-align: center;
+     font-size: 32px;
+     color: red;
+}
+/* play() menu div */
+#menuDiv {
+     text-align: left;
+     padding-bottom: 30px;
+}
+
+/* round and roll div */
+#rnd-roll-col {
+/*    float: left;*/
+/*    background-color: white;*/
+    font-weight: bold;
+    text-align: center;
+    font-size: 20px;
+    padding-top: 20px;
+}
+
+/* round div */
+#roundDiv {
+    font-size: 36px; 
+    margin: 20px;
+}
+
+/* Player's roll div' */
+#rollDiv {
+     padding: 20px;
+}
+
+/* scorecard div */
+#scorecardCol {
+    float: left;
+    background-color: lightgreen;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* ^^CSS for row1's id=diceMsgCol '^^ */
+
+
+h1 {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #5F33FF;
+    color: white;
+    margin: 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 400px;
+    margin: 5px auto;
+/*    background-color: white;*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+th,
+td {
+    border: 1px solid #000;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.category-button {
+/*button {*/
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 2px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+button:hover {
+    background-color: #3F51B5;
+}
+
+.btn-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
